@@ -20,7 +20,7 @@
         <!--Slider for selecting amount of characters per interest the password should include-->
         <div class="sliderContainer">
             <label for="slider" class="sliderLabel">Characters Per Interest</label>
-            <input type="range" name="charactersPerInterest" id="slider" min="1" max="5" value="2">
+            <input type="range" name="charactersPerInterest" id="characters" min="1" max="5" value="2">
             <div class="rangeLabels">
                 <label class="minValue">1</label>
                 <label class="maxValue">5</label>
@@ -30,10 +30,20 @@
         <!--slider for choosing the length of the password-->
         <div class="sliderContainer">
             <label for="slider" class="sliderLabel">Password Length</label>
-            <input type="range" name="charactersPerInterest" id="slider" min="8" max="20" value="10">
+            <input type="range" name="charactersPerInterest" id="passwordLength" min="8" max="20" value="10">
             <div class="rangeLabels">
                 <label class="minValue">8</label>
                 <label class="maxValue">20</label>
+            </div>
+        </div>
+
+        <!--slider for selecting the amount of characters from service name -->
+        <div class="sliderContainer">
+            <label for="slider" class="sliderLabel">Number of characters from service name</label>
+            <input type="range" name="charactersPerInterest" id="serviceName" min="2" max="5" value="3">
+            <div class="rangeLabels">
+                <label class="minValue">2</label>
+                <label class="maxValue">5</label>
             </div>
         </div>
     </div>
