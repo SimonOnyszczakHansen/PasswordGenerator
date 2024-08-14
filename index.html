@@ -1,13 +1,27 @@
 <!DOCTYPE html>
+
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="container">
         <h1 id="header">Password Generator</h1>
 
-        <!--Input field for the interests and number-->
-        <input id="interestsTextField" type="text" placeholder="Type interest or number"/>
+        <!--Input field for the interests and numbers-->
+        <div class="inputsContainer">
+            <div class="inputGroup">
+            <input id="inputsTextField" type="text" placeholder="Type interest or number" />
+            <button id="addButton" class="btn btn-primary">Add</button>
+            </div>
+        </div>
+
+        <!--Slider for selecting amount of characters per interest the password should include-->
+        <div class="sliderContainer">
+            <label for="slider" class="sliderLabel">Characters Per Interest</label>
+            <input type="range" name="charactersPerInterest" id="slider" min="1" max="5" value="2">
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
