@@ -2,37 +2,47 @@ const tagsDiv = document.getElementById("tags");
 const addBtn = document.getElementById("addButton");
 const inputField = document.getElementById("inputsTextField");
 
-let tags = [];
+const serviceDiv = document.getElementById("serviceTags");
+const serviceInputField = document.getElementById("servicesTextField");
+const addServiceBtn = document.getElementById("servicesAddButton");
 
-function addTag() {
+let tags = [];
+let services = [];
+
+function addItem(inputField, container, itemList) {
   const value = inputField.value.trim();
   if (value) {
-    tags.push(value);
-    updateTags(tagsDiv, tags);
+    itemList.push(value);
+    updateItems(container, itemList);
     inputField.value = "";
   }
 }
 
-function updateTags(container, tagList) {
-  container.innerHTML = tagList.map((tag) => `<span>${tag}</span>`).join("");
+function updateItems(container, itemList) {
+  container.innerHTML = itemList.map((item) => `<span>${item}</span>`).join("");
 }
 
-addBtn.addEventListener("click", function () {
-  addTag();
-});
+function handleItemAddition(addButton, inputField, container, itemList) {
+  addButton.addEventListener("click", function () {
+    addItem(inputField, container, itemList);
+  });
 
-inputField.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    addTag();
-  }
-});
+  inputField.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      addItem(inputField, container, itemList);
+    }
+  });
 
-tagsDiv.addEventListener("click", function () {
-    const tag = event.target;
-    const index = tags.indexOf(tag.textContent);
+  container.addEventListener("click", function (event) {
+    const item = event.target;
+    const index = itemList.indexOf(item.textContent);
     if (index > -1) {
-        tags.splice(index, 1);
-        updateTags(tagsDiv, tags);
-        }
-})
+      itemList.splice(index, 1);
+      updateItems(container, itemList);
+    }
+  });
+}
+
+handleItemAddition(addBtn, inputField, tagsDiv, tags);
+handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);

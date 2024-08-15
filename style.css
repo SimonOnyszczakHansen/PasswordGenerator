@@ -33,10 +33,9 @@ body {
 }
 
 #inputsTextField,
-#servicesTextField
-{
+#servicesTextField {
     font-size: 1em;
-    font-weight:500;
+    font-weight: 500;
     padding: 1em;
     max-width: 72vh;
     width: 100%;
@@ -45,7 +44,8 @@ body {
     height: 100%;
 }
 
-#addButton {
+#addButton,
+#servicesAddButton {
     height: 100%;
     font-weight: bold;
     width: 100%;
@@ -152,7 +152,18 @@ input[type="range"] {
     margin: 0 auto;
 }
 
-#tags span {
+#serviceTags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    max-width: 80vh;
+    margin: 0 auto;
+}
+
+#tags span,
+#serviceTags span {
     background-color: #007bff;
     color: white;
     padding: 0.5em 1em;
@@ -164,10 +175,12 @@ input[type="range"] {
     transition: background-color 0.3s ease;
 }
 
-#tags span:hover {
+#tags span:hover,
+#serviceTags span:hover {
     background-color: #0056b3;
 }
 
-#tags span:active {
+#tags span:active,
+#serviceTags span:active {
     background-color: #004085;
 }
