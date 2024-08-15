@@ -153,7 +153,7 @@ input[type="range"] {
 }
 
 #tags span {
-    background-color: #007bff; /* Bootstrap primary color */
+    background-color: #007bff;
     color: white;
     padding: 0.5em 1em;
     border-radius: 1em;
@@ -165,9 +165,9 @@ input[type="range"] {
 }
 
 #tags span:hover {
-    background-color: #0056b3; /* Darker shade on hover */
+    background-color: #0056b3;
 }
 
 #tags span:active {
-    background-color: #004085; /* Even darker shade when active */
+    background-color: #004085;
 }
