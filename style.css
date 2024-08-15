@@ -10,7 +10,7 @@ body {
 }
 
 #header {
-    margin: 1em;
+    margin: 0.5em;
     font-size: 4em;
 }
 
@@ -38,7 +38,7 @@ body {
     font-size: 1em;
     font-weight:500;
     padding: 1em;
-    max-width: 70vh;
+    max-width: 72vh;
     width: 100%;
     border-radius: 1vh;
     border-style: none;
@@ -101,4 +101,19 @@ input[type="range"] {
     width: 100%;
     border-radius: 1vh;
     height: 5vh;
+}
+
+.checkboxContainer {
+    padding: 0.5em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    max-width: 80vh;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.checkboxGroup {
+    align-self: flex-start;
 }
