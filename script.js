@@ -1,17 +1,22 @@
+// Interest and number textfield
 const tagsDiv = document.getElementById("tags");
 const addBtn = document.getElementById("addButton");
 const inputField = document.getElementById("inputsTextField");
 
+// Services textfield
 const serviceDiv = document.getElementById("serviceTags");
 const serviceInputField = document.getElementById("servicesTextField");
 const addServiceBtn = document.getElementById("servicesAddButton");
 
+// slider for choosing characters
 const charactersSlider = document.getElementById("characters");
 const charactersValue = document.getElementById("charactersValue");
 
+// Slider for choosing password length
 const passwordLength = document.getElementById("passwordLength");
 const passwordLengthValue = document.getElementById("passwordLengthValue")
 
+// Slider for choosing service name
 const serviceName = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
 

@@ -12,6 +12,7 @@ body {
 .header {
     margin: 0.5em;
     font-size: 4em;
+    margin-bottom: 1em;
 }
 
 .inputsContainer {
@@ -28,7 +29,7 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 80vh;
+    max-width: 50em;
     height: 3em;
 }
 
@@ -37,9 +38,9 @@ body {
     font-size: 1em;
     font-weight: 500;
     padding: 1em;
-    max-width: 72vh;
+    max-width: 42em;
     width: 100%;
-    border-radius: 1vh;
+    border-radius: 0.6em;
     border-style: none;
     height: 100%;
 }
@@ -50,8 +51,8 @@ body {
     font-weight: bold;
     width: 100%;
     margin-left: 0.3em;
-    max-width: 6vh;
-    border-radius: 1vh;
+    max-width: 3em;
+    border-radius: 0.6em;
     font-size: larger;
 }
 
@@ -99,8 +100,8 @@ input[type="range"] {
 
 #generatePassword {
     width: 100%;
-    border-radius: 1vh;
-    height: 5vh;
+    border-radius: 0.6em;
+    height: 3em;
 }
 
 .checkboxContainer {
