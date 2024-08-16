@@ -16,7 +16,7 @@ const charactersValue = document.getElementById("charactersValue");
 const passwordLength = document.getElementById("passwordLength");
 const passwordLengthValue = document.getElementById("passwordLengthValue")
 
-// Slider for choosing service name
+// Slider for choosing service name 
 const serviceName = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
 
