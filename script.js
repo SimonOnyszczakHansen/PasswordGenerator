@@ -9,6 +9,12 @@ const addServiceBtn = document.getElementById("servicesAddButton");
 const charactersSlider = document.getElementById("characters");
 const charactersValue = document.getElementById("charactersValue");
 
+const passwordLength = document.getElementById("passwordLength");
+const passwordLengthValue = document.getElementById("passwordLengthValue")
+
+const serviceName = document.getElementById("serviceName");
+const serviceNameValue = document.getElementById("serviceNameValue");
+
 let tags = [];
 let services = [];
 
@@ -56,4 +62,6 @@ function updateSlider(slider, displayElement) {
 handleItemAddition(addBtn, inputField, tagsDiv, tags);
 handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);
 
-updateSlider(charactersSlider, charactersValue)
+updateSlider(charactersSlider, charactersValue);
+updateSlider(passwordLength, passwordLengthValue);
+updateSlider(serviceName, serviceNameValue);
