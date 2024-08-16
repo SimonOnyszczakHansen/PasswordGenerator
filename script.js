@@ -6,6 +6,9 @@ const serviceDiv = document.getElementById("serviceTags");
 const serviceInputField = document.getElementById("servicesTextField");
 const addServiceBtn = document.getElementById("servicesAddButton");
 
+const charactersSlider = document.getElementById("characters");
+const charactersValue = document.getElementById("charactersValue");
+
 let tags = [];
 let services = [];
 
@@ -44,5 +47,13 @@ function handleItemAddition(addButton, inputField, container, itemList) {
   });
 }
 
+function updateSlider(slider, displayElement) {
+  slider.addEventListener("input", function () {
+    displayElement.textContent = slider.value;
+  });
+}
+
 handleItemAddition(addBtn, inputField, tagsDiv, tags);
 handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);
+
+updateSlider(charactersSlider, charactersValue)
