@@ -22,6 +22,7 @@ body {
     align-items: center;
     width: 100%;
     margin: 0 auto;
+    margin-top: 2em;
 }
 
 .inputGroup {
@@ -168,7 +169,7 @@ input[type="range"] {
     background-color: #007bff;
     color: white;
     padding: 0.5em 1em;
-    border-radius: 1em;
+    border-radius: 0.7em;
     margin: 0.2em;
     font-size: 1em;
     display: inline-block;
