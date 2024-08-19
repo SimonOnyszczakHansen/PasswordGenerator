@@ -15,6 +15,9 @@ body {
     margin-bottom: 1em;
 }
 
+
+/*css for the textfields*/ 
+
 .inputsContainer {
     padding: 1em;
     display: flex;
@@ -46,16 +49,8 @@ body {
     height: 100%;
 }
 
-#addButton,
-#servicesAddButton {
-    height: 100%;
-    font-weight: bold;
-    width: 100%;
-    margin-left: 0.3em;
-    max-width: 3em;
-    border-radius: 0.6em;
-    font-size: larger;
-}
+
+/*css for the sliders*/
 
 .sliderContainer {
     padding: 0.5em;
@@ -92,18 +87,8 @@ input[type="range"] {
     font-weight: bold;
 }
 
-#buttonContainer {
-    display: flex;
-    max-width: 80vh;
-    width: 100%;
-    margin: 0 auto;
-}
 
-#generatePassword {
-    width: 100%;
-    border-radius: 0.6em;
-    height: 3em;
-}
+/*css for hte checkboxes*/
 
 .checkboxContainer {
     padding: 0.5em;
@@ -120,6 +105,20 @@ input[type="range"] {
     align-self: flex-start;
 }
 
+
+/*css for all the buttons*/
+
+#addButton,
+#servicesAddButton {
+    height: 100%;
+    font-weight: bold;
+    width: 100%;
+    margin-left: 0.3em;
+    max-width: 3em;
+    border-radius: 0.6em;
+    font-size: larger;
+}
+
 .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
@@ -129,6 +128,22 @@ input[type="range"] {
     background-color: #004085;
     border-color: #003056;
 }
+
+#buttonContainer {
+    display: flex;
+    max-width: 80vh;
+    width: 100%;
+    margin: 0 auto;
+}
+
+#generatePassword {
+    width: 100%;
+    border-radius: 0.6em;
+    height: 3em;
+}
+
+
+/*css for the container that shows the generated passwords*/
 
 #passwords {
     background-color: #2c2c2c;
@@ -143,6 +158,9 @@ input[type="range"] {
     font-size: 2em;
     margin-bottom: 0.5em;
 }
+
+
+/*css for the tags*/
 
 #tags {
     display: flex;
@@ -186,6 +204,9 @@ input[type="range"] {
 #serviceTags span:active {
     background-color: #004085;
 }
+
+
+/*css for the dark and light mode switch*/
 
 .switch {
     position: relative;
