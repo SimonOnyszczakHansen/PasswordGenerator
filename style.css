@@ -44,9 +44,41 @@ body {
     padding: 1em;
     max-width: 42em;
     width: 100%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #007bff;
     border-radius: 0.6em;
-    border-style: none;
+    background-color: #3b3b3b;
+    color: white;
     height: 100%;
+}
+
+/*Default (dark mode)*/
+#inputsTextField,
+#servicesTextField {
+    background-color: #3b3b3b;
+    color: #ffffff;
+}
+
+#inputsTextField::placeholder,
+#servicesTextField::placeholder {
+    color: #ffffff;
+}
+
+/* Light Mode */
+#inputsTextField.light-mode,
+#servicesTextField.light-mode {
+    background-color: #ffffff;
+    color: #3b3b3b;
+}
+
+#inputsTextField.light-mode::placeholder,
+#servicesTextField.light-mode::placeholder {
+    color: #3b3b3b;
+}
+
+*:focus {
+    outline: none;
 }
 
 
@@ -270,4 +302,8 @@ input:checked + .slider:before {
 
 .slider.round:before {
     border-radius: 50%;
+}
+
+.light-mode {
+    background-color: white;
 }
