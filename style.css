@@ -2,6 +2,7 @@ body {
     background-color: #3b3b3b;
     text-align: center;
     font-weight: bold;
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 .container {
@@ -51,6 +52,15 @@ body {
     background-color: #3b3b3b;
     color: white;
     height: 100%;
+}
+
+#inputsTextField,
+#servicesTextField,
+#passwords,
+#tags span,
+#serviceTags span,
+.slider {
+    transition: background-color 0.5s ease, color 0.5s ease;
 }
 
 /*Default (dark mode)*/
