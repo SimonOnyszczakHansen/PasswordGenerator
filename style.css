@@ -54,6 +54,14 @@ body {
     height: 100%;
 }
 
+#inputsTextField:focus,
+#servicesTextField:focus {
+    border-color: #0056b3; 
+    box-shadow: 0 0 8px rgba(0, 91, 179, 0.5);
+    background-color: #333333; 
+}
+
+
 #inputsTextField,
 #servicesTextField,
 #passwords,
