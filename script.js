@@ -20,21 +20,29 @@ const passwordLengthValue = document.getElementById("passwordLengthValue");
 const serviceName = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
 
-document
-  .getElementById("darkModeSwitch")
-  .addEventListener("change", function () {
+document.getElementById("darkModeSwitch").addEventListener("change", function () {
     if (this.checked) {
-      document.body.style.backgroundColor = "#ffffff";
-      document.querySelector(".container").style.color = "#3b3b3b";
-      document.querySelector("#inputsTextField").classList.add("light-mode");
-      document.querySelector("#servicesTextField").classList.add("light-mode");
+      lightMode();
     } else {
-      document.body.style.backgroundColor = "#3b3b3b";
-      document.querySelector(".container").style.color = "#ffffff";
-      document.querySelector("#inputsTextField").classList.remove("light-mode");
-      document.querySelector("#servicesTextField").classList.remove("light-mode");
+      darkMode();
     }
   });
+
+function lightMode() {
+  document.body.style.backgroundColor = "#ffffff";
+  document.querySelector(".container").style.color = "#3b3b3b";
+  document.querySelector("#inputsTextField").classList.add("light-mode");
+  document.querySelector("#servicesTextField").classList.add("light-mode");
+  document.querySelector("#passwords").style.backgroundColor = "#ccc";
+}
+
+function darkMode() {
+  document.body.style.backgroundColor = "#3b3b3b";
+  document.querySelector(".container").style.color = "#ffffff";
+  document.querySelector("#inputsTextField").classList.remove("light-mode");
+  document.querySelector("#servicesTextField").classList.remove("light-mode");
+  document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
+}
 
 let tags = [];
 let services = [];
