@@ -17,7 +17,7 @@ body {
 }
 
 
-/*css for the textfields*/ 
+/*css for the textfields*/
 
 .inputsContainer {
     padding: 1em;
@@ -56,9 +56,9 @@ body {
 
 #inputsTextField:focus,
 #servicesTextField:focus {
-    border-color: #0056b3; 
+    border-color: #0056b3;
     box-shadow: 0 0 8px rgba(0, 91, 179, 0.5);
-    background-color: #333333; 
+    background-color: #333333;
 }
 
 
@@ -284,7 +284,7 @@ input[type="range"] {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #ccc ;
+    background-color: #ccc;
     transition: .3s;
     border-radius: 34px;
     background-image: url('https://img.icons8.com/ios-filled/50/ffffff/sun.png'), url('https://img.icons8.com/ios-filled/50/000000/moon-symbol.png');
@@ -305,12 +305,12 @@ input[type="range"] {
     border-radius: 50%;
 }
 
-input:checked + .slider {
+input:checked+.slider {
     background-color: #2196F3;
     background-image: url('https://img.icons8.com/ios-filled/50/ffffff/sun.png'), url('https://img.icons8.com/ios-filled/50/000000/moon-symbol.png');
 }
 
-input:checked + .slider:before {
+input:checked+.slider:before {
     transform: translateX(26px);
 }
 
