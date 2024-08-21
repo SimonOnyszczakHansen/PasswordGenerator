@@ -58,12 +58,6 @@ function addItem(inputField, container, itemList) {
   }
 }
 
-capitalizeFirstLetter.addEventListener('change', function () {
-  if (capitalizeFirstLetter.checked) {
-    value = value.charAt(0).toUpperCase() + value.slice(1);
-  }
-})
-
 function updateItems(container, itemList) {
   container.innerHTML = itemList.map((item) => `<span>${item}</span>`).join("");
 }
