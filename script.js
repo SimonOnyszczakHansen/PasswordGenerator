@@ -99,12 +99,31 @@ updateSlider(serviceName, serviceNameValue);
 
 function generatePassword(tags, charactersValue) {
   let password = '';
+  let numbers = [];
+  let nonNumberTags = [];
 
+  // Separate numbers and non-number tags
   tags.forEach(tag => {
-    const extractedPart = tag.substring(0, charactersValue)
-    password += extractedPart;
+      if (!isNaN(tag)) {
+          numbers.push(tag);
+      } else {
+          nonNumberTags.push(tag);
+      }
   });
-  return password
+
+  // Generate the password from non-number tags
+  nonNumberTags.forEach(tag => {
+      const extractedPart = tag.substring(0, charactersValue);
+      password += extractedPart;
+  });
+
+  // Randomly insert numbers into the password
+  numbers.forEach(number => {
+      const randomIndex = Math.floor(Math.random() * (password.length + 1));
+      password = password.slice(0, randomIndex) + number + password.slice(randomIndex);
+  });
+
+  return password;
 }
 
 document.getElementById("generatePassword").addEventListener("click", function () {
