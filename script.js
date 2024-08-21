@@ -8,7 +8,7 @@ const serviceDiv = document.getElementById("serviceTags");
 const serviceInputField = document.getElementById("servicesTextField");
 const addServiceBtn = document.getElementById("servicesAddButton");
 
-// slider for choosing characters
+// slider for choosing amount of characters per interest
 const charactersSlider = document.getElementById("characters");
 const charactersValue = document.getElementById("charactersValue");
 
@@ -19,6 +19,8 @@ const passwordLengthValue = document.getElementById("passwordLengthValue");
 // Slider for choosing service name
 const serviceName = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
+
+const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox")
 
 document.getElementById("darkModeSwitch").addEventListener("change", function () {
     if (this.checked) {
@@ -55,6 +57,12 @@ function addItem(inputField, container, itemList) {
     inputField.value = "";
   }
 }
+
+capitalizeFirstLetter.addEventListener('change', function () {
+  if (capitalizeFirstLetter.checked) {
+    value = value.charAt(0).toUpperCase() + value.slice(1);
+  }
+})
 
 function updateItems(container, itemList) {
   container.innerHTML = itemList.map((item) => `<span>${item}</span>`).join("");
@@ -94,3 +102,18 @@ handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);
 updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceName, serviceNameValue);
+
+function generatePassword(tags, charactersValue) {
+  let password = '';
+
+  tags.forEach(tag => {
+    const extractedPart = tag.substring(0, charactersValue)
+    password += extractedPart;
+  });
+  return password
+}
+
+document.getElementById("generatePassword").addEventListener("click", function () {
+  const password = generatePassword(tags, charactersSlider.value)
+  console.log(password)
+})
