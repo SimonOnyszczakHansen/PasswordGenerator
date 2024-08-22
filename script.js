@@ -117,6 +117,7 @@ function generatePassword(tags, charactersValue) {
   // Check if the user checked the capitalize first letter checkbox
   const capitalizeFirst = capitalizeFirstLetter.checked;
 
+  // check if the user checked the use special characters checkbox
   const useSpecial = useSpecialCharacters.checked;
 
   // Generate the password from non-number tags
