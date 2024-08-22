@@ -21,7 +21,7 @@ const serviceName = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
 
 const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
-const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox").checked;
+const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
 
 document.getElementById("darkModeSwitch").addEventListener("change", function () {
     if (this.checked) {
@@ -117,11 +117,13 @@ function generatePassword(tags, charactersValue) {
   // Check if the user checked the capitalize first letter checkbox
   const capitalizeFirst = capitalizeFirstLetter.checked;
 
+  const useSpecial = useSpecialCharacters.checked;
+
   // Generate the password from non-number tags
   nonNumberTags.forEach(tag => {
       let extractedPart = tag.substring(0, charactersValue);
 
-      if(useSpecialCharacters) {
+      if(useSpecial) {
         extractedPart = extractedPart.split('').map(char => {
           return specialCharacterMap[char.toLowerCase()] || char;
         }).join('');
@@ -130,8 +132,7 @@ function generatePassword(tags, charactersValue) {
       // capitalize the first letter of every string in the tags array
       // if the user checked the box
       if(capitalizeFirst) {
-    
-        password += nonNumberTags[0].charAt(0).toUpperCase();
+        extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
 
