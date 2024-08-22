@@ -114,6 +114,9 @@ function generatePassword(tags, charactersValue) {
       }
   });
 
+  // Check if the user checked the capitalize first letter checkbox
+  const capitalizeFirst = capitalizeFirstLetter.checked;
+
   // Generate the password from non-number tags
   nonNumberTags.forEach(tag => {
       let extractedPart = tag.substring(0, charactersValue);
@@ -122,6 +125,13 @@ function generatePassword(tags, charactersValue) {
         extractedPart = extractedPart.split('').map(char => {
           return specialCharacterMap[char.toLowerCase()] || char;
         }).join('');
+      }
+
+      // capitalize the first letter of every string in the tags array
+      // if the user checked the box
+      if(capitalizeFirst) {
+    
+        password += nonNumberTags[0].charAt(0).toUpperCase();
       }
 
 
