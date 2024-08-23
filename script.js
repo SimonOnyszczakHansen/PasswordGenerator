@@ -163,7 +163,7 @@ function generatePassword(tags, charactersValue) {
   // Generate the final passwords for each service
   let finalPasswords = [];
   services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value);
+      let serviceNamePart = service.substring(0, serviceName.value) + ' - ' + service.substring();
       let finalPassword = passwordWithNumbers + serviceNamePart; // You can prepend or append the service name
       finalPasswords.push(finalPassword);
   });
