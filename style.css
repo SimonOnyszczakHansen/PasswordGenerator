@@ -202,6 +202,7 @@ input[type="range"] {
     margin-top: 1em;
     max-width: 80vh;
     margin: 0 auto;
+    margin-bottom: 4em;
 }
 
 .passwordContainer h1 {
