@@ -164,7 +164,7 @@ function generatePassword(tags, charactersValue) {
   let finalPasswords = [];
   services.forEach(service => {
       let serviceNamePart = service.substring(0, serviceName.value) + ' - ' + service.substring();
-      let finalPassword = passwordWithNumbers + serviceNamePart; // You can prepend or append the service name
+      let finalPassword = passwordWithNumbers + serviceNamePart;
       finalPasswords.push(finalPassword);
   });
 
