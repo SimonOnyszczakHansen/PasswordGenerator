@@ -99,7 +99,7 @@ updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceName, serviceNameValue);
 
 function generatePassword(tags, charactersValue) {
-  let passwordParts = [];
+  let basePasswordParts = [];
   let numbers = [];
   let nonNumberTags = [];
 
@@ -120,13 +120,7 @@ function generatePassword(tags, charactersValue) {
   // Check if the user checked the use special characters checkbox
   const useSpecial = useSpecialCharacters.checked;
 
-  // Generate the part of the password from service names
-  services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value);
-      passwordParts.push(serviceNamePart);
-  });
-
-  // Generate the part of the password from non-number tags
+  // Generate the base part of the password from non-number tags
   nonNumberTags.forEach(tag => {
       let extractedPart = tag.substring(0, charactersValue);
 
@@ -142,32 +136,46 @@ function generatePassword(tags, charactersValue) {
         extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
-      passwordParts.push(extractedPart);
+      basePasswordParts.push(extractedPart);
   });
 
-  // Now combine the parts and insert numbers between them
-  let password = '';
-  passwordParts.forEach((part, index) => {
-      password += part;
-      if (index < passwordParts.length - 1 && numbers.length > 0) {
+  // Combine the parts to create the base password
+  let basePassword = basePasswordParts.join('');
+
+  // Now add the numbers to the base password (inserted between parts)
+  let passwordWithNumbers = '';
+  basePasswordParts.forEach((part, index) => {
+      passwordWithNumbers += part;
+      if (index < basePasswordParts.length - 1 && numbers.length > 0) {
           // Insert a random number between parts if there are any left
           const randomIndex = Math.floor(Math.random() * numbers.length);
-          password += numbers[randomIndex];
+          passwordWithNumbers += numbers[randomIndex];
           // Optionally remove the number from the array if you want to use each number only once
           numbers.splice(randomIndex, 1);
       }
   });
 
-  // If there are any remaining numbers, append them at the end of the password
+  // Append any remaining numbers to the end of the password
   if (numbers.length > 0) {
-      password += numbers.join('');
+      passwordWithNumbers += numbers.join('');
   }
 
-  return password;
+  // Generate the final passwords for each service
+  let finalPasswords = [];
+  services.forEach(service => {
+      let serviceNamePart = service.substring(0, serviceName.value);
+      let finalPassword = passwordWithNumbers + serviceNamePart; // You can prepend or append the service name
+      finalPasswords.push(finalPassword);
+  });
+
+  return finalPasswords;
 }
 
 document.getElementById("generatePassword").addEventListener("click", function () {
-  const password = generatePassword(tags, charactersSlider.value);
-  console.log(password);
-  document.getElementById("passwords").textContent = password;
+  const passwords = generatePassword(tags, charactersSlider.value);
+  console.log(passwords);
+
+  // Display the generated passwords in the passwords container
+  const passwordsContainer = document.getElementById("passwords");
+  passwordsContainer.innerHTML = passwords.map(pwd => `<div>${pwd}</div>`).join('');
 });
