@@ -117,8 +117,14 @@ function generatePassword(tags, charactersValue) {
   // Check if the user checked the capitalize first letter checkbox
   const capitalizeFirst = capitalizeFirstLetter.checked;
 
-  // check if the user checked the use special characters checkbox
+  // Check if the user checked the use special characters checkbox
   const useSpecial = useSpecialCharacters.checked;
+
+  // Loop through services array and process each service name
+  services.forEach(service => {
+      let serviceNamePart = service.substring(0, serviceName.value);
+      password += serviceNamePart;
+  });
 
   // Generate the password from non-number tags
   nonNumberTags.forEach(tag => {
@@ -130,12 +136,11 @@ function generatePassword(tags, charactersValue) {
         }).join('');
       }
 
-      // capitalize the first letter of every string in the tags array
+      // Capitalize the first letter of every string in the tags array
       // if the user checked the box
       if(capitalizeFirst) {
         extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
-
 
       password += extractedPart;
   });
@@ -150,6 +155,7 @@ function generatePassword(tags, charactersValue) {
 }
 
 document.getElementById("generatePassword").addEventListener("click", function () {
-  const password = generatePassword(tags, charactersSlider.value)
-  console.log(password)
-})
+  const password = generatePassword(tags, charactersSlider.value);
+  console.log(password);
+  document.getElementById("passwords").textContent = password;
+});
