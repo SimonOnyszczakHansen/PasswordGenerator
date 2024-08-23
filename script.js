@@ -99,11 +99,11 @@ updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceName, serviceNameValue);
 
 function generatePassword(tags, charactersValue) {
-  let password = '';
+  let passwordParts = [];
   let numbers = [];
   let nonNumberTags = [];
 
-  const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'}
+  const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
 
   // Separate numbers and non-number tags
   tags.forEach(tag => {
@@ -120,13 +120,13 @@ function generatePassword(tags, charactersValue) {
   // Check if the user checked the use special characters checkbox
   const useSpecial = useSpecialCharacters.checked;
 
-  // Loop through services array and process each service name
+  // Generate the part of the password from service names
   services.forEach(service => {
       let serviceNamePart = service.substring(0, serviceName.value);
-      password += serviceNamePart;
+      passwordParts.push(serviceNamePart);
   });
 
-  // Generate the password from non-number tags
+  // Generate the part of the password from non-number tags
   nonNumberTags.forEach(tag => {
       let extractedPart = tag.substring(0, charactersValue);
 
@@ -142,14 +142,26 @@ function generatePassword(tags, charactersValue) {
         extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
-      password += extractedPart;
+      passwordParts.push(extractedPart);
   });
 
-  // Randomly insert numbers into the password
-  numbers.forEach(number => {
-      const randomIndex = Math.floor(Math.random() * (password.length + 1));
-      password = password.slice(0, randomIndex) + number + password.slice(randomIndex);
+  // Now combine the parts and insert numbers between them
+  let password = '';
+  passwordParts.forEach((part, index) => {
+      password += part;
+      if (index < passwordParts.length - 1 && numbers.length > 0) {
+          // Insert a random number between parts if there are any left
+          const randomIndex = Math.floor(Math.random() * numbers.length);
+          password += numbers[randomIndex];
+          // Optionally remove the number from the array if you want to use each number only once
+          numbers.splice(randomIndex, 1);
+      }
   });
+
+  // If there are any remaining numbers, append them at the end of the password
+  if (numbers.length > 0) {
+      password += numbers.join('');
+  }
 
   return password;
 }
