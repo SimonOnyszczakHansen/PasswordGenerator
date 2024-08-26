@@ -201,25 +201,31 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
 }
 
 function calculateStrength(password) {
+  // Initialize the strength variable to track the password's strength score
   let strength = 0;
 
-  // Criteria for password strength
+  // Define the criteria for password strength
+  // Each criterion has a regex to test a specific characteristic and a message for explanation
   const criteria = [
-    { regex: /[a-z]/, message: "lowercase letter" },
-    { regex: /[A-Z]/, message: "uppercase letter" },
-    { regex: /\d/, message: "number" },
-    { regex: /[@$!%*?&€]/, message: "special character" },
-    { regex: /.{8,}/, message: "minimum 8 characters" }
+    { regex: /[a-z]/, message: "lowercase letter" }, // Checks for at least one lowercase letter
+    { regex: /[A-Z]/, message: "uppercase letter" }, // Checks for at least one uppercase letter
+    { regex: /\d/, message: "number" },              // Checks for at least one digit
+    { regex: /[@$!%*?&€]/, message: "special character" }, // Checks for at least one special character
+    { regex: /.{8,}/, message: "minimum 8 characters" }    // Checks if the password is at least 8 characters long
   ];
 
+  // Iterate over each criterion and test it against the password
   criteria.forEach(rule => {
+    // If the password matches the regex pattern, increase the strength score
     if (rule.regex.test(password)) {
-      strength += 20;
+      strength += 20; // Each matching criterion contributes 20 points to the strength score
     }
   });
 
+  // Return the final strength score (out of 100)
   return strength;
 }
+
 
 function updateStrengthIndicator(password) {
   const strength = calculateStrength(password);
