@@ -202,7 +202,6 @@ input[type="range"] {
     margin-top: 1em;
     max-width: 80vh;
     margin: 0 auto;
-    margin-bottom: 4em;
 }
 
 .passwordContainer h1 {
@@ -344,4 +343,82 @@ input:checked+.slider:before {
   .print-button i {
     font-size: 1.2em;
   }
+
+  /* Style for the strength meter container */
+#strengthMeterContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1em;
+    max-width: 80vh;
+    margin: 0 auto;
+}
+
+/* Style for the progress bar */
+#strengthMeter {
+    width: 100%;
+    height: 20px;
+    border-radius: 10px;
+    overflow: hidden;
+    background-color: #333;
+    margin-top: 10px;
+    transition: background-color 0.5s ease, width 0.5s ease;
+}
+
+/* Background color for different strength levels */
+#strengthMeter[value="0"] {
+    background-color: #ff0000;
+}
+
+#strengthMeter[value="25"] {
+    background-color: #ff8000;
+}
+
+#strengthMeter[value="50"] {
+    background-color: #ffff00;
+}
+
+#strengthMeter[value="75"] {
+    background-color: #80ff00;
+}
+
+#strengthMeter[value="100"] {
+    background-color: #00ff00;
+}
+
+/* Style for the strength text */
+#strengthText {
+    margin-top: 0.5em;
+    font-size: 1.2em;
+    font-weight: bold;
+    color: white;
+    transition: color 0.5s ease;
+    margin-bottom: 4em;
+}
+
+/* Light mode styles */
+.light-mode #strengthMeter {
+    background-color: #ccc;
+}
+
+.light-mode #strengthText {
+    color: #3b3b3b;
+}
+
+/* Gradient for the meter bar */
+#strengthMeter::-webkit-progress-value {
+    background-image: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00);
+    border-radius: 10px;
+}
+
+#strengthMeter::-moz-progress-bar {
+    background-image: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00);
+    border-radius: 10px;
+}
+
+#strengthMeter::-ms-fill {
+    background-image: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00);
+    border-radius: 10px;
+}
+
   

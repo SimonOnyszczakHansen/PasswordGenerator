@@ -189,8 +189,51 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
       finalPasswords.push(finalPassword);
   });
 
+  finalPasswords.forEach(password => {
+    updateStrengthIndicator(password);
+  });
+
   return finalPasswords;
 }
+
+function calculateStrength(password) {
+  let strength = 0;
+
+  // Criteria for password strength
+  const criteria = [
+    { regex: /[a-z]/, message: "lowercase letter" },
+    { regex: /[A-Z]/, message: "uppercase letter" },
+    { regex: /\d/, message: "number" },
+    { regex: /[@$!%*?&€]/, message: "special character" },
+    { regex: /.{8,}/, message: "minimum 8 characters" }
+  ];
+
+  criteria.forEach(rule => {
+    if (rule.regex.test(password)) {
+      strength += 20;
+    }
+  });
+
+  return strength;
+}
+
+function updateStrengthIndicator(password) {
+  const strength = calculateStrength(password);
+  const strengthMeter = document.getElementById("strengthMeter");
+  const strengthText = document.getElementById("strengthText");
+
+  strengthMeter.value = strength;
+
+  let strengthLabel = "Weak";
+  if (strength >= 80) {
+    strengthLabel = "Strong";
+  } else if (strength >= 60) {
+    strengthLabel = "Medium";
+  }
+
+  strengthText.textContent = strengthLabel;
+}
+
 
 document.getElementById("generatePassword").addEventListener("click", function () {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
@@ -207,3 +250,41 @@ document.getElementById("generatePassword").addEventListener("click", function (
     </div>
   `).join('');
 });
+
+function printPassword(passwordId) {
+  const passwordElement = document.getElementById(passwordId).innerText;
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Password</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .container {
+            text-align: center;
+          }
+          .password {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Your Password</h2>
+          <div class="password">${passwordElement}</div>
+        </div>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.print();
+}
