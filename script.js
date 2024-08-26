@@ -37,7 +37,6 @@ function lightMode() {
   document.querySelector("#inputsTextField").classList.add("light-mode");
   document.querySelector("#servicesTextField").classList.add("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#ccc";
-  document.querySelector(".bi-printer").style.color = "#3b3b3b"
   document.querySelector("#strengthText").style.color = "#3b3b3b"
 }
 
@@ -47,7 +46,6 @@ function darkMode() {
   document.querySelector("#inputsTextField").classList.remove("light-mode");
   document.querySelector("#servicesTextField").classList.remove("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
-  document.querySelector(".bi-printer").style.color = "#ffffff"
   document.querySelector("#strengthText").style.color = "#ffffff"
 }
 
@@ -204,27 +202,41 @@ function calculateStrength(password) {
   // Initialize the strength variable to track the password's strength score
   let strength = 0;
 
-  // Define the criteria for password strength
-  // Each criterion has a regex to test a specific characteristic and a message for explanation
+  // Define the criteria for password strength with different weights
   const criteria = [
-    { regex: /[a-z]/, message: "lowercase letter" }, // Checks for at least one lowercase letter
-    { regex: /[A-Z]/, message: "uppercase letter" }, // Checks for at least one uppercase letter
-    { regex: /\d/, message: "number" },              // Checks for at least one digit
-    { regex: /[@$!%*?&€]/, message: "special character" }, // Checks for at least one special character
-    { regex: /.{8,}/, message: "minimum 8 characters" }    // Checks if the password is at least 8 characters long
+    { regex: /[a-z]/, message: "lowercase letter", score: 10 },       // Checks for at least one lowercase letter
+    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },       // Checks for at least one uppercase letter
+    { regex: /\d/, message: "number", score: 10 },                    // Checks for at least one digit
+    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 }, // Checks for at least one special character
+    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },  // Checks if the password is at least 12 characters long
+    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 }, // Checks that there are no sequences of three or more repeated characters
+    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 }, // No sequential letters like abc or xyz
+    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },  // No sequential numbers like 123 or 987
+    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 } // No repeating patterns like aaa or 111
   ];
+
+  // Checks if the password contains dictionary words
+  const dictionaryWords = ["password", "qwerty", "123456", "admin", "welcome"];
+  const dictionaryScore = dictionaryWords.some(word => password.toLowerCase().includes(word)) ? -20 : 0;
 
   // Iterate over each criterion and test it against the password
   criteria.forEach(rule => {
     // If the password matches the regex pattern, increase the strength score
     if (rule.regex.test(password)) {
-      strength += 20; // Each matching criterion contributes 20 points to the strength score
+      strength += rule.score;
     }
   });
+
+  // Add or subtract the score for dictionary words
+  strength += dictionaryScore;
+
+  // Ensure the score is between 0 and 100
+  strength = Math.max(0, Math.min(strength, 100));
 
   // Return the final strength score (out of 100)
   return strength;
 }
+
 
 
 function updateStrengthIndicator(password) {
