@@ -164,9 +164,22 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
   let finalPasswords = [];
   services.forEach(service => {
       let serviceNamePart = service.substring(0, serviceName.value);
-      let maxLengthForBasePassword = totalPasswordLength - serviceNamePart.length;
+      let specialCharIndex = passwordWithNumbers.search(/[@!&$€]/);
 
-      let finalPassword = passwordWithNumbers.substring(0, maxLengthForBasePassword) + serviceNamePart;
+      let finalPassword = '';
+
+      if (specialCharIndex !== -1) {
+          // Insert the service name after the first special character
+          finalPassword = passwordWithNumbers.slice(0, specialCharIndex + 1) + serviceNamePart + passwordWithNumbers.slice(specialCharIndex + 1);
+      } else {
+          // If no special character is found, just append the service name at the end
+          finalPassword = passwordWithNumbers + serviceNamePart;
+      }
+
+      // If the final password is longer than the desired length, trim it
+      if (finalPassword.length > totalPasswordLength) {
+          finalPassword = finalPassword.substring(0, totalPasswordLength);
+      }
 
       // If the final password is shorter than the desired length, add more numbers or padding
       while (finalPassword.length < totalPasswordLength) {
@@ -182,8 +195,7 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
 document.getElementById("generatePassword").addEventListener("click", function () {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
   const passwords = generatePassword(tags, charactersSlider.value, totalPasswordLength);
-  console.log(passwords);
-
+  
   // Display the generated passwords in the passwords container
   const passwordsContainer = document.getElementById("passwords");
   passwordsContainer.innerHTML = passwords.map(pwd => `<div>${pwd}</div>`).join('');
