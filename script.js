@@ -37,6 +37,8 @@ function lightMode() {
   document.querySelector("#inputsTextField").classList.add("light-mode");
   document.querySelector("#servicesTextField").classList.add("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#ccc";
+  document.querySelector(".bi-printer").style.color = "#3b3b3b"
+  document.querySelector("#strengthText").style.color = "#3b3b3b"
 }
 
 function darkMode() {
@@ -45,6 +47,8 @@ function darkMode() {
   document.querySelector("#inputsTextField").classList.remove("light-mode");
   document.querySelector("#servicesTextField").classList.remove("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
+  document.querySelector(".bi-printer").style.color = "#ffffff"
+  document.querySelector("#strengthText").style.color = "#ffffff"
 }
 
 let tags = [];
