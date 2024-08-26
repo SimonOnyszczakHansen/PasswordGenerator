@@ -98,7 +98,7 @@ updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceName, serviceNameValue);
 
-function generatePassword(tags, charactersValue) {
+function generatePassword(tags, charactersValue, totalPasswordLength) {
   let basePasswordParts = [];
   let numbers = [];
   let nonNumberTags = [];
@@ -163,8 +163,16 @@ function generatePassword(tags, charactersValue) {
   // Generate the final passwords for each service
   let finalPasswords = [];
   services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value) + ' - ' + service.substring();
-      let finalPassword = passwordWithNumbers + serviceNamePart;
+      let serviceNamePart = service.substring(0, serviceName.value);
+      let maxLengthForBasePassword = totalPasswordLength - serviceNamePart.length;
+
+      let finalPassword = passwordWithNumbers.substring(0, maxLengthForBasePassword) + serviceNamePart;
+
+      // If the final password is shorter than the desired length, add more numbers or padding
+      while (finalPassword.length < totalPasswordLength) {
+          finalPassword += numbers.length > 0 ? numbers[Math.floor(Math.random() * numbers.length)] : 'x';
+      }
+
       finalPasswords.push(finalPassword);
   });
 
@@ -172,7 +180,8 @@ function generatePassword(tags, charactersValue) {
 }
 
 document.getElementById("generatePassword").addEventListener("click", function () {
-  const passwords = generatePassword(tags, charactersSlider.value);
+  const totalPasswordLength = parseInt(passwordLength.value, 10);
+  const passwords = generatePassword(tags, charactersSlider.value, totalPasswordLength);
   console.log(passwords);
 
   // Display the generated passwords in the passwords container
