@@ -103,7 +103,7 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
   let numbers = [];
   let nonNumberTags = [];
 
-  const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
+  const specialCharacterMap = {'o': '@', 'a': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
 
   // Separate numbers and non-number tags
   tags.forEach(tag => {
@@ -198,5 +198,12 @@ document.getElementById("generatePassword").addEventListener("click", function (
   
   // Display the generated passwords in the passwords container
   const passwordsContainer = document.getElementById("passwords");
-  passwordsContainer.innerHTML = passwords.map(pwd => `<div>${pwd}</div>`).join('');
+  passwordsContainer.innerHTML = passwords.map((pwd, index) => `
+    <div id="password-${index}" class="password-item">
+      ${pwd} 
+      <button onclick="printPassword('password-${index}')" class="print-button">
+        <i class="bi bi-printer"></i>
+      </button>
+    </div>
+  `).join('');
 });
