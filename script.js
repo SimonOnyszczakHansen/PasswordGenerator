@@ -207,3 +207,41 @@ document.getElementById("generatePassword").addEventListener("click", function (
     </div>
   `).join('');
 });
+
+function printPassword(passwordId) {
+  const passwordElement = document.getElementById(passwordId).innerText;
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Password</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .container {
+            text-align: center;
+          }
+          .password {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Your Password</h2>
+          <div class="password">${passwordElement}</div>
+        </div>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.print();
+}
