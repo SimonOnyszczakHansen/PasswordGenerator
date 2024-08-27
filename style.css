@@ -336,10 +336,6 @@ input:checked+.slider:before {
     color: white;
   }
   
-  .print-button:hover {
-    color: #007bff;
-  }
-  
   .print-button i {
     font-size: 1.2em;
   }
