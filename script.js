@@ -37,6 +37,8 @@ function lightMode() {
   document.querySelector("#inputsTextField").classList.add("light-mode");
   document.querySelector("#servicesTextField").classList.add("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#ccc";
+  document.querySelector("#strengthText").style.color = "#3b3b3b";
+  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#3b3b3b"})
 }
 
 function darkMode() {
@@ -45,6 +47,9 @@ function darkMode() {
   document.querySelector("#inputsTextField").classList.remove("light-mode");
   document.querySelector("#servicesTextField").classList.remove("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
+  document.querySelector("#strengthText").style.color = "#ffffff";
+  document.querySelector(".bi-printer").style.color = "#ffffff"
+  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#ffffff"})
 }
 
 let tags = [];
@@ -98,12 +103,12 @@ updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceName, serviceNameValue);
 
-function generatePassword(tags, charactersValue) {
+function generatePassword(tags, charactersValue, totalPasswordLength) {
   let basePasswordParts = [];
   let numbers = [];
   let nonNumberTags = [];
 
-  const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
+  const specialCharacterMap = {'o': '@', 'a': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
 
   // Separate numbers and non-number tags
   tags.forEach(tag => {
@@ -163,19 +168,148 @@ function generatePassword(tags, charactersValue) {
   // Generate the final passwords for each service
   let finalPasswords = [];
   services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value) + ' - ' + service.substring();
-      let finalPassword = passwordWithNumbers + serviceNamePart; // You can prepend or append the service name
+      let serviceNamePart = service.substring(0, serviceName.value);
+      let specialCharIndex = passwordWithNumbers.search(/[@!&$€]/);
+
+      let finalPassword = '';
+
+      if (specialCharIndex !== -1) {
+          // Insert the service name after the first special character
+          finalPassword = passwordWithNumbers.slice(0, specialCharIndex + 1) + serviceNamePart + passwordWithNumbers.slice(specialCharIndex + 1);
+      } else {
+          // If no special character is found, just append the service name at the end
+          finalPassword = passwordWithNumbers + serviceNamePart;
+      }
+
+      // If the final password is longer than the desired length, trim it
+      if (finalPassword.length > totalPasswordLength) {
+          finalPassword = finalPassword.substring(0, totalPasswordLength);
+      }
+
+      // If the final password is shorter than the desired length, add more numbers or padding
+      while (finalPassword.length < totalPasswordLength) {
+          finalPassword += numbers.length > 0 ? numbers[Math.floor(Math.random() * numbers.length)] : 'x';
+      }
+
       finalPasswords.push(finalPassword);
+  });
+
+  finalPasswords.forEach(password => {
+    updateStrengthIndicator(password);
   });
 
   return finalPasswords;
 }
 
-document.getElementById("generatePassword").addEventListener("click", function () {
-  const passwords = generatePassword(tags, charactersSlider.value);
-  console.log(passwords);
+function calculateStrength(password) {
+  // Initialize the strength variable to track the password's strength score
+  let strength = 0;
 
+  // Define the criteria for password strength with different weights
+  const criteria = [
+    { regex: /[a-z]/, message: "lowercase letter", score: 10 },       // Checks for at least one lowercase letter
+    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },       // Checks for at least one uppercase letter
+    { regex: /\d/, message: "number", score: 10 },                    // Checks for at least one digit
+    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 }, // Checks for at least one special character
+    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },  // Checks if the password is at least 12 characters long
+    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 }, // Checks that there are no sequences of three or more repeated characters
+    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 }, // No sequential letters like abc or xyz
+    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },  // No sequential numbers like 123 or 987
+    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 } // No repeating patterns like aaa or 111
+  ];
+
+  // Checks if the password contains dictionary words
+  const dictionaryWords = ["password", "qwerty", "123456", "admin", "welcome"];
+  const dictionaryScore = dictionaryWords.some(word => password.toLowerCase().includes(word)) ? -20 : 0;
+
+  // Iterate over each criterion and test it against the password
+  criteria.forEach(rule => {
+    // If the password matches the regex pattern, increase the strength score
+    if (rule.regex.test(password)) {
+      strength += rule.score;
+    }
+  });
+
+  // Add or subtract the score for dictionary words
+  strength += dictionaryScore;
+
+  // Ensure the score is between 0 and 100
+  strength = Math.max(0, Math.min(strength, 100));
+
+  // Return the final strength score (out of 100)
+  return strength;
+}
+
+
+
+function updateStrengthIndicator(password) {
+  const strength = calculateStrength(password);
+  const strengthMeter = document.getElementById("strengthMeter");
+  const strengthText = document.getElementById("strengthText");
+
+  strengthMeter.value = strength;
+
+  let strengthLabel = "Weak";
+  if (strength >= 80) {
+    strengthLabel = "Strong";
+  } else if (strength >= 60) {
+    strengthLabel = "Medium";
+  }
+
+  strengthText.textContent = strengthLabel;
+}
+
+
+document.getElementById("generatePassword").addEventListener("click", function () {
+  const totalPasswordLength = parseInt(passwordLength.value, 10);
+  const passwords = generatePassword(tags, charactersSlider.value, totalPasswordLength);
+  
   // Display the generated passwords in the passwords container
   const passwordsContainer = document.getElementById("passwords");
-  passwordsContainer.innerHTML = passwords.map(pwd => `<div>${pwd}</div>`).join('');
+  passwordsContainer.innerHTML = passwords.map((pwd, index) => `
+    <div id="password-${index}" class="password-item">
+      ${pwd} 
+      <button onclick="printPassword('password-${index}')" class="print-button">
+        <i class="bi bi-printer"></i>
+      </button>
+    </div>
+  `).join('');
 });
+
+function printPassword(passwordId) {
+  const passwordElement = document.getElementById(passwordId).innerText;
+  const printWindow = window.open('', '_blank');
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Password</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          }
+          .container {
+            text-align: center;
+          }
+          .password {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 20px;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="container">
+          <h2>Your Password</h2>
+          <div class="password">${passwordElement}</div>
+        </div>
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.print();
+}
