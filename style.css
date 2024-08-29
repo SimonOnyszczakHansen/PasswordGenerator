@@ -11,7 +11,6 @@ body {
     margin: 0;
 }
 
-
 .container {
     margin: 0;
     color: white;
@@ -27,7 +26,6 @@ body {
     font-size: 3.5em;
     margin-bottom: 1em;
 }
-
 
 /*css for the textfields*/
 
@@ -72,7 +70,6 @@ body {
     background-color: #333333;
 }
 
-
 #inputsTextField,
 #servicesTextField,
 #passwords,
@@ -109,7 +106,6 @@ body {
 *:focus {
     outline: none;
 }
-
 
 /*css for the sliders*/
 
@@ -148,8 +144,7 @@ input[type="range"] {
     font-weight: bold;
 }
 
-
-/*css for hte checkboxes*/
+/*css for the checkboxes*/
 
 .checkboxContainer {
     padding: 0.5em;
@@ -165,7 +160,6 @@ input[type="range"] {
 .checkboxGroup {
     align-self: flex-start;
 }
-
 
 /*css for all the buttons*/
 
@@ -203,7 +197,6 @@ input[type="range"] {
     height: 3em;
 }
 
-
 /*css for the container that shows the generated passwords*/
 
 #passwords {
@@ -219,7 +212,6 @@ input[type="range"] {
     font-size: 2em;
     margin-bottom: 0.5em;
 }
-
 
 /*css for the tags*/
 
@@ -265,7 +257,6 @@ input[type="range"] {
 #serviceTags span:active {
     background-color: #004085;
 }
-
 
 /*css for the dark and light mode switch*/
 
@@ -428,105 +419,105 @@ input:checked+.slider:before {
     border-radius: 10px;
 }
 
+/* Media Query for screens with a max-width of 500px */
+@media only screen and (max-width: px) {
 
-/* Media Query for screens with a max-width of 400px */
-@media only screen and (max-width: 800px) {
     .header {
-        font-size: 4.5em; /* Increased font size */
+        font-size: 2.5em; /* Decreased font size for small screens */
     }
 
     .inputsContainer {
-        padding: 2em; /* Increased padding */
-        margin-top: 2.5em; /* Increased margin-top */
+        padding: 0.5em; /* Decreased padding */
+        margin-top: 1em; /* Decreased margin-top */
     }
 
     .inputGroup {
-        height: 4em; /* Increased height */
+        height: 2.5em; /* Decreased height */
     }
 
     #inputsTextField,
     #servicesTextField {
-        font-size: 1.5em; /* Increased font size */
-        padding: 1.5em; /* Increased padding */
-        border-radius: 0.8em; /* Increased border-radius */
+        font-size: 0.9em; /* Decreased font size */
+        padding: 0.8em; /* Decreased padding */
+        border-radius: 0.5em; /* Decreased border-radius */
     }
 
     .sliderContainer {
-        padding: 1em; /* Increased padding */
-        margin-bottom: 30px; /* Increased margin-bottom */
+        padding: 0.5em; /* Decreased padding */
+        margin-bottom: 15px; /* Decreased margin-bottom */
     }
 
     .sliderLabel {
-        margin-bottom: 15px; /* Increased margin-bottom */
-        margin-left: 10px; /* Increased margin-left */
-        font-size: x-large; /* Increased font size */
+        margin-bottom: 8px; /* Decreased margin-bottom */
+        margin-left: 5px;
+        font-size: medium; /* Decreased font size */
     }
 
     .rangeLabels .minValue,
     .rangeLabels .maxValue {
-        font-size: x-large; /* Increased font size */
+        font-size: medium; /* Decreased font size */
     }
 
     .checkboxContainer {
-        padding: 1em; /* Increased padding */
-        margin-bottom: 30px; /* Increased margin-bottom */
+        padding: 0.5em; /* Decreased padding */
+        margin-bottom: 15px; /* Decreased margin-bottom */
     }
 
     .checkboxGroup {
-        font-size: 1.5em; /* Increased font size */
+        font-size: 1em; /* Decreased font size */
     }
 
     #addButton,
     #servicesAddButton {
-        max-width: 3.5em; /* Increased max-width */
-        border-radius: 0.8em; /* Increased border-radius */
-        font-size: x-large; /* Increased font size */
+        max-width: 2.5em; /* Decreased max-width */
+        border-radius: 0.5em; /* Decreased border-radius */
+        font-size: medium; /* Decreased font size */
     }
 
     #generatePassword {
-        border-radius: 0.8em; /* Increased border-radius */
-        height: 4em; /* Increased height */
+        border-radius: 0.5em; /* Decreased border-radius */
+        height: 2.5em; /* Decreased height */
     }
 
     #passwords {
-        padding: 1.5em; /* Increased padding */
-        border-radius: 10px; /* Increased border-radius */
-        margin-top: 1.5em; /* Increased margin-top */
-        font-size: 1.5em; /* Increased font size */
+        padding: 0.8em; /* Decreased padding */
+        border-radius: 5px;
+        margin-top: 1em;
+        font-size: 1em; /* Decreased font size */
     }
 
     .passwordContainer h1 {
-        font-size: 2.5em; /* Increased font size */
-        margin-bottom: 1em; /* Increased margin-bottom */
+        font-size: 1.5em; /* Decreased font size */
+        margin-bottom: 0.5em;
     }
 
     #tags span,
     #serviceTags span {
-        padding: 0.7em 1.5em; /* Increased padding */
-        border-radius: 0.9em; /* Increased border-radius */
-        font-size: 1.2em; /* Increased font size */
+        padding: 0.4em 0.8em; /* Decreased padding */
+        border-radius: 0.6em; /* Decreased border-radius */
+        font-size: 0.9em; /* Decreased font size */
     }
 
     .switch {
-        width: 80px; /* Increased width */
-        height: 44px; /* Increased height */
+        width: 50px; /* Decreased width */
+        height: 28px; /* Decreased height */
     }
 
     .slider {
-        background-position: 5px center, 40px center; /* Adjusted for larger size */
-        background-size: 35px 35px, 30px 30px; /* Increased icon size */
+        background-position: 5px center, 28px center; /* Adjusted for smaller size */
+        background-size: 20px 20px, 17px 17px; /* Decreased icon size */
     }
 
     .slider:before {
-        height: 36px; /* Increased height */
-        width: 36px; /* Increased width */
+        height: 22px; /* Decreased height */
+        width: 22px; /* Decreased width */
     }
 
     #strengthMeter {
-        height: 30px; /* Increased height */
+        height: 15px; /* Decreased height */
     }
 
     #strengthText {
-        font-size: 1.7em; /* Increased font size */
+        font-size: 1em; /* Decreased font size */
     }
 }
