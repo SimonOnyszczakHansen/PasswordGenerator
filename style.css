@@ -133,7 +133,7 @@ body {
 
 input[type="range"] {
     width: 100%;
-    height: 3em;
+    height: 4em;
 }
 
 .rangeLabels {
@@ -155,12 +155,14 @@ input[type="range"] {
 
 /*css for hte checkboxes*/
 
+/*css for the checkboxes*/
+
 .checkboxContainer {
-    padding: 1em; /* Increased padding */
+    padding: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px; /* Increased margin-bottom */
+    margin-bottom: 30px;
     max-width: 60em;
     width: 100%;
     margin: 0 auto;
@@ -168,7 +170,18 @@ input[type="range"] {
 
 .checkboxGroup {
     align-self: flex-start;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
 }
+
+.checkboxGroup input[type="checkbox"] {
+    width: 1em;
+    height: 1em;
+    margin-right: 0.5em;
+}
+
 
 /*css for all the buttons*/
 
