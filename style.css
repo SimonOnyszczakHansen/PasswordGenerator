@@ -11,7 +11,6 @@ body {
     margin: 0;
 }
 
-
 .container {
     margin: 0;
     color: white;
@@ -19,26 +18,25 @@ body {
     max-width: 90%;
     width: 100%;
     box-sizing: border-box;
-    padding: 2em; /* Increased padding */
+    padding: 1em;
 }
 
 .header {
     margin: 0.5em;
-    font-size: 4.5em; /* Increased font size */
-    margin-bottom: 1.5em; /* Increased margin-bottom */
+    font-size: 3.5em;
+    margin-bottom: 1em;
 }
-
 
 /*css for the textfields*/
 
 .inputsContainer {
-    padding: 2em; /* Increased padding */
+    padding: 1em;
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
     margin: 0 auto;
-    margin-top: 2.5em; /* Increased margin-top */
+    margin-top: 2em;
 }
 
 .inputGroup {
@@ -47,19 +45,19 @@ body {
     align-items: center;
     width: 100%;
     max-width: 60em;
-    height: 4em; /* Increased height */
+    height: 3em;
 }
 
 #inputsTextField,
 #servicesTextField {
-    font-size: 1.5em; /* Increased font size */
+    font-size: 1em;
     font-weight: 500;
-    padding: 1.5em; /* Increased padding */
+    padding: 1em;
     width: 100%;
     border-style: solid;
     border-width: 2px;
     border-color: #007bff;
-    border-radius: 0.8em; /* Increased border-radius */
+    border-radius: 0.6em;
     background-color: #3b3b3b;
     color: white;
     height: 100%;
@@ -68,10 +66,9 @@ body {
 #inputsTextField:focus,
 #servicesTextField:focus {
     border-color: #0056b3;
-    box-shadow: 0 0 10px rgba(0, 91, 179, 0.5); /* Increased shadow */
+    box-shadow: 0 0 8px rgba(0, 91, 179, 0.5);
     background-color: #333333;
 }
-
 
 #inputsTextField,
 #servicesTextField,
@@ -110,59 +107,51 @@ body {
     outline: none;
 }
 
-
 /*css for the sliders*/
 
 .sliderContainer {
-    padding: 1em; /* Increased padding */
+    padding: 0.5em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px; /* Increased margin-bottom */
+    margin-bottom: 20px;
     max-width: 60em;
     width: 100%;
     margin: 0 auto;
 }
 
 .sliderLabel {
-    margin-bottom: 15px; /* Increased margin-bottom */
+    margin-bottom: 10px;
     align-self: flex-start;
-    margin-left: 10px; /* Increased margin-left */
-    font-size: x-large; /* Increased font size */
+    margin-left: 5px;
+    font-size: large;
 }
 
 input[type="range"] {
     width: 100%;
-    height: 4em;
 }
 
 .rangeLabels {
     display: flex;
     justify-content: space-between;
     width: 100%;
-    margin-top: 10px;
+    margin-top: 5px;
 }
 
 .rangeLabels .minValue,
-.rangeLabels .maxValue,
-#charactersValue,
-#passwordLengthValue,
-#serviceNameValue {
-    font-size: x-large;
+.rangeLabels .maxValue {
+    font-size: large;
     font-weight: bold;
 }
-
-
-/*css for hte checkboxes*/
 
 /*css for the checkboxes*/
 
 .checkboxContainer {
-    padding: 1em;
+    padding: 0.5em;
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     max-width: 60em;
     width: 100%;
     margin: 0 auto;
@@ -170,18 +159,7 @@ input[type="range"] {
 
 .checkboxGroup {
     align-self: flex-start;
-    font-size: 1.5em;
-    display: flex;
-    align-items: center;
-    margin-bottom: 1em;
 }
-
-.checkboxGroup input[type="checkbox"] {
-    width: 1em;
-    height: 1em;
-    margin-right: 0.5em;
-}
-
 
 /*css for all the buttons*/
 
@@ -190,10 +168,10 @@ input[type="range"] {
     height: 100%;
     font-weight: bold;
     width: 100%;
-    margin-left: 0.5em; /* Increased margin-left */
-    max-width: 3.5em; /* Increased max-width */
-    border-radius: 0.8em; /* Increased border-radius */
-    font-size: x-large; /* Increased font size */
+    margin-left: 0.3em;
+    max-width: 3em;
+    border-radius: 0.6em;
+    font-size: larger;
 }
 
 .btn-primary:hover {
@@ -215,27 +193,25 @@ input[type="range"] {
 
 #generatePassword {
     width: 100%;
-    border-radius: 0.8em; /* Increased border-radius */
-    height: 4em; /* Increased height */
+    border-radius: 0.6em;
+    height: 3em;
 }
-
 
 /*css for the container that shows the generated passwords*/
 
 #passwords {
     background-color: #2c2c2c;
-    padding: 1.5em; /* Increased padding */
-    border-radius: 10px; /* Increased border-radius */
-    margin-top: 1.5em; /* Increased margin-top */
+    padding: 1em;
+    border-radius: 5px;
+    margin-top: 1em;
     max-width: 60em;
     margin: 0 auto;
 }
 
 .passwordContainer h1 {
-    font-size: 2.5em; /* Increased font size */
-    margin-bottom: 1em; /* Increased margin-bottom */
+    font-size: 2em;
+    margin-bottom: 0.5em;
 }
-
 
 /*css for the tags*/
 
@@ -243,8 +219,8 @@ input[type="range"] {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1em; /* Increased padding */
-    margin-bottom: 1.5em; /* Increased margin-bottom */
+    padding: 0.5em;
+    margin-bottom: 1em;
     max-width: 50em;
     margin: 0 auto;
 }
@@ -253,8 +229,8 @@ input[type="range"] {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1em; /* Increased padding */
-    margin-bottom: 1.5em; /* Increased margin-bottom */
+    padding: 0.5em;
+    margin-bottom: 1em;
     max-width: 50em;
     margin: 0 auto;
 }
@@ -263,10 +239,10 @@ input[type="range"] {
 #serviceTags span {
     background-color: #007bff;
     color: white;
-    padding: 0.7em 1.5em; /* Increased padding */
-    border-radius: 0.9em; /* Increased border-radius */
-    margin: 0.3em; /* Increased margin */
-    font-size: 1.2em; /* Increased font size */
+    padding: 0.5em 1em;
+    border-radius: 0.7em;
+    margin: 0.2em;
+    font-size: 1em;
     display: inline-block;
     cursor: pointer;
     transition: background-color 0.3s ease;
@@ -282,14 +258,13 @@ input[type="range"] {
     background-color: #004085;
 }
 
-
 /*css for the dark and light mode switch*/
 
 .switch {
     position: relative;
     display: inline-block;
-    width: 80px; /* Increased width */
-    height: 44px; /* Increased height */
+    width: 60px;
+    height: 34px;
 }
 
 .switch input {
@@ -300,8 +275,8 @@ input[type="range"] {
 
 .switchContainer {
     position: absolute;
-    top: 2.5em; /* Increased top position */
-    right: 2.5em; /* Increased right position */
+    top: 2em;
+    right: 2em;
 }
 
 .slider {
@@ -316,15 +291,15 @@ input[type="range"] {
     border-radius: 34px;
     background-image: url('https://img.icons8.com/ios-filled/50/ffffff/sun.png'), url('https://img.icons8.com/ios-filled/50/000000/moon-symbol.png');
     background-repeat: no-repeat;
-    background-position: 5px center, 40px center; /* Adjusted for larger size */
-    background-size: 35px 35px, 30px 30px; /* Increased icon size */
+    background-position: 5px center, 32px center;
+    background-size: 25px 25px, 21px 21px;
 }
 
 .slider:before {
     position: absolute;
     content: "";
-    height: 36px; /* Increased height */
-    width: 36px; /* Increased width */
+    height: 26px;
+    width: 26px;
     left: 4px;
     bottom: 4px;
     background-color: white;
@@ -338,7 +313,7 @@ input:checked+.slider {
 }
 
 input:checked+.slider:before {
-    transform: translateX(36px); /* Adjusted for larger size */
+    transform: translateX(26px);
 }
 
 .slider.round {
@@ -364,7 +339,7 @@ input:checked+.slider:before {
   }
   
   .print-button i {
-    font-size: 1.5em; /* Increased font size */
+    font-size: 1.2em;
   }
 
   /* Style for the strength meter container */
@@ -372,7 +347,7 @@ input:checked+.slider:before {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2em; /* Increased margin-top */
+    margin-top: 1em;
     max-width: 60em;
     margin: 0 auto;
 }
@@ -380,11 +355,11 @@ input:checked+.slider:before {
 /* Style for the progress bar */
 #strengthMeter {
     width: 100%;
-    height: 30px; /* Increased height */
+    height: 20px;
     border-radius: 10px;
     overflow: hidden;
     background-color: #333;
-    margin-top: 10px; /* Increased margin-top */
+    margin-top: 10px;
     transition: background-color 0.5s ease, width 0.5s ease;
 }
 
@@ -411,8 +386,8 @@ input:checked+.slider:before {
 
 /* Style for the strength text */
 #strengthText {
-    margin-top: 1em; /* Increased margin-top */
-    font-size: 1.7em; /* Increased font size */
+    margin-top: 0.5em;
+    font-size: 1.2em;
     font-weight: bold;
     color: white;
     transition: color 0.5s ease;
@@ -442,4 +417,107 @@ input:checked+.slider:before {
 #strengthMeter::-ms-fill {
     background-image: linear-gradient(to right, #ff0000, #ff8000, #ffff00, #80ff00, #00ff00);
     border-radius: 10px;
+}
+
+/* Media Query for screens with a max-width of 500px */
+@media only screen and (max-width: 600px) {
+
+    .header {
+        font-size: 2.5em; 
+    }
+
+    .inputsContainer {
+        padding: 0.5em; 
+        margin-top: 1em; 
+    }
+
+    .inputGroup {
+        height: 2.5em; 
+    }
+
+    #inputsTextField,
+    #servicesTextField {
+        font-size: 0.9em; 
+        padding: 0.8em; 
+        border-radius: 0.5em; 
+    }
+
+    .sliderContainer {
+        padding: 0.5em; 
+        margin-bottom: 15px; 
+    }
+
+    .sliderLabel {
+        margin-bottom: 8px; 
+        margin-left: 5px;
+        font-size: medium; 
+    }
+
+    .rangeLabels .minValue,
+    .rangeLabels .maxValue {
+        font-size: medium; 
+    }
+
+    .checkboxContainer {
+        padding: 0.5em; 
+        margin-bottom: 15px; 
+    }
+
+    .checkboxGroup {
+        font-size: 1em; 
+    }
+
+    #addButton,
+    #servicesAddButton {
+        max-width: 2.5em; 
+        border-radius: 0.5em;
+        font-size: medium;
+    }
+
+    #generatePassword {
+        border-radius: 0.5em;
+        height: 2.5em;
+    }
+
+    #passwords {
+        padding: 0.8em;
+        border-radius: 5px;
+        margin-top: 1em;
+        font-size: 1em;
+    }
+
+    .passwordContainer h1 {
+        font-size: 1.5em;
+        margin-bottom: 0.5em;
+    }
+
+    #tags span,
+    #serviceTags span {
+        padding: 0.4em 0.8em;
+        border-radius: 0.6em;
+        font-size: 0.9em;
+    }
+
+    .switch {
+        width: 50px;
+        height: 28px;
+    }
+
+    .slider {
+        background-position: 5px center, 28px center;
+        background-size: 20px 20px, 17px 17px;
+    }
+
+    .slider:before {
+        height: 22px;
+        width: 22px;
+    }
+
+    #strengthMeter {
+        height: 15px;
+    }
+
+    #strengthText {
+        font-size: 1em;
+    }
 }
