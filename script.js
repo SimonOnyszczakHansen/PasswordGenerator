@@ -269,9 +269,9 @@ document.getElementById("generatePassword").addEventListener("click", function (
   passwordsContainer.innerHTML = passwords.map((pwd, index) => `
     <div id="password-${index}" class="password-item">
       ${pwd} 
-      <button onclick="printPassword('password-${index}')" class="print-button">
+      <span onclick="printPassword('password-${index}')" class="print-button">
         <i class="bi bi-printer"></i>
-      </button>
+      </span>
     </div>
   `).join('');
 });
