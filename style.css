@@ -423,101 +423,101 @@ input:checked+.slider:before {
 @media only screen and (max-width: 600px) {
 
     .header {
-        font-size: 2.5em; /* Decreased font size for small screens */
+        font-size: 2.5em; 
     }
 
     .inputsContainer {
-        padding: 0.5em; /* Decreased padding */
-        margin-top: 1em; /* Decreased margin-top */
+        padding: 0.5em; 
+        margin-top: 1em; 
     }
 
     .inputGroup {
-        height: 2.5em; /* Decreased height */
+        height: 2.5em; 
     }
 
     #inputsTextField,
     #servicesTextField {
-        font-size: 0.9em; /* Decreased font size */
-        padding: 0.8em; /* Decreased padding */
-        border-radius: 0.5em; /* Decreased border-radius */
+        font-size: 0.9em; 
+        padding: 0.8em; 
+        border-radius: 0.5em; 
     }
 
     .sliderContainer {
-        padding: 0.5em; /* Decreased padding */
-        margin-bottom: 15px; /* Decreased margin-bottom */
+        padding: 0.5em; 
+        margin-bottom: 15px; 
     }
 
     .sliderLabel {
-        margin-bottom: 8px; /* Decreased margin-bottom */
+        margin-bottom: 8px; 
         margin-left: 5px;
-        font-size: medium; /* Decreased font size */
+        font-size: medium; 
     }
 
     .rangeLabels .minValue,
     .rangeLabels .maxValue {
-        font-size: medium; /* Decreased font size */
+        font-size: medium; 
     }
 
     .checkboxContainer {
-        padding: 0.5em; /* Decreased padding */
-        margin-bottom: 15px; /* Decreased margin-bottom */
+        padding: 0.5em; 
+        margin-bottom: 15px; 
     }
 
     .checkboxGroup {
-        font-size: 1em; /* Decreased font size */
+        font-size: 1em; 
     }
 
     #addButton,
     #servicesAddButton {
-        max-width: 2.5em; /* Decreased max-width */
-        border-radius: 0.5em; /* Decreased border-radius */
-        font-size: medium; /* Decreased font size */
+        max-width: 2.5em; 
+        border-radius: 0.5em;
+        font-size: medium;
     }
 
     #generatePassword {
-        border-radius: 0.5em; /* Decreased border-radius */
-        height: 2.5em; /* Decreased height */
+        border-radius: 0.5em;
+        height: 2.5em;
     }
 
     #passwords {
-        padding: 0.8em; /* Decreased padding */
+        padding: 0.8em;
         border-radius: 5px;
         margin-top: 1em;
-        font-size: 1em; /* Decreased font size */
+        font-size: 1em;
     }
 
     .passwordContainer h1 {
-        font-size: 1.5em; /* Decreased font size */
+        font-size: 1.5em;
         margin-bottom: 0.5em;
     }
 
     #tags span,
     #serviceTags span {
-        padding: 0.4em 0.8em; /* Decreased padding */
-        border-radius: 0.6em; /* Decreased border-radius */
-        font-size: 0.9em; /* Decreased font size */
+        padding: 0.4em 0.8em;
+        border-radius: 0.6em;
+        font-size: 0.9em;
     }
 
     .switch {
-        width: 50px; /* Decreased width */
-        height: 28px; /* Decreased height */
+        width: 50px;
+        height: 28px;
     }
 
     .slider {
-        background-position: 5px center, 28px center; /* Adjusted for smaller size */
-        background-size: 20px 20px, 17px 17px; /* Decreased icon size */
+        background-position: 5px center, 28px center;
+        background-size: 20px 20px, 17px 17px;
     }
 
     .slider:before {
-        height: 22px; /* Decreased height */
-        width: 22px; /* Decreased width */
+        height: 22px;
+        width: 22px;
     }
 
     #strengthMeter {
-        height: 15px; /* Decreased height */
+        height: 15px;
     }
 
     #strengthText {
-        font-size: 1em; /* Decreased font size */
+        font-size: 1em;
     }
 }
