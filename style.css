@@ -335,7 +335,6 @@ input:checked+.slider:before {
     border: none;
     cursor: pointer;
     margin-left: 10px;
-    color: white;
   }
   
   .print-button i {
