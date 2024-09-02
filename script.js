@@ -146,29 +146,12 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
   // Combine the parts to create the base password
   let basePassword = basePasswordParts.join('');
 
-  // Now add the numbers to the base password (inserted between parts)
-  let passwordWithNumbers = '';
-  basePasswordParts.forEach((part, index) => {
-      passwordWithNumbers += part;
-      if (index < basePasswordParts.length - 1 && numbers.length > 0) {
-          // Insert a random number between parts if there are any left
-          const randomIndex = Math.floor(Math.random() * numbers.length);
-          passwordWithNumbers += numbers[randomIndex];
-          numbers.splice(randomIndex, 1);  // Optionally remove the number from the array if you want to use each number only once
-      }
-  });
-
-  // Append any remaining numbers to the end of the password
-  if (numbers.length > 0) {
-      passwordWithNumbers += numbers.join('');
-  }
-
   // Extend the password by reusing the interests if it's shorter than the desired length
-  while (passwordWithNumbers.length < totalPasswordLength) {
+  while (basePassword.length < totalPasswordLength) {
       nonNumberTags.forEach(tag => {
-          if (passwordWithNumbers.length < totalPasswordLength) {
+          if (basePassword.length < totalPasswordLength) {
               let extractedPart = tag.substring(0, charactersValue);
-              
+
               if (useSpecial) {
                   extractedPart = extractedPart.split('').map(char => {
                       return specialCharacterMap[char.toLowerCase()] || char;
@@ -179,25 +162,36 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
                   extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
               }
 
-              passwordWithNumbers += extractedPart;
+              basePassword += extractedPart;
           }
       });
+  }
+
+  // Place numbers randomly within the password
+  numbers.forEach(number => {
+      const randomIndex = Math.floor(Math.random() * (basePassword.length + 1));
+      basePassword = basePassword.slice(0, randomIndex) + number + basePassword.slice(randomIndex);
+  });
+
+  // Ensure the password is the correct length (truncate if necessary)
+  if (basePassword.length > totalPasswordLength) {
+      basePassword = basePassword.substring(0, totalPasswordLength);
   }
 
   // Generate the final passwords for each service
   let finalPasswords = [];
   services.forEach(service => {
       let serviceNamePart = service.substring(0, serviceName.value);
-      let specialCharIndex = passwordWithNumbers.search(/[@!&$€]/);
+      let specialCharIndex = basePassword.search(/[@!&$€]/);
 
       let finalPassword = '';
 
       if (specialCharIndex !== -1) {
           // Insert the service name after the first special character
-          finalPassword = passwordWithNumbers.slice(0, specialCharIndex + 1) + serviceNamePart + passwordWithNumbers.slice(specialCharIndex + 1);
+          finalPassword = basePassword.slice(0, specialCharIndex + 1) + serviceNamePart + basePassword.slice(specialCharIndex + 1);
       } else {
           // If no special character is found, just append the service name at the end
-          finalPassword = passwordWithNumbers + serviceNamePart;
+          finalPassword = basePassword + serviceNamePart;
       }
 
       // If the final password is longer than the desired length, trim it
@@ -214,6 +208,7 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
 
   return finalPasswords;
 }
+
 
 
 function calculateStrength(password) {
