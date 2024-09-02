@@ -130,15 +130,14 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
       let extractedPart = tag.substring(0, charactersValue);
 
       if(useSpecial) {
-        extractedPart = extractedPart.split('').map(char => {
-          return specialCharacterMap[char.toLowerCase()] || char;
-        }).join('');
+          extractedPart = extractedPart.split('').map(char => {
+              return specialCharacterMap[char.toLowerCase()] || char;
+          }).join('');
       }
 
       // Capitalize the first letter of every string in the tags array
-      // if the user checked the box
       if(capitalizeFirst) {
-        extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
+          extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
       basePasswordParts.push(extractedPart);
@@ -155,14 +154,34 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
           // Insert a random number between parts if there are any left
           const randomIndex = Math.floor(Math.random() * numbers.length);
           passwordWithNumbers += numbers[randomIndex];
-          // Optionally remove the number from the array if you want to use each number only once
-          numbers.splice(randomIndex, 1);
+          numbers.splice(randomIndex, 1);  // Optionally remove the number from the array if you want to use each number only once
       }
   });
 
   // Append any remaining numbers to the end of the password
   if (numbers.length > 0) {
       passwordWithNumbers += numbers.join('');
+  }
+
+  // Extend the password by reusing the interests if it's shorter than the desired length
+  while (passwordWithNumbers.length < totalPasswordLength) {
+      nonNumberTags.forEach(tag => {
+          if (passwordWithNumbers.length < totalPasswordLength) {
+              let extractedPart = tag.substring(0, charactersValue);
+              
+              if (useSpecial) {
+                  extractedPart = extractedPart.split('').map(char => {
+                      return specialCharacterMap[char.toLowerCase()] || char;
+                  }).join('');
+              }
+
+              if (capitalizeFirst) {
+                  extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
+              }
+
+              passwordWithNumbers += extractedPart;
+          }
+      });
   }
 
   // Generate the final passwords for each service
@@ -186,20 +205,16 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
           finalPassword = finalPassword.substring(0, totalPasswordLength);
       }
 
-      // If the final password is shorter than the desired length, add more numbers or padding
-      while (finalPassword.length < totalPasswordLength) {
-          finalPassword += numbers.length > 0 ? numbers[Math.floor(Math.random() * numbers.length)] : 'x';
-      }
-
       finalPasswords.push(finalPassword);
   });
 
   finalPasswords.forEach(password => {
-    updateStrengthIndicator(password);
+      updateStrengthIndicator(password);
   });
 
   return finalPasswords;
 }
+
 
 function calculateStrength(password) {
   // Initialize the strength variable to track the password's strength score
