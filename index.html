@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
@@ -48,9 +48,9 @@
         <div class="sliderContainer">
             <label for="passwordLength" class="sliderLabel">Password Length</label>
             <input type="range" aria-labelledby="passwordLength" name="charactersPerInterest" id="passwordLength"
-                min="8" max="20" value="15">
+                min="12" max="20" value="15">
             <div class="rangeLabels">
-                <label class="minValue">8</label>
+                <label class="minValue">12</label>
                 <span id="passwordLengthValue">15</span>
                 <label class="maxValue">20</label>
             </div>
@@ -58,12 +58,24 @@
 
         <!--textfield for adding services-->
         <div class="inputsContainer">
-            <div class="inputGroup">
-                <input id="servicesTextField" type="text" placeholder="Type service" />
-                <button id="servicesAddButton" class="btn btn-primary">+</button>
+            <div id="defaultServicesContainer" class="service-buttons">
+                <button type="button" class="service-button" data-service="Facebook">Facebook</button>
+                <button type="button" class="service-button" data-service="Twitter">Twitter</button>
+                <button type="button" class="service-button" data-service="Instagram">Instagram</button>
+                <button type="button" class="service-button" data-service="LinkedIn">LinkedIn</button>
+                <button type="button" class="service-button" data-service="Google">Google</button>
+                <button type="button" class="service-button" data-service="Amazon">Amazon</button>
+                <button type="button" class="service-button" data-service="Netflix">Netflix</button>
+                <button type="button" class="service-button" data-service="Spotify">Spotify</button>
+                <button type="button" class="service-button" data-service="Apple">Apple</button>
+                <button type="button" class="service-button" data-service="Microsoft">Microsoft</button>
+                <button type="button" class="service-button" data-service="Dropbox">Dropbox</button>
+                <button type="button" class="service-button" data-service="GitHub">GitHub</button>
+                <button type="button" class="service-button" data-service="Reddit">Reddit</button>
+                <button type="button" class="service-button" data-service="WhatsApp">WhatsApp</button>
+                <button type="button" class="service-button" data-service="Zoom">Zoom</button>
             </div>
         </div>
-
         <div id="serviceTags"></div>
 
         <!--slider for selecting the amount of characters from service name -->
