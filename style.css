@@ -446,34 +446,14 @@ input:checked+.slider:before {
 /* Hover effect for service buttons */
 .service-button:hover {
     background-color: #0056b3;
-    border-color: #004085;
 }
 
 /* Active (selected) state for service buttons */
 .service-button.selected {
     background-color: #007bff;
     color: white;
-    border-color: #0056b3;
 }
 
-/* Light mode for service buttons */
-.light-mode .service-button {
-    background-color: white;
-    color: #007bff;
-    border-color: #007bff;
-}
-
-.light-mode .service-button.selected {
-    background-color: #007bff;
-    color: white;
-    border-color: #0056b3;
-}
-
-.light-mode .service-button:hover {
-    background-color: #0056b3;
-    color: white;
-    border-color: #004085;
-}
 
 .service-button:focus {
     outline: none;
