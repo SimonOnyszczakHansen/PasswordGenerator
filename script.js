@@ -11,6 +11,10 @@ const charactersValue = document.getElementById("charactersValue");
 const passwordLength = document.getElementById("passwordLength");
 const passwordLengthValue = document.getElementById("passwordLengthValue");
 
+// Slider for selecting the number of characters from service name
+const serviceNameSlider = document.getElementById("serviceName");
+const serviceNameValue = document.getElementById("serviceNameValue");
+
 const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
 const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
 
@@ -112,6 +116,7 @@ handleItemAddition(addBtn, inputField, tagsDiv, tags);
 
 updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
+updateSlider(serviceNameSlider, serviceNameValue);
 
 function generatePassword(tags, charactersValue, totalPasswordLength) {
   let basePasswordParts = [];
@@ -188,7 +193,21 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
       basePassword = basePassword.substring(0, totalPasswordLength);
   }
 
-  return [basePassword]; // Return as array for compatibility with previous structure
+  return basePassword; // Return the final generated password
+}
+
+function insertServiceName(password, serviceName, serviceNameLength) {
+  // Find the first special character in the password
+  const specialCharacterIndex = password.search(/[@!&$€]/);
+  
+  // If a special character is found, insert the service name after it
+  if (specialCharacterIndex !== -1) {
+    const servicePart = serviceName.substring(0, serviceNameLength);
+    return password.slice(0, specialCharacterIndex + 1) + servicePart + password.slice(specialCharacterIndex + 1);
+  }
+  
+  // If no special character is found, just append the service name at the end
+  return password + serviceName.substring(0, serviceNameLength);
 }
 
 function calculateStrength(password) {
@@ -248,8 +267,16 @@ function updateStrengthIndicator(password) {
 
 document.getElementById("generatePassword").addEventListener("click", function () {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
-  const passwords = generatePassword(tags, charactersSlider.value, totalPasswordLength);
-  
+  const serviceNameLength = parseInt(serviceNameSlider.value, 10);
+
+  // Generate a single base password
+  const basePassword = generatePassword(tags, charactersSlider.value, totalPasswordLength);
+
+  // Generate passwords for each selected service by modifying the base password
+  const passwords = selectedServices.map(service => {
+    return insertServiceName(basePassword, service, serviceNameLength);
+  });
+
   // Display the generated passwords in the passwords container
   const passwordsContainer = document.getElementById("passwords");
   passwordsContainer.innerHTML = passwords.map((pwd, index) => `
@@ -260,6 +287,11 @@ document.getElementById("generatePassword").addEventListener("click", function (
       </span>
     </div>
   `).join('');
+
+  // Update the strength meter for the first generated password
+  if (passwords.length > 0) {
+    updateStrengthIndicator(passwords[0]);
+  }
 });
 
 function printPassword(passwordId) {
