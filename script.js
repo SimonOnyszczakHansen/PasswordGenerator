@@ -3,11 +3,6 @@ const tagsDiv = document.getElementById("tags");
 const addBtn = document.getElementById("addButton");
 const inputField = document.getElementById("inputsTextField");
 
-// Services textfield
-const serviceDiv = document.getElementById("serviceTags");
-const serviceInputField = document.getElementById("servicesTextField");
-const addServiceBtn = document.getElementById("servicesAddButton");
-
 // slider for choosing amount of characters per interest
 const charactersSlider = document.getElementById("characters");
 const charactersValue = document.getElementById("charactersValue");
@@ -16,12 +11,11 @@ const charactersValue = document.getElementById("charactersValue");
 const passwordLength = document.getElementById("passwordLength");
 const passwordLengthValue = document.getElementById("passwordLengthValue");
 
-// Slider for choosing service name
-const serviceName = document.getElementById("serviceName");
-const serviceNameValue = document.getElementById("serviceNameValue");
-
 const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
 const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
+
+const serviceTagsDiv = document.getElementById("serviceTags");
+const serviceButtons = document.querySelectorAll('.service-button');
 
 document.getElementById("darkModeSwitch").addEventListener("change", function () {
     if (this.checked) {
@@ -29,13 +23,12 @@ document.getElementById("darkModeSwitch").addEventListener("change", function ()
     } else {
       darkMode();
     }
-  });
+});
 
 function lightMode() {
   document.body.style.backgroundColor = "#ffffff";
   document.querySelector(".container").style.color = "#3b3b3b";
   document.querySelector("#inputsTextField").classList.add("light-mode");
-  document.querySelector("#servicesTextField").classList.add("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#ccc";
   document.querySelector("#strengthText").style.color = "#3b3b3b";
   document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#3b3b3b"})
@@ -45,7 +38,6 @@ function darkMode() {
   document.body.style.backgroundColor = "#3b3b3b";
   document.querySelector(".container").style.color = "#ffffff";
   document.querySelector("#inputsTextField").classList.remove("light-mode");
-  document.querySelector("#servicesTextField").classList.remove("light-mode");
   document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
   document.querySelector("#strengthText").style.color = "#ffffff";
   document.querySelector(".bi-printer").style.color = "#ffffff"
@@ -53,7 +45,7 @@ function darkMode() {
 }
 
 let tags = [];
-let services = [];
+let selectedServices = [];
 
 function addItem(inputField, container, itemList) {
   const value = inputField.value.trim();
@@ -96,12 +88,30 @@ function updateSlider(slider, displayElement) {
   });
 }
 
+// Toggle service button selection and update the visual feedback
+serviceButtons.forEach(button => {
+  button.addEventListener("click", function () {
+    const serviceName = button.dataset.service;
+
+    // Toggle 'selected' class
+    button.classList.toggle("selected");
+
+    // Update selected services array
+    if (selectedServices.includes(serviceName)) {
+      selectedServices = selectedServices.filter(service => service !== serviceName);
+    } else {
+      selectedServices.push(serviceName);
+    }
+
+    // Update visual feedback
+    updateItems(serviceTagsDiv, selectedServices);
+  });
+});
+
 handleItemAddition(addBtn, inputField, tagsDiv, tags);
-handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);
 
 updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
-updateSlider(serviceName, serviceNameValue);
 
 function generatePassword(tags, charactersValue, totalPasswordLength) {
   let basePasswordParts = [];
@@ -178,38 +188,8 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
       basePassword = basePassword.substring(0, totalPasswordLength);
   }
 
-  // Generate the final passwords for each service
-  let finalPasswords = [];
-  services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value);
-      let specialCharIndex = basePassword.search(/[@!&$€]/);
-
-      let finalPassword = '';
-
-      if (specialCharIndex !== -1) {
-          // Insert the service name after the first special character
-          finalPassword = basePassword.slice(0, specialCharIndex + 1) + serviceNamePart + basePassword.slice(specialCharIndex + 1);
-      } else {
-          // If no special character is found, just append the service name at the end
-          finalPassword = basePassword + serviceNamePart;
-      }
-
-      // If the final password is longer than the desired length, trim it
-      if (finalPassword.length > totalPasswordLength) {
-          finalPassword = finalPassword.substring(0, totalPasswordLength);
-      }
-
-      finalPasswords.push(finalPassword);
-  });
-
-  finalPasswords.forEach(password => {
-      updateStrengthIndicator(password);
-  });
-
-  return finalPasswords;
+  return [basePassword]; // Return as array for compatibility with previous structure
 }
-
-
 
 function calculateStrength(password) {
   // Initialize the strength variable to track the password's strength score
@@ -217,15 +197,15 @@ function calculateStrength(password) {
 
   // Define the criteria for password strength with different weights
   const criteria = [
-    { regex: /[a-z]/, message: "lowercase letter", score: 10 },       // Checks for at least one lowercase letter
-    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },       // Checks for at least one uppercase letter
-    { regex: /\d/, message: "number", score: 10 },                    // Checks for at least one digit
-    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 }, // Checks for at least one special character
-    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },  // Checks if the password is at least 12 characters long
-    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 }, // Checks that there are no sequences of three or more repeated characters
-    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 }, // No sequential letters like abc or xyz
-    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },  // No sequential numbers like 123 or 987
-    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 } // No repeating patterns like aaa or 111
+    { regex: /[a-z]/, message: "lowercase letter", score: 10 },
+    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },
+    { regex: /\d/, message: "number", score: 10 },
+    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 },
+    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },
+    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 },
+    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 },
+    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },
+    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 }
   ];
 
   // Checks if the password contains dictionary words
@@ -234,7 +214,6 @@ function calculateStrength(password) {
 
   // Iterate over each criterion and test it against the password
   criteria.forEach(rule => {
-    // If the password matches the regex pattern, increase the strength score
     if (rule.regex.test(password)) {
       strength += rule.score;
     }
@@ -249,8 +228,6 @@ function calculateStrength(password) {
   // Return the final strength score (out of 100)
   return strength;
 }
-
-
 
 function updateStrengthIndicator(password) {
   const strength = calculateStrength(password);
@@ -268,7 +245,6 @@ function updateStrengthIndicator(password) {
 
   strengthText.textContent = strengthLabel;
 }
-
 
 document.getElementById("generatePassword").addEventListener("click", function () {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
