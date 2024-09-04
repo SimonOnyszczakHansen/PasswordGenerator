@@ -252,6 +252,7 @@ document.getElementById("generatePassword").addEventListener("click", function (
   // Update the strength meter for the first generated password
   if (passwords.length > 0) {
     updateStrengthIndicator(passwords[0]);
+    document.querySelector(".passwordContainer").classList.remove("hidden")
   }
 });
 
