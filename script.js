@@ -21,33 +21,6 @@ const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckb
 const serviceTagsDiv = document.getElementById("serviceTags");
 const serviceButtons = document.querySelectorAll('.service-button');
 
-document.getElementById("darkModeSwitch").addEventListener("change", function () {
-    if (this.checked) {
-      lightMode();
-    } else {
-      darkMode();
-    }
-});
-
-function lightMode() {
-  document.body.style.backgroundColor = "#ffffff";
-  document.querySelector(".container").style.color = "#3b3b3b";
-  document.querySelector("#inputsTextField").classList.add("light-mode");
-  document.querySelector("#passwords").style.backgroundColor = "#ccc";
-  document.querySelector("#strengthText").style.color = "#3b3b3b";
-  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#3b3b3b"})
-}
-
-function darkMode() {
-  document.body.style.backgroundColor = "#3b3b3b";
-  document.querySelector(".container").style.color = "#ffffff";
-  document.querySelector("#inputsTextField").classList.remove("light-mode");
-  document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
-  document.querySelector("#strengthText").style.color = "#ffffff";
-  document.querySelector(".bi-printer").style.color = "#ffffff"
-  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#ffffff"})
-}
-
 let tags = [];
 let selectedServices = [];
 
