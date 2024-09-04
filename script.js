@@ -3,11 +3,6 @@ const tagsDiv = document.getElementById("tags");
 const addBtn = document.getElementById("addButton");
 const inputField = document.getElementById("inputsTextField");
 
-// Services textfield
-const serviceDiv = document.getElementById("serviceTags");
-const serviceInputField = document.getElementById("servicesTextField");
-const addServiceBtn = document.getElementById("servicesAddButton");
-
 // slider for choosing amount of characters per interest
 const charactersSlider = document.getElementById("characters");
 const charactersValue = document.getElementById("charactersValue");
@@ -16,44 +11,18 @@ const charactersValue = document.getElementById("charactersValue");
 const passwordLength = document.getElementById("passwordLength");
 const passwordLengthValue = document.getElementById("passwordLengthValue");
 
-// Slider for choosing service name
-const serviceName = document.getElementById("serviceName");
+// Slider for selecting the number of characters from service name
+const serviceNameSlider = document.getElementById("serviceName");
 const serviceNameValue = document.getElementById("serviceNameValue");
 
 const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
 const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
 
-document.getElementById("darkModeSwitch").addEventListener("change", function () {
-    if (this.checked) {
-      lightMode();
-    } else {
-      darkMode();
-    }
-  });
-
-function lightMode() {
-  document.body.style.backgroundColor = "#ffffff";
-  document.querySelector(".container").style.color = "#3b3b3b";
-  document.querySelector("#inputsTextField").classList.add("light-mode");
-  document.querySelector("#servicesTextField").classList.add("light-mode");
-  document.querySelector("#passwords").style.backgroundColor = "#ccc";
-  document.querySelector("#strengthText").style.color = "#3b3b3b";
-  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#3b3b3b"})
-}
-
-function darkMode() {
-  document.body.style.backgroundColor = "#3b3b3b";
-  document.querySelector(".container").style.color = "#ffffff";
-  document.querySelector("#inputsTextField").classList.remove("light-mode");
-  document.querySelector("#servicesTextField").classList.remove("light-mode");
-  document.querySelector("#passwords").style.backgroundColor = "#2c2c2c";
-  document.querySelector("#strengthText").style.color = "#ffffff";
-  document.querySelector(".bi-printer").style.color = "#ffffff"
-  document.querySelectorAll(".bi-printer").forEach(icon => {icon.style.color = "#ffffff"})
-}
+const serviceTagsDiv = document.getElementById("serviceTags");
+const serviceButtons = document.querySelectorAll('.service-button');
 
 let tags = [];
-let services = [];
+let selectedServices = [];
 
 function addItem(inputField, container, itemList) {
   const value = inputField.value.trim();
@@ -96,19 +65,38 @@ function updateSlider(slider, displayElement) {
   });
 }
 
+// Toggle service button selection and update the visual feedback
+serviceButtons.forEach(button => {
+  button.addEventListener("click", function () {
+    const serviceName = button.dataset.service;
+
+    // Toggle 'selected' class
+    button.classList.toggle("selected");
+
+    // Update selected services array
+    if (selectedServices.includes(serviceName)) {
+      selectedServices = selectedServices.filter(service => service !== serviceName);
+    } else {
+      selectedServices.push(serviceName);
+    }
+
+    // Update visual feedback
+    updateItems(serviceTagsDiv, selectedServices);
+  });
+});
+
 handleItemAddition(addBtn, inputField, tagsDiv, tags);
-handleItemAddition(addServiceBtn, serviceInputField, serviceDiv, services);
 
 updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
-updateSlider(serviceName, serviceNameValue);
+updateSlider(serviceNameSlider, serviceNameValue);
 
-function generatePassword(tags, charactersValue, totalPasswordLength) {
+function generateBasePassword(tags, charactersValue, maxLength) {
   let basePasswordParts = [];
   let numbers = [];
   let nonNumberTags = [];
 
-  const specialCharacterMap = {'o': '@', 'a': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
+  const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
 
   // Separate numbers and non-number tags
   tags.forEach(tag => {
@@ -129,14 +117,14 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
   nonNumberTags.forEach(tag => {
       let extractedPart = tag.substring(0, charactersValue);
 
-      if(useSpecial) {
+      if (useSpecial) {
           extractedPart = extractedPart.split('').map(char => {
               return specialCharacterMap[char.toLowerCase()] || char;
           }).join('');
       }
 
       // Capitalize the first letter of every string in the tags array
-      if(capitalizeFirst) {
+      if (capitalizeFirst) {
           extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
@@ -146,25 +134,9 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
   // Combine the parts to create the base password
   let basePassword = basePasswordParts.join('');
 
-  // Extend the password by reusing the interests if it's shorter than the desired length
-  while (basePassword.length < totalPasswordLength) {
-      nonNumberTags.forEach(tag => {
-          if (basePassword.length < totalPasswordLength) {
-              let extractedPart = tag.substring(0, charactersValue);
-
-              if (useSpecial) {
-                  extractedPart = extractedPart.split('').map(char => {
-                      return specialCharacterMap[char.toLowerCase()] || char;
-                  }).join('');
-              }
-
-              if (capitalizeFirst) {
-                  extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
-              }
-
-              basePassword += extractedPart;
-          }
-      });
+  // Ensure the base password length does not exceed the maximum allowed
+  if (basePassword.length > maxLength) {
+    basePassword = basePassword.substring(0, maxLength);
   }
 
   // Place numbers randomly within the password
@@ -173,43 +145,31 @@ function generatePassword(tags, charactersValue, totalPasswordLength) {
       basePassword = basePassword.slice(0, randomIndex) + number + basePassword.slice(randomIndex);
   });
 
-  // Ensure the password is the correct length (truncate if necessary)
-  if (basePassword.length > totalPasswordLength) {
-      basePassword = basePassword.substring(0, totalPasswordLength);
-  }
-
-  // Generate the final passwords for each service
-  let finalPasswords = [];
-  services.forEach(service => {
-      let serviceNamePart = service.substring(0, serviceName.value);
-      let specialCharIndex = basePassword.search(/[@!&$€]/);
-
-      let finalPassword = '';
-
-      if (specialCharIndex !== -1) {
-          // Insert the service name after the first special character
-          finalPassword = basePassword.slice(0, specialCharIndex + 1) + serviceNamePart + basePassword.slice(specialCharIndex + 1);
-      } else {
-          // If no special character is found, just append the service name at the end
-          finalPassword = basePassword + serviceNamePart;
-      }
-
-      // If the final password is longer than the desired length, trim it
-      if (finalPassword.length > totalPasswordLength) {
-          finalPassword = finalPassword.substring(0, totalPasswordLength);
-      }
-
-      finalPasswords.push(finalPassword);
-  });
-
-  finalPasswords.forEach(password => {
-      updateStrengthIndicator(password);
-  });
-
-  return finalPasswords;
+  // Truncate if necessary to ensure the base password is within the maxLength
+  return basePassword.substring(0, maxLength);  // Return the base password with the appropriate length
 }
 
-
+function insertServiceName(password, serviceName, serviceNameLength, totalLength) {
+  // Find the first special character in the password
+  const specialCharacterIndex = password.search(/[@!&$€]/);
+  
+  // If a special character is found, insert the service name after it
+  let servicePart = serviceName.substring(0, serviceNameLength);
+  
+  let newPassword;
+  if (specialCharacterIndex !== -1) {
+    newPassword = password.slice(0, specialCharacterIndex + 1) + servicePart + password.slice(specialCharacterIndex + 1);
+  } else {
+    newPassword = password + servicePart;
+  }
+  
+  // Trim or pad to ensure the password matches the total length
+  if (newPassword.length > totalLength) {
+    return newPassword.substring(0, totalLength);  // Truncate
+  } else {
+    return newPassword.padEnd(totalLength, '*');  // Pad with asterisks or any character if needed
+  }
+}
 
 function calculateStrength(password) {
   // Initialize the strength variable to track the password's strength score
@@ -217,15 +177,15 @@ function calculateStrength(password) {
 
   // Define the criteria for password strength with different weights
   const criteria = [
-    { regex: /[a-z]/, message: "lowercase letter", score: 10 },       // Checks for at least one lowercase letter
-    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },       // Checks for at least one uppercase letter
-    { regex: /\d/, message: "number", score: 10 },                    // Checks for at least one digit
-    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 }, // Checks for at least one special character
-    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },  // Checks if the password is at least 12 characters long
-    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 }, // Checks that there are no sequences of three or more repeated characters
-    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 }, // No sequential letters like abc or xyz
-    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },  // No sequential numbers like 123 or 987
-    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 } // No repeating patterns like aaa or 111
+    { regex: /[a-z]/, message: "lowercase letter", score: 10 },
+    { regex: /[A-Z]/, message: "uppercase letter", score: 10 },
+    { regex: /\d/, message: "number", score: 10 },
+    { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 },
+    { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },
+    { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 },
+    { regex: /^(?!.*[a-z]{3,}).*$/i, message: "no sequential letters", score: 10 },
+    { regex: /^(?!.*[0-9]{3,}).*$/, message: "no sequential numbers", score: 10 },
+    { regex: /^(?!.*(.)\1{2,}).*$/, message: "no repeating patterns", score: 10 }
   ];
 
   // Checks if the password contains dictionary words
@@ -234,7 +194,6 @@ function calculateStrength(password) {
 
   // Iterate over each criterion and test it against the password
   criteria.forEach(rule => {
-    // If the password matches the regex pattern, increase the strength score
     if (rule.regex.test(password)) {
       strength += rule.score;
     }
@@ -249,8 +208,6 @@ function calculateStrength(password) {
   // Return the final strength score (out of 100)
   return strength;
 }
-
-
 
 function updateStrengthIndicator(password) {
   const strength = calculateStrength(password);
@@ -269,11 +226,18 @@ function updateStrengthIndicator(password) {
   strengthText.textContent = strengthLabel;
 }
 
-
 document.getElementById("generatePassword").addEventListener("click", function () {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
-  const passwords = generatePassword(tags, charactersSlider.value, totalPasswordLength);
-  
+  const serviceNameLength = parseInt(serviceNameSlider.value, 10);
+
+  // Generate a single base password
+  const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
+
+  // Modify the base password for each selected service
+  const passwords = selectedServices.map(service => {
+    return insertServiceName(basePassword, service, serviceNameLength, totalPasswordLength);
+  });
+
   // Display the generated passwords in the passwords container
   const passwordsContainer = document.getElementById("passwords");
   passwordsContainer.innerHTML = passwords.map((pwd, index) => `
@@ -284,6 +248,11 @@ document.getElementById("generatePassword").addEventListener("click", function (
       </span>
     </div>
   `).join('');
+
+  // Update the strength meter for the first generated password
+  if (passwords.length > 0) {
+    updateStrengthIndicator(passwords[0]);
+  }
 });
 
 function printPassword(passwordId) {
