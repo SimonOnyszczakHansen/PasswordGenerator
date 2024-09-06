@@ -20,13 +20,21 @@ const serviceButtons = document.querySelectorAll('.service-button');
 let tags = [];
 let selectedServices = [];
 
+// Minimum interests feedback element
+const minInterestsFeedback = document.createElement('div');
+minInterestsFeedback.style.color = 'red';
+minInterestsFeedback.style.display = 'none';
+document.querySelector(".inputsContainer").appendChild(minInterestsFeedback);
+
 function addItem(inputField, container, itemList) {
   const value = inputField.value.trim();
+
   if (value) {
     itemList.push(value);
     updateItems(container, itemList);
     inputField.value = "";
   }
+  checkMinimumInterests();
 }
 
 function updateItems(container, itemList) {
@@ -52,12 +60,14 @@ function handleItemAddition(addButton, inputField, container, itemList) {
       itemList.splice(index, 1);
       updateItems(container, itemList);
     }
+    checkMinimumInterests(); // Check if the minimum number of interests is met after each removal
   });
 }
 
 function updateSlider(slider, displayElement) {
   slider.addEventListener("input", function () {
     displayElement.textContent = slider.value;
+    checkMinimumInterests(); // Recalculate the minimum interests when the sliders change
   });
 }
 
@@ -82,6 +92,28 @@ updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceNameSlider, serviceNameValue);
 
+// Check if the user has added enough interests
+function checkMinimumInterests() {
+  const totalPasswordLength = parseInt(passwordLength.value, 10);
+  const serviceNameLength = parseInt(serviceNameSlider.value, 10);
+  const charactersPerInterest = parseInt(charactersSlider.value, 10);
+
+  // Filter out the numbers from the tags array
+  const nonNumberTags = tags.filter(tag => isNaN(tag));
+
+  // Calculate the minimum number of interests needed
+  const minInterests = Math.ceil((totalPasswordLength - serviceNameLength) / charactersPerInterest);
+
+  if (nonNumberTags.length < minInterests) {
+    minInterestsFeedback.textContent = `Please add at least ${minInterests} non-numeric interests to generate a password.`;
+    minInterestsFeedback.style.display = 'block';
+    document.getElementById("generatePassword").disabled = true;
+  } else {
+    minInterestsFeedback.style.display = 'none';
+    document.getElementById("generatePassword").disabled = false;
+  }
+}
+
 function generateBasePassword(tags, charactersValue, maxLength) {
   let basePasswordParts = [];
   let numbers = [];
@@ -90,30 +122,30 @@ function generateBasePassword(tags, charactersValue, maxLength) {
   const specialCharacterMap = {'o': '@', 'l': '!', 'g': '&', 's': '$', 'e': '€'};
 
   tags.forEach(tag => {
-      if (!isNaN(tag)) {
-          numbers.push(tag);
-      } else {
-          nonNumberTags.push(tag);
-      }
+    if (!isNaN(tag)) {
+      numbers.push(tag);
+    } else {
+      nonNumberTags.push(tag);
+    }
   });
 
   const capitalizeFirst = capitalizeFirstLetter.checked;
   const useSpecial = useSpecialCharacters.checked;
 
   nonNumberTags.forEach(tag => {
-      let extractedPart = tag.substring(0, charactersValue);
+    let extractedPart = tag.substring(0, charactersValue);
 
-      if (useSpecial) {
-          extractedPart = extractedPart.split('').map(char => {
-              return specialCharacterMap[char.toLowerCase()] || char;
-          }).join('');
-      }
+    if (useSpecial) {
+      extractedPart = extractedPart.split('').map(char => {
+        return specialCharacterMap[char.toLowerCase()] || char;
+      }).join('');
+    }
 
-      if (capitalizeFirst) {
-          extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
-      }
+    if (capitalizeFirst) {
+      extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
+    }
 
-      basePasswordParts.push(extractedPart);
+    basePasswordParts.push(extractedPart);
   });
 
   let basePassword = basePasswordParts.join('');
@@ -123,8 +155,8 @@ function generateBasePassword(tags, charactersValue, maxLength) {
   }
 
   numbers.forEach(number => {
-      const randomIndex = Math.floor(Math.random() * (basePassword.length + 1));
-      basePassword = basePassword.slice(0, randomIndex) + number + basePassword.slice(randomIndex);
+    const randomIndex = Math.floor(Math.random() * (basePassword.length + 1));
+    basePassword = basePassword.slice(0, randomIndex) + number + basePassword.slice(randomIndex);
   });
 
   return basePassword.substring(0, maxLength);
