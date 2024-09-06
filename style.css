@@ -195,6 +195,7 @@ input[type="range"] {
     width: 100%;
     border-radius: 0.6em;
     height: 3em;
+    font-weight: bold;
 }
 
 /*css for the container that shows the generated passwords*/
@@ -388,6 +389,10 @@ input[type="range"] {
 .service-button:focus {
     outline: none;
     box-shadow: none;
+}
+
+.hidden {
+    display: none;
 }
 
 /* Media Query for screens with a max-width of 500px */
