@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 
 <head>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Generér sikre, tilpassede adgangskoder nemt med vores adgangskodegenerator. Vælg længde, inkludér tjenester og mere.">
+    <meta name="description" content="Generate secure, customized passwords easily with our password generator. Choose character length, include services, and more.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
@@ -13,23 +13,21 @@
 
 <body>
     <div class="container">
-        <!-- This header needs an id for translation -->
-        <label id="header" class="header"></label>
+        <label for="header" id="header" class="header">Password Generator</label>
 
-        <!--Input felt til interesser og tal-->
+        <!--Input field for the interests and numbers-->
         <div class="inputsContainer">
             <div class="inputGroup">
-                <input id="inputsTextField" type="text" placeholder="Indtast interesse eller tal" />
+                <input id="inputsTextField" type="text" placeholder="Type interest or number" />
                 <button id="addButton" class="btn btn-primary">+</button>
             </div>
         </div>
 
         <div id="tags"></div>
 
-        <!--Slider til valg af antal tegn pr. interesse-->
+        <!--Slider for selecting amount of characters per interest the password should include-->
         <div class="sliderContainer">
-            <!-- This label needs the correct id for translation -->
-            <label id="characters" class="sliderLabel"></label>
+            <label for="characters" id="charactersLabel" class="sliderLabel">Characters Per Interest</label>
             <input type="range" aria-labelledby="characters" name="charactersPerInterest" id="characters" min="1"
                 max="5" value="2">
             <div class="rangeLabels">
@@ -39,10 +37,9 @@
             </div>
         </div>
 
-        <!--Slider til valg af adgangskodelængde-->
+        <!--slider for choosing the length of the password-->
         <div class="sliderContainer">
-            <!-- This label needs the correct id for translation -->
-            <label id="passwordLength" class="sliderLabel"></label>
+            <label for="passwordLength" id="passwordLengthLabel" class="sliderLabel">Password Length</label>
             <input type="range" aria-labelledby="passwordLength" name="charactersPerInterest" id="passwordLength"
                 min="12" max="20" value="15">
             <div class="rangeLabels">
@@ -52,9 +49,9 @@
             </div>
         </div>
 
-        <!--Slider til valg af antal tegn fra tjenestens navn-->
+        <!--slider for selecting the amount of characters from service name -->
         <div class="sliderContainer">
-            <label id="serviceName" class="sliderLabel"></label>
+            <label for="serviceName" class="sliderLabel">Number of characters from service name</label>
             <input type="range" aria-labelledby="serviceName" name="charactersPerInterest" id="serviceName" min="2"
                 max="5" value="3">
             <div class="rangeLabels">
@@ -64,32 +61,30 @@
             </div>
         </div>
 
-        <!--Checkbox for aktivering af specialtegn-->
+        <!--Checkbox for enabling special characters-->
         <div class="checkboxContainer">
             <div class="checkboxGroup">
                 <input type="checkbox" id="useSpecialCharactersCheckbox" checked disabled>
-                <!-- Add an id for translation -->
-                <label id="useSpecialCharacters"></label>
+                <label for="useSpecialCharacters">Use Special Characters</label>
             </div>
         </div>
 
-        <!--Checkbox for at kapitalisere første bogstav i interesser-->
+        <!--checkbox for capitalizing the first letter of the interest-->
         <div class="checkboxContainer">
             <div class="checkboxGroup">
                 <input type="checkbox" id="capitalizeFirstLettersCheckbox" checked disabled>
-                <!-- Add an id for translation -->
-                <label id="capitalizeFirstLetters"></label>
+                <label for="capitalizeFirstLetters">Capitalize First Letter</label>
             </div>
         </div>
 
-        <!--Knap der genererer adgangskoder-->
+        <!--Button that generates the passwords-->
         <div id="buttonContainer">
-            <button id="generatePassword" class="btn btn-primary"></button>
+            <button id="generatePassword" class="btn btn-primary">Generate Passwords</button>
         </div>
 
-        <!--Container til de genererede adgangskoder-->
+        <!--container for the passwords when they are generated-->
         <div class="passwordContainer hidden">
-            <label id="passwordsHeader" class="header"></label>
+            <label for="header" class="header">Passwords</label>
             <div id="passwords"></div>
             <div id="strengthMeterContainer">
                 <progress id="strengthMeter" value="0" max="100"></progress>
@@ -99,4 +94,5 @@
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
