@@ -1,24 +1,74 @@
-const tagsDiv = document.getElementById("tags");
-const addBtn = document.getElementById("addButton");
-const inputField = document.getElementById("inputsTextField");
+document.addEventListener('DOMContentLoaded', function() {
+  const tagsDiv = document.getElementById("tags");
+  const addBtn = document.getElementById("addButton");
+  const inputField = document.getElementById("inputsTextField");
 
-const charactersSlider = document.getElementById("characters");
-const charactersValue = document.getElementById("charactersValue");
+  const charactersSlider = document.getElementById("characters");
+  const charactersValue = document.getElementById("charactersValue");
 
-const passwordLength = document.getElementById("passwordLength");
-const passwordLengthValue = document.getElementById("passwordLengthValue");
+  const passwordLength = document.getElementById("passwordLength");
+  const passwordLengthValue = document.getElementById("passwordLengthValue");
 
-const serviceNameSlider = document.getElementById("serviceName");
-const serviceNameValue = document.getElementById("serviceNameValue");
+  const serviceNameSlider = document.getElementById("serviceName");
+  const serviceNameValue = document.getElementById("serviceNameValue");
 
-const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
-const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
+  const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
+  const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
 
-const serviceTagsDiv = document.getElementById("serviceTags");
-const serviceButtons = document.querySelectorAll('.service-button');
+  const translations = {
+    en: {
+      header: "Password Generator",
+      interestPlaceholder: "Type interest or number",
+      charactersPerInterest: "Characters Per Interest",
+      passwordLength: "Password Length",
+      charactersFromServiceName: "Number of characters from service name",
+      useSpecialCharacters: "Use Special Characters",
+      capitalizeFirstLetters: "Capitalize First Letter",
+      generatePasswords: "Generate Passwords",
+      passwords: "Passwords"
+    },
+    da: {
+      header: "Adgangskodegenerator",
+      interestPlaceholder: "Indtast interesse eller tal",
+      charactersPerInterest: "Tegn pr. interesse",
+      passwordLength: "Adgangskodelængde",
+      charactersFromServiceName: "Antal tegn fra tjenestens navn",
+      useSpecialCharacters: "Brug specialtegn",
+      capitalizeFirstLetters: "Kapitaliser første bogstav",
+      generatePasswords: "Generér adgangskoder",
+      passwords: "Adgangskoder"
+    }
+  };
+
+  const userLang = navigator.language || navigator.userLanguage;
+
+  function applyTranslations(lang) {
+    const selectedLang = translations[lang] || translations['en'];
+
+    // Updating the text contents of the elements based on the selected language
+    document.getElementById('header').textContent = selectedLang.header;
+    document.getElementById('inputsTextField').placeholder = selectedLang.interestPlaceholder;
+    document.getElementById('characters').textContent = selectedLang.charactersPerInterest;
+    document.getElementById('passwordLength').textContent = selectedLang.passwordLength;
+    document.getElementById('serviceName').textContent = selectedLang.charactersFromServiceName;
+    document.getElementById('useSpecialCharacters').textContent = selectedLang.useSpecialCharacters;
+    document.getElementById('capitalizeFirstLetters').textContent = selectedLang.capitalizeFirstLetters;
+    document.getElementById('generatePassword').textContent = selectedLang.generatePasswords;
+    document.getElementById('passwordsHeader').textContent = selectedLang.passwords;
+  }
+
+  // Apply the language translations based on user's browser language
+  if (userLang.startsWith('da')) {
+    applyTranslations('da');  // Apply Danish if the language starts with 'da'
+  } else {
+    applyTranslations('en');  // Default to English
+  }
 
 let tags = [];
-let selectedServices = [];
+let selectedServices = [
+    "Facebook", "Twitter", "Instagram", "LinkedIn", "Google", "Amazon", "Netflix", 
+    "Spotify", "Apple", "Microsoft", "Dropbox", "GitHub", "Reddit", "WhatsApp", "Zoom"
+]; // Predefined services
 
 // Minimum interests feedback element
 const minInterestsFeedback = document.createElement('div');
@@ -60,31 +110,16 @@ function handleItemAddition(addButton, inputField, container, itemList) {
       itemList.splice(index, 1);
       updateItems(container, itemList);
     }
-    checkMinimumInterests(); // Check if the minimum number of interests is met after each removal
+    checkMinimumInterests(); 
   });
 }
 
 function updateSlider(slider, displayElement) {
   slider.addEventListener("input", function () {
     displayElement.textContent = slider.value;
-    checkMinimumInterests(); // Recalculate the minimum interests when the sliders change
+    checkMinimumInterests();
   });
 }
-
-serviceButtons.forEach(button => {
-  button.addEventListener("click", function () {
-    const serviceName = button.dataset.service;
-    button.classList.toggle("selected");
-
-    if (selectedServices.includes(serviceName)) {
-      selectedServices = selectedServices.filter(service => service !== serviceName);
-    } else {
-      selectedServices.push(serviceName);
-    }
-
-    updateItems(serviceTagsDiv, selectedServices);
-  });
-});
 
 handleItemAddition(addBtn, inputField, tagsDiv, tags);
 
@@ -92,16 +127,13 @@ updateSlider(charactersSlider, charactersValue);
 updateSlider(passwordLength, passwordLengthValue);
 updateSlider(serviceNameSlider, serviceNameValue);
 
-// Check if the user has added enough interests
 function checkMinimumInterests() {
   const totalPasswordLength = parseInt(passwordLength.value, 10);
   const serviceNameLength = parseInt(serviceNameSlider.value, 10);
   const charactersPerInterest = parseInt(charactersSlider.value, 10);
 
-  // Filter out the numbers from the tags array
   const nonNumberTags = tags.filter(tag => isNaN(tag));
 
-  // Calculate the minimum number of interests needed
   const minInterests = Math.ceil((totalPasswordLength - serviceNameLength) / charactersPerInterest);
 
   if (nonNumberTags.length < minInterests) {
@@ -236,13 +268,17 @@ document.getElementById("generatePassword").addEventListener("click", function (
   const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
 
   const passwords = selectedServices.map(service => {
-    return insertServiceName(basePassword, service, serviceNameLength, totalPasswordLength);
+    return { 
+      serviceName: service, 
+      password: insertServiceName(basePassword, service, serviceNameLength, totalPasswordLength) 
+    };
   });
 
   const passwordsContainer = document.getElementById("passwords");
-  passwordsContainer.innerHTML = passwords.map((pwd, index) => `
+  passwordsContainer.innerHTML = passwords.map((entry, index) => `
     <div id="password-${index}" class="password-item">
-      ${pwd} 
+      <span class="service-name">${entry.serviceName} - </span> 
+      <span class="password-text">${entry.password}</span> 
       <span onclick="printPassword('password-${index}')" class="print-button">
         <i class="bi bi-printer"></i>
       </span>
@@ -250,7 +286,7 @@ document.getElementById("generatePassword").addEventListener("click", function (
   `).join('');
 
   if (passwords.length > 0) {
-    updateStrengthIndicator(passwords[0]);
+    updateStrengthIndicator(passwords[0].password);
     document.querySelector(".passwordContainer").classList.remove("hidden");
   }
 });
@@ -292,3 +328,4 @@ function printPassword(passwordId) {
   printWindow.document.close();
   printWindow.print();
 }
+})
