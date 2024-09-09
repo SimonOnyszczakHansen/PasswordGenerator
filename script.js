@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordsHeader: "Passwords",
       weak: "Weak",
       medium: "Medium",
-      strong: "Strong"
+      strong: "Strong",
+      minInterestsMessage: "Please add at least {minInterests} interests to generate a password."
     },
     da: {
       header: "Adgangskode Generator",
@@ -43,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordsHeader: "Adgangskoder",
       weak: "Svag",
       medium: "Middel",
-      strong: "Stærk"
+      strong: "Stærk",
+      minInterestsMessage: "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode."
     }
   };
 
@@ -138,13 +140,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPasswordLength = parseInt(passwordLength.value, 10);
     const serviceNameLength = parseInt(serviceNameSlider.value, 10);
     const charactersPerInterest = parseInt(charactersSlider.value, 10);
-
+  
     const nonNumberTags = tags.filter(tag => isNaN(tag));
-
+  
     const minInterests = Math.ceil((totalPasswordLength - serviceNameLength) / charactersPerInterest);
-
+  
     if (nonNumberTags.length < minInterests) {
-      minInterestsFeedback.textContent = `Please add at least ${minInterests} interests to generate a password.`;
+      const minInterestsMessage = selectedLang.minInterestsMessage.replace("{minInterests}", minInterests);
+      minInterestsFeedback.textContent = minInterestsMessage;
       minInterestsFeedback.style.display = "block";
       document.getElementById("generatePassword").disabled = true;
     } else {
