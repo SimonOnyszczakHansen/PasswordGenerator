@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
       passwords: "Passwords"
     },
     da: {
-      header: "Adgangskodegenerator",
+      header: "Adgangskode Generator",
       interestPlaceholder: "Indtast interesse eller tal",
       charactersPerInterest: "Tegn pr. interesse",
       passwordLength: "Adgangskodelængde",
