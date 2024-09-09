@@ -1,18 +1,68 @@
-const tagsDiv = document.getElementById("tags");
-const addBtn = document.getElementById("addButton");
-const inputField = document.getElementById("inputsTextField");
+document.addEventListener('DOMContentLoaded', function() {
+  const tagsDiv = document.getElementById("tags");
+  const addBtn = document.getElementById("addButton");
+  const inputField = document.getElementById("inputsTextField");
 
-const charactersSlider = document.getElementById("characters");
-const charactersValue = document.getElementById("charactersValue");
+  const charactersSlider = document.getElementById("characters");
+  const charactersValue = document.getElementById("charactersValue");
 
-const passwordLength = document.getElementById("passwordLength");
-const passwordLengthValue = document.getElementById("passwordLengthValue");
+  const passwordLength = document.getElementById("passwordLength");
+  const passwordLengthValue = document.getElementById("passwordLengthValue");
 
-const serviceNameSlider = document.getElementById("serviceName");
-const serviceNameValue = document.getElementById("serviceNameValue");
+  const serviceNameSlider = document.getElementById("serviceName");
+  const serviceNameValue = document.getElementById("serviceNameValue");
 
-const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
-const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
+  const capitalizeFirstLetter = document.getElementById("capitalizeFirstLettersCheckbox");
+  const useSpecialCharacters = document.getElementById("useSpecialCharactersCheckbox");
+
+  const translations = {
+    en: {
+      header: "Password Generator",
+      interestPlaceholder: "Type interest or number",
+      charactersPerInterest: "Characters Per Interest",
+      passwordLength: "Password Length",
+      charactersFromServiceName: "Number of characters from service name",
+      useSpecialCharacters: "Use Special Characters",
+      capitalizeFirstLetters: "Capitalize First Letter",
+      generatePasswords: "Generate Passwords",
+      passwords: "Passwords"
+    },
+    da: {
+      header: "Adgangskodegenerator",
+      interestPlaceholder: "Indtast interesse eller tal",
+      charactersPerInterest: "Tegn pr. interesse",
+      passwordLength: "Adgangskodelængde",
+      charactersFromServiceName: "Antal tegn fra tjenestens navn",
+      useSpecialCharacters: "Brug specialtegn",
+      capitalizeFirstLetters: "Kapitaliser første bogstav",
+      generatePasswords: "Generér adgangskoder",
+      passwords: "Adgangskoder"
+    }
+  };
+
+  const userLang = navigator.language || navigator.userLanguage;
+
+  function applyTranslations(lang) {
+    const selectedLang = translations[lang] || translations['en'];
+
+    // Updating the text contents of the elements based on the selected language
+    document.getElementById('header').textContent = selectedLang.header;
+    document.getElementById('inputsTextField').placeholder = selectedLang.interestPlaceholder;
+    document.getElementById('characters').textContent = selectedLang.charactersPerInterest;
+    document.getElementById('passwordLength').textContent = selectedLang.passwordLength;
+    document.getElementById('serviceName').textContent = selectedLang.charactersFromServiceName;
+    document.getElementById('useSpecialCharacters').textContent = selectedLang.useSpecialCharacters;
+    document.getElementById('capitalizeFirstLetters').textContent = selectedLang.capitalizeFirstLetters;
+    document.getElementById('generatePassword').textContent = selectedLang.generatePasswords;
+    document.getElementById('passwordsHeader').textContent = selectedLang.passwords;
+  }
+
+  // Apply the language translations based on user's browser language
+  if (userLang.startsWith('da')) {
+    applyTranslations('da');  // Apply Danish if the language starts with 'da'
+  } else {
+    applyTranslations('en');  // Default to English
+  }
 
 let tags = [];
 let selectedServices = [
@@ -278,3 +328,4 @@ function printPassword(passwordId) {
   printWindow.document.close();
   printWindow.print();
 }
+})
