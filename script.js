@@ -257,20 +257,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateStrengthIndicator(password) {
     const strength = calculateStrength(password);
-    const strengthMeter = document.getElementById("strengthMeter");
+    const strengthMeterBar = document.querySelector(".strengthMeterBar");
     const strengthText = document.getElementById("strengthText");
-
-    strengthMeter.value = strength;
-
+  
+    // Adjust the width of the bar based on the strength levels
+    let barWidth = 0;
     let strengthLabel = selectedLang.weak;
+  
     if (strength >= 80) {
+      barWidth = 100;  // Full width for strong
       strengthLabel = selectedLang.strong;
     } else if (strength >= 60) {
+      barWidth = 75;  // Medium strength
       strengthLabel = selectedLang.medium;
+    } else if (strength >= 30) {
+      barWidth = 50;  // Weak strength but not the weakest
+      strengthLabel = selectedLang.weak;
+    } else {
+      barWidth = 25;  // Very weak strength
     }
-
+  
+    // Update the width of the bar
+    strengthMeterBar.style.width = `${barWidth}%`;
+  
+    // Update the text label for strength
     strengthText.textContent = strengthLabel;
   }
+  
+  
 
   document.getElementById("generatePassword").addEventListener("click", function () {
     const totalPasswordLength = parseInt(passwordLength.value, 10);
