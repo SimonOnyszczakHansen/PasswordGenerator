@@ -220,6 +220,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (newPassword.length > totalLength) {
       return newPassword.substring(0, totalLength);
+    } else {
+      return newPassword.padEnd(totalLength, "*");
     }
   }
 
