@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   };
 
-  // Detect the user's browser language and set the default to English
+  // Detect the user's browser language
   const userLang = navigator.language || navigator.userLanguage;
   let selectedLang = languages['en']; // default language is English
 
@@ -156,17 +156,25 @@ document.addEventListener("DOMContentLoaded", function () {
     // Calculate minimum number of interests required
     const minInterests = Math.ceil((totalPasswordLength - serviceNameLength) / charactersPerInterest);
 
-    // Display a message if the user hasn't added enough interests
-    if (nonNumberTags.length < minInterests) {
-      const minInterestsMessage = selectedLang.minInterestsMessage.replace("{minInterests}", minInterests);
-      minInterestsFeedback.textContent = minInterestsMessage;
-      minInterestsFeedback.style.display = "block";
-      document.getElementById("generatePassword").disabled = true; // Disable password generation
-    } else {
-      minInterestsFeedback.style.display = "none";
-      document.getElementById("generatePassword").disabled = false; // Enable password generation
+    // Ensure totalPasswordLength is greater than serviceNameLength and charactersPerInterest
+    if (totalPasswordLength <= serviceNameLength) {
+        minInterestsFeedback.textContent = "Password length must be greater than the length of characters from service name.";
+        minInterestsFeedback.style.display = "block";
+        document.getElementById("generatePassword").disabled = true;
+        return;
     }
-  }
+
+    if (nonNumberTags.length < minInterests) {
+        const minInterestsMessage = selectedLang.minInterestsMessage.replace("{minInterests}", minInterests);
+        minInterestsFeedback.textContent = minInterestsMessage;
+        minInterestsFeedback.style.display = "block";
+        document.getElementById("generatePassword").disabled = true; // Disable password generation
+    } else {
+        minInterestsFeedback.style.display = "none";
+        document.getElementById("generatePassword").disabled = false; // Enable password generation
+    }
+}
+
 
   // Function to generate a base password using the user's interests and inputs
   function generateBasePassword(tags, charactersValue, maxLength) {
@@ -314,7 +322,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Update the text label for strength
     strengthText.textContent = strengthLabel;
+  } 
+
+  // Add this function to update the password preview
+function updatePasswordPreview() {
+  const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
+  const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
+  
+  // Generate a base password based on user inputs
+  const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
+  
+  // Display the generated base password in the preview container
+  const passwordPreviewElement = document.getElementById("passwordPreview");
+  passwordPreviewElement.textContent = basePassword || '...'; // Show '...' if no password
+}
+
+// Call this function to initialize the preview on page load
+updatePasswordPreview();
+
+// Attach the password preview update to all relevant events
+charactersSlider.addEventListener("input", updatePasswordPreview);
+passwordLength.addEventListener("input", updatePasswordPreview);
+serviceNameSlider.addEventListener("input", updatePasswordPreview);
+capitalizeFirstLetter.addEventListener("change", updatePasswordPreview);
+useSpecialCharacters.addEventListener("change", updatePasswordPreview);
+
+// Update password preview when new tags are added or removed
+addBtn.addEventListener("click", updatePasswordPreview);
+inputField.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    updatePasswordPreview();
   }
+});
+tagsDiv.addEventListener("click", updatePasswordPreview);
+
 
   // Event listener for the password generation button
   document.getElementById("generatePassword").addEventListener("click", function () {
