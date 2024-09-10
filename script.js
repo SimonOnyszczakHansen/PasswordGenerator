@@ -29,7 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordsHeader: "Passwords",
       weak: "Weak",
       medium: "Medium",
-      strong: "Strong"
+      strong: "Strong",
+      minInterestsMessage: "Please add at least {minInterests} interests to generate a password."
     },
     da: {
       header: "Adgangskode Generator",
@@ -43,7 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
       passwordsHeader: "Adgangskoder",
       weak: "Svag",
       medium: "Middel",
-      strong: "Stærk"
+      strong: "Stærk",
+      minInterestsMessage: "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode."
     }
   };
 
@@ -138,13 +140,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPasswordLength = parseInt(passwordLength.value, 10);
     const serviceNameLength = parseInt(serviceNameSlider.value, 10);
     const charactersPerInterest = parseInt(charactersSlider.value, 10);
-
+  
     const nonNumberTags = tags.filter(tag => isNaN(tag));
-
+  
     const minInterests = Math.ceil((totalPasswordLength - serviceNameLength) / charactersPerInterest);
-
+  
     if (nonNumberTags.length < minInterests) {
-      minInterestsFeedback.textContent = `Please add at least ${minInterests} interests to generate a password.`;
+      const minInterestsMessage = selectedLang.minInterestsMessage.replace("{minInterests}", minInterests);
+      minInterestsFeedback.textContent = minInterestsMessage;
       minInterestsFeedback.style.display = "block";
       document.getElementById("generatePassword").disabled = true;
     } else {
@@ -217,8 +220,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (newPassword.length > totalLength) {
       return newPassword.substring(0, totalLength);
-    } else {
-      return newPassword.padEnd(totalLength, "*");
     }
   }
 
@@ -254,20 +255,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function updateStrengthIndicator(password) {
     const strength = calculateStrength(password);
-    const strengthMeter = document.getElementById("strengthMeter");
+    const strengthMeterBar = document.querySelector(".strengthMeterBar");
     const strengthText = document.getElementById("strengthText");
-
-    strengthMeter.value = strength;
-
+  
+    // Adjust the width of the bar based on the strength levels
+    let barWidth = 0;
     let strengthLabel = selectedLang.weak;
+  
     if (strength >= 80) {
+      barWidth = 100;  // Full width for strong
       strengthLabel = selectedLang.strong;
     } else if (strength >= 60) {
+      barWidth = 75;  // Medium strength
       strengthLabel = selectedLang.medium;
+    } else if (strength >= 30) {
+      barWidth = 50;  // Weak strength but not the weakest
+      strengthLabel = selectedLang.weak;
+    } else {
+      barWidth = 25;  // Very weak strength
     }
-
+  
+    // Update the width of the bar
+    strengthMeterBar.style.width = `${barWidth}%`;
+  
+    // Update the text label for strength
     strengthText.textContent = strengthLabel;
   }
+  
+  
 
   document.getElementById("generatePassword").addEventListener("click", function () {
     const totalPasswordLength = parseInt(passwordLength.value, 10);
