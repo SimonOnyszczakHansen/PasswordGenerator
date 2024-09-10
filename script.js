@@ -47,6 +47,36 @@ document.addEventListener("DOMContentLoaded", function () {
       medium: "Middel",
       strong: "Stærk",
       minInterestsMessage: "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode."
+    },
+    de: {
+      header: "Passwort-Generator",
+      inputsTextField: "Geben Sie Interesse oder Zahl ein",
+      characters: "Zeichen pro Interesse",
+      passwordLength: "Passwortlänge",
+      serviceName: "Anzahl der Zeichen aus dem Dienstnamen",
+      useSpecialCharacters: "Sonderzeichen verwenden",
+      capitalizeFirstLetter: "Mit Großbuchstaben beginnen",
+      generatedPassword: "Passwörter generieren",
+      passwordsHeader: "Passwörter",
+      weak: "Schwach",
+      medium: "Mittel",
+      strong: "Stark",
+      minInterestsMessage: "Bitte fügen Sie mindestens {minInterests} Interessen hinzu, um ein Passwort zu generieren."
+    },
+    ar: {
+        header: "مولد كلمة المرور",
+        inputsTextField: "أدخل الاهتمام أو الرقم",
+        characters: "عدد الأحرف لكل اهتمام",
+        passwordLength: "طول كلمة المرور",
+        serviceName: "عدد الأحرف من اسم الخدمة",
+        useSpecialCharacters: "استخدام الأحرف الخاصة",
+        capitalizeFirstLetter: "ابدأ بحرف كبير",
+        generatedPassword: "توليد كلمات المرور",
+        passwordsHeader: "كلمات المرور",
+        weak: "ضعيف",
+        medium: "متوسط",
+        strong: "قوي",
+        minInterestsMessage: "يرجى إضافة {minInterests} اهتمامات على الأقل لتوليد كلمة مرور."      
     }
   };
 
@@ -73,7 +103,13 @@ document.addEventListener("DOMContentLoaded", function () {
   // Apply translation based on the detected browser language
   if (userLang.startsWith("da")) {
     applyTranslation("da"); // Use Danish if the browser language starts with "da"
-  } else {
+  } else if (userLang.startsWith("de")){
+    applyTranslation("de"); // Use German if the browser language starts with "de"
+  } else if (userLang.startsWith("ar")) {
+    applyTranslation("ar"); // Use Arabic if the browser language starts with "ar"
+  }
+  
+  else {
     applyTranslation("en"); // Default to English
   }
 
