@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
       minInterestsMessage: "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode."
     },
     de: {
-      header: "Passwort-Generator",
+      header: "Passwort Generator",
       inputsTextField: "Geben Sie Interesse oder Zahl ein",
       characters: "Zeichen pro Interesse",
       passwordLength: "Passwortlänge",
@@ -64,19 +64,19 @@ document.addEventListener("DOMContentLoaded", function () {
       minInterestsMessage: "Bitte fügen Sie mindestens {minInterests} Interessen hinzu, um ein Passwort zu generieren."
     },
     ar: {
-        header: "مولد كلمة المرور",
-        inputsTextField: "أدخل الاهتمام أو الرقم",
-        characters: "عدد الأحرف لكل اهتمام",
-        passwordLength: "طول كلمة المرور",
-        serviceName: "عدد الأحرف من اسم الخدمة",
-        useSpecialCharacters: "استخدام الأحرف الخاصة",
-        capitalizeFirstLetter: "ابدأ بحرف كبير",
-        generatedPassword: "توليد كلمات المرور",
-        passwordsHeader: "كلمات المرور",
-        weak: "ضعيف",
-        medium: "متوسط",
-        strong: "قوي",
-        minInterestsMessage: "يرجى إضافة {minInterests} اهتمامات على الأقل لتوليد كلمة مرور."      
+      header: "مولد كلمة المرور",
+      inputsTextField: "أدخل الاهتمام أو الرقم",
+      characters: "عدد الأحرف لكل اهتمام",
+      passwordLength: "طول كلمة المرور",
+      serviceName: "عدد الأحرف من اسم الخدمة",
+      useSpecialCharacters: "استخدام الأحرف الخاصة",
+      capitalizeFirstLetter: "ابدأ بحرف كبير",
+      generatedPassword: "توليد كلمات المرور",
+      passwordsHeader: "كلمات المرور",
+      weak: "ضعيف",
+      medium: "متوسط",
+      strong: "قوي",
+      minInterestsMessage: "يرجى إضافة {minInterests} اهتمامات على الأقل لتوليد كلمة مرور."
     }
   };
 
@@ -103,14 +103,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // Apply translation based on the detected browser language
   if (userLang.startsWith("da")) {
     applyTranslation("da"); // Use Danish if the browser language starts with "da"
-  } else if (userLang.startsWith("de")){
+  } else if (userLang.startsWith("de")) {
     applyTranslation("de"); // Use German if the browser language starts with "de"
   } else if (userLang.startsWith("ar")) {
     applyTranslation("ar"); // Use Arabic if the browser language starts with "ar"
-  }
-  
-  else {
-    applyTranslation("en"); // Default to English
+  } else {
+    applyTranslation("en")
   }
 
   // Tags array to store user input
@@ -359,39 +357,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Update the text label for strength
     strengthText.textContent = strengthLabel;
   } 
-
-  // Add this function to update the password preview
-function updatePasswordPreview() {
-  const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
-  const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
-  
-  // Generate a base password based on user inputs
-  const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
-  
-  // Display the generated base password in the preview container
-  const passwordPreviewElement = document.getElementById("passwordPreview");
-  passwordPreviewElement.textContent = basePassword || '...'; // Show '...' if no password
-}
-
-// Call this function to initialize the preview on page load
-updatePasswordPreview();
-
-// Attach the password preview update to all relevant events
-charactersSlider.addEventListener("input", updatePasswordPreview);
-passwordLength.addEventListener("input", updatePasswordPreview);
-serviceNameSlider.addEventListener("input", updatePasswordPreview);
-capitalizeFirstLetter.addEventListener("change", updatePasswordPreview);
-useSpecialCharacters.addEventListener("change", updatePasswordPreview);
-
-// Update password preview when new tags are added or removed
-addBtn.addEventListener("click", updatePasswordPreview);
-inputField.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
-    updatePasswordPreview();
-  }
-});
-tagsDiv.addEventListener("click", updatePasswordPreview);
-
 
   // Event listener for the password generation button
   document.getElementById("generatePassword").addEventListener("click", function () {
