@@ -273,6 +273,12 @@ input[type="range"] {
     margin-bottom: 4em;
 }
 
+.service-part {
+    color: red; /* Change this to any color you like */
+    font-weight: bold; /* Optional: make it bold */
+  }
+  
+
 /* Media Query for smaller screens */
 @media only screen and (max-width: 600px) {
 
