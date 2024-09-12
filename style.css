@@ -273,6 +273,11 @@ input[type="range"] {
     margin-bottom: 4em;
 }
 
+.service-password {
+    color: #66cc00;
+    font-weight: bold;
+}
+
 /* Media Query for smaller screens */
 @media only screen and (max-width: 600px) {
 

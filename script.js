@@ -335,19 +335,36 @@ document.addEventListener("DOMContentLoaded", function () {
     // Display the generated passwords in the UI
     const passwordsContainer = document.getElementById("passwords");
     passwordsContainer.innerHTML = passwords
-      .map(
-        (entry, index) => `
-      <div id="password-${index}" class="password-item">
-        <span class="service-name">${entry.serviceName} - </span> 
-        <span class="password-text">${entry.password}</span> 
-        <span onclick="printPassword('password-${index}')" class="print-button">
-          <i class="bi bi-printer"></i>
-        </span>
-      </div>
-    `
-      )
-      .join("");
-
+    .map(
+      (entry, index) => {
+        // Find the first special character index
+        const specialCharacterIndex = entry.password.search(/[@!&$€]/);
+  
+        // Extract the base password up to and including the special character
+        const basePassword = entry.password.slice(0, specialCharacterIndex + 1);
+  
+        // Extract the service part of the password based on the serviceNameLength (slider value)
+        const servicePart = entry.password.slice(specialCharacterIndex + 1, specialCharacterIndex + 1 + serviceNameLength);
+  
+        // Get the remaining part of the password (if any) after the service name portion
+        const remainingPassword = entry.password.slice(specialCharacterIndex + 1 + serviceNameLength);
+  
+        return `
+          <div id="password-${index}" class="password-item">
+            <span class="service-name">${entry.serviceName}</span> - 
+            <span class="password-text">${basePassword}<span class="service-password">${servicePart}</span>${remainingPassword}</span>
+            <span onclick="printPassword('password-${index}')" class="print-button">
+              <i class="bi bi-printer"></i>
+            </span>
+          </div>
+        `;
+      }
+    )
+    .join("");
+  
+  
+  
+  
     // Show the password strength indicator for the first password
     if (passwords.length > 0) {
       updateStrengthIndicator(passwords[0].password);
