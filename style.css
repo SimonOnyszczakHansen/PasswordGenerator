@@ -56,8 +56,8 @@ body {
     border-width: 2px;
     border-color: #007bff;
     border-radius: 0.6em;
-    background-color: #3b3b3b;
     color: white;
+    background-color: #3b3b3b;
     height: 100%;
 }
 
@@ -73,7 +73,7 @@ body {
 }
 
 #inputsTextField::placeholder {
-    color: white;
+    color: rgb(255,255,255,0.8);
 }
 
 /* Light Mode */
@@ -276,6 +276,11 @@ input[type="range"] {
 .service-password {
     color: #66cc00;
     font-weight: bold;
+}
+
+#originalPassword {
+    font-size: 200%;
+    margin-bottom: 2em;
 }
 
 /* Media Query for smaller screens */

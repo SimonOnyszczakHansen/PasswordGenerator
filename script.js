@@ -173,10 +173,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let basePasswordParts = [];
     let numbers = [];
     let nonNumberTags = [];
-
+  
     // Map for replacing certain characters with special symbols
     const specialCharacterMap = { o: "@", l: "!", g: "&", s: "$", e: "€" };
-
+    let firstSpecialChar = null; // Store the first special character found
+  
     // Separate numbers and non-number tags from the user's input
     tags.forEach((tag) => {
       if (!isNaN(tag)) {
@@ -185,54 +186,65 @@ document.addEventListener("DOMContentLoaded", function () {
         nonNumberTags.push(tag); // Non-number tags (interests)
       }
     });
-
+  
     // Get user preferences for capitalizing the first letter and using special characters
     const capitalizeFirst = capitalizeFirstLetter.checked;
     const useSpecial = useSpecialCharacters.checked;
-
+  
     // Process non-number tags for inclusion in the password
     nonNumberTags.forEach((tag) => {
       let extractedPart = tag.substring(0, charactersValue); // Get the first few characters
-
-      // Replace with special characters if enabled
-      if (useSpecial) {
+  
+      // Replace with special characters if enabled, and store the first special character found
+      if (useSpecial && !firstSpecialChar) {
         extractedPart = extractedPart
           .split("")
           .map((char) => {
-            return specialCharacterMap[char.toLowerCase()] || char;
+            if (specialCharacterMap[char.toLowerCase()] && !firstSpecialChar) {
+              firstSpecialChar = specialCharacterMap[char.toLowerCase()]; // Store the first special character
+              return firstSpecialChar;
+            }
+            return char;
           })
           .join("");
       }
-
+  
       // Capitalize the first letter if the option is selected
       if (capitalizeFirst) {
         extractedPart = extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
-
+  
       basePasswordParts.push(extractedPart); // Add the processed tag to the password parts
     });
-
+  
     let basePassword = basePasswordParts.join(""); // Join parts to form the base password
-
+  
     // Ensure the base password doesn't exceed the maximum length
     if (basePassword.length > maxLength) {
       basePassword = basePassword.substring(0, maxLength);
     }
-
+  
     // Insert numbers randomly into the password
     numbers.forEach((number) => {
       const randomIndex = Math.floor(Math.random() * (basePassword.length + 1));
       basePassword = basePassword.slice(0, randomIndex) + number + basePassword.slice(randomIndex);
     });
-
+  
+    // Ensure there is only one special character
+    if (useSpecial && firstSpecialChar) {
+      basePassword = basePassword.replace(/[@!&$€]/g, ""); // Remove any extra special characters
+      basePassword = firstSpecialChar + basePassword.slice(1); // Place the special character at the beginning
+    }
+  
     return basePassword.substring(0, maxLength); // Return the final base password, capped to the max length
   }
+  
 
   // Function to insert the service name into the generated password
   function insertServiceName(password, serviceName, serviceNameLength, totalLength) {
-    const specialCharacterIndex = password.search(/[@!&$€]/); // Find the index of a special character
+    const specialCharacterIndex = password.search(/[@!&$€]/); // Find the index of the special character
     let servicePart = serviceName.substring(0, serviceNameLength); // Extract part of the service name
-
+  
     let newPassword;
     // Insert the service name after a special character, if one exists
     if (specialCharacterIndex !== -1) {
@@ -240,14 +252,17 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       newPassword = password + servicePart; // Otherwise, append the service name to the end
     }
-
-    // Ensure the password doesn't exceed the total length
+  
+    // Ensure the password is exactly the required length, by trimming extra characters if needed
     if (newPassword.length > totalLength) {
-      return newPassword.substring(0, totalLength);
-    } else {
-      return newPassword.padEnd(totalLength, "*"); // Pad the password if it's too short
+      return newPassword.substring(0, totalLength); // Trim the password if it's too long
+    } else if (newPassword.length < totalLength) {
+      return newPassword; // Don't pad with asterisks; just return the password as is
     }
+  
+    return newPassword; // Return the generated password
   }
+  
 
   // Function to calculate the strength of the password based on various criteria
   function calculateStrength(password) {
@@ -317,24 +332,30 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Event listener for the password generation button
-  document.getElementById("generatePassword").addEventListener("click", function () {
-    const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
-    const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
+document.getElementById("generatePassword").addEventListener("click", function () {
+  const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
+  const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
 
-    // Generate a base password based on user inputs
-    const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
+  // Generate a base password based on user inputs (this is the original password before service name is added)
+  const basePassword = generateBasePassword(tags, charactersSlider.value, totalPasswordLength - serviceNameLength);
 
-    // Generate passwords for each selected service
-    const passwords = selectedServices.map((service) => {
-      return {
-        serviceName: service,
-        password: insertServiceName(basePassword, service, serviceNameLength, totalPasswordLength)
-      };
-    });
+  // Display the original password (base password without service name)
+  const originalPasswordContainer = document.getElementById("originalPasswordContainer");
+  const originalPasswordDiv = document.getElementById("originalPassword");
+  originalPasswordDiv.textContent = basePassword;
+  originalPasswordContainer.classList.remove("hidden");
 
-    // Display the generated passwords in the UI
-    const passwordsContainer = document.getElementById("passwords");
-    passwordsContainer.innerHTML = passwords
+  // Generate passwords for each selected service
+  const passwords = selectedServices.map((service) => {
+    return {
+      serviceName: service,
+      password: insertServiceName(basePassword, service, serviceNameLength, totalPasswordLength)
+    };
+  });
+
+  // Display the generated passwords in the UI
+  const passwordsContainer = document.getElementById("passwords");
+  passwordsContainer.innerHTML = passwords
     .map(
       (entry, index) => {
         // Find the first special character index
@@ -361,16 +382,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     )
     .join("");
-  
-  
-  
-  
-    // Show the password strength indicator for the first password
-    if (passwords.length > 0) {
-      updateStrengthIndicator(passwords[0].password);
-      document.querySelector(".passwordContainer").classList.remove("hidden");
-    }
-  });
+
+  // Show the password strength indicator for the first password
+  if (passwords.length > 0) {
+    updateStrengthIndicator(passwords[0].password);
+    document.querySelector(".passwordContainer").classList.remove("hidden");
+  }
+});
+
 
   // Function to print the password when the print button is clicked
   window.printPassword = function (passwordId) {

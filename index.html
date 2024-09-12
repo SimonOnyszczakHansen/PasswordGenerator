@@ -3,7 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Generate secure, customized passwords easily with our password generator. Choose character length, include services, and more.">
+    <meta name="description"
+        content="Generate secure, customized passwords easily with our password generator. Choose character length, include services, and more.">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
@@ -84,15 +85,19 @@
 
         <!--container for the passwords when they are generated-->
         <div class="passwordContainer hidden">
-            <label for="header" id="passwordsHeader" class="header"></label>
+            <label for="passwordsHeader" id="passwordsHeader" class="header"></label>
+            <div id="originalPasswordContainer" class="hidden">
+                <a id="originalPassword"></a>
+            </div>
             <div id="passwords"></div>
             <div id="strengthMeterContainer">
                 <div class="strengthMeterWrapper">
                     <div class="strengthMeterBar"></div>
                 </div>
                 <span id="strengthText"></span>
-            </div>            
-        </div>        
+            </div>
+        </div>
+
     </div>
     <script src="script.js"></script>
 </body>
