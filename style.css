@@ -67,23 +67,8 @@ body {
     background-color: #333333;
 }
 
-#inputsTextField,
-.slider {
-    transition: background-color 0.5s ease, color 0.5s ease;
-}
-
 #inputsTextField::placeholder {
-    color: rgb(255,255,255,0.8);
-}
-
-/* Light Mode */
-#inputsTextField.light-mode {
-    background-color: #ffffff;
-    color: #3b3b3b;
-}
-
-#inputsTextField.light-mode::placeholder {
-    color: #3b3b3b;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 *:focus {
@@ -127,23 +112,6 @@ input[type="range"] {
     font-weight: bold;
 }
 
-/* CSS for the checkboxes */
-
-.checkboxContainer {
-    padding: 0.5em;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-    max-width: 60em;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.checkboxGroup {
-    align-self: flex-start;
-}
-
 /* CSS for the buttons */
 
 #addButton {
@@ -162,7 +130,8 @@ input[type="range"] {
 }
 
 #generatePassword {
-    width: 100%; /* Ensure full width */
+    width: 100%;
+    /* Ensure full width */
     border-radius: 0.6em;
     height: 3em;
     font-weight: bold;
@@ -181,7 +150,8 @@ input[type="range"] {
 }
 
 .hidden {
-    display: none; /* For hiding generated passwords until they are ready */
+    display: none;
+    /* For hiding generated passwords until they are ready */
 }
 
 .passwordContainer h1 {
@@ -221,17 +191,18 @@ input[type="range"] {
     background-color: #004085;
 }
 
-/* Print button */
-
-.print-button {
-    background: none;
-    border: none;
-    cursor: pointer;
+/* Styles for the print password icon */
+.print-password-icon {
     margin-left: 10px;
+    cursor: pointer;
+    font-size: 1.2em;
+    vertical-align: middle;
+    color: white;
+    transition: color 0.3s ease;
 }
 
-.print-button i {
-    font-size: 1.2em;
+.print-password-icon:hover {
+    color: #a0a0a0;
 }
 
 /* Strength Meter Container */
@@ -278,9 +249,55 @@ input[type="range"] {
     font-weight: bold;
 }
 
+#originalPasswordContainer {
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
 #originalPassword {
-    font-size: 200%;
-    margin-bottom: 2em;
+    font-size: 2em;
+    background-color: #007bff;
+    color: white;
+    padding: 0.5em 1em;
+    border-radius: 10px;
+    display: inline-block;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.characterColor {
+    color: #007bff;
+}
+
+/* Shake Animation Keyframes */
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-5px);
+    }
+
+    40% {
+        transform: translateX(5px);
+    }
+
+    60% {
+        transform: translateX(-5px);
+    }
+
+    80% {
+        transform: translateX(5px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+/* Class to trigger the shake animation */
+.shake-animation {
+    animation: shake 0.5s;
 }
 
 /* Media Query for smaller screens */
@@ -321,11 +338,6 @@ input[type="range"] {
         font-size: medium;
     }
 
-    .checkboxContainer {
-        padding: 0.5em;
-        margin-bottom: 15px;
-    }
-
     #addButton {
         max-width: 2.5em;
         border-radius: 0.5em;
@@ -353,10 +365,6 @@ input[type="range"] {
         padding: 0.4em 0.8em;
         border-radius: 0.6em;
         font-size: 0.9em;
-    }
-
-    #strengthMeter {
-        height: 15px;
     }
 
     #strengthText {
