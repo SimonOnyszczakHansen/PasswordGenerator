@@ -27,8 +27,11 @@
                     maxlength="40" />
                 <button id="addButton" class="btn btn-primary">+</button>
             </div>
+            <!-- Feedback for minimum interests -->
+            <div id="minInterestsFeedback" class="min-interests-feedback"></div>
         </div>
 
+        <!-- Tags Displayed Here -->
         <div id="tags"></div>
 
         <!-- Slider for selecting amount of characters per interest the password should include -->
@@ -51,6 +54,12 @@
                 <div>valgt: <span id="passwordLengthValue" class="characterColor">15</span></div>
                 <label class="maxValue">20</label>
             </div>
+        </div>
+
+        <!-- **Tags Summary (New Addition)** -->
+        <div id="tagsSummary" class="tags-summary hidden">
+            <h3 id="tagsSummaryHeader"></h3>
+            <ul id="tagsList"></ul>
         </div>
 
         <!-- Button that generates the passwords -->
