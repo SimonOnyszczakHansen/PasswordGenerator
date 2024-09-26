@@ -62,6 +62,18 @@
             <ul id="tagsList"></ul>
         </div>
 
+        <!-- Custom-Styled Checkboxes -->
+        <div class="checkboxesContainer">
+            <div class="custom-checkbox">
+                <input type="checkbox" id="checkboxForSpecialCharacters" checked disabled>
+                <label for="checkboxForSpecialCharacters" id="labelForSpecialCharacters"></label>
+            </div>
+            <div class="custom-checkbox">
+                <input type="checkbox" id="checkboxForUppercaseLetters" checked disabled>
+                <label for="checkboxForUppercaseLetters" id="labelForUppercaseLetters"></label>
+            </div>
+        </div>
+
         <!-- Button that generates the passwords -->
         <div id="buttonContainer">
             <button id="generatePassword" class="btn btn-primary"></button>
@@ -94,9 +106,34 @@
                     <div class="strengthMeterBar"></div>
                 </div>
                 <span id="strengthText"></span>
+
+                <!-- Strength Criteria Grid -->
+                <div id="strengthCriteriaContainer">
+                    <ul id="strengthCriteria" class="strength-criteria" aria-live="polite">
+                        <li id="criteria-lowercase" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <span>Lowercase Letter</span>
+                        </li>
+                        <li id="criteria-uppercase" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <span>Uppercase Letter</span>
+                        </li>
+                        <li id="criteria-number" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <span>Number</span>
+                        </li>
+                        <li id="criteria-special" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <span>Special Character</span>
+                        </li>
+                        <li id="criteria-length" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <span>Minimum 12 Characters</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-
     </div>
 
     <script src="script.js"></script>

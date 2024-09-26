@@ -28,6 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
       strong: "Strong",
       minInterestsMessage:
         "Please add at least {minInterests} interests to generate a password.",
+      specialCharacterCheckbox: "Use Special Character",
+      uppercaseCheckpox: "Start With Uppercase",
     },
     da: {
       header: "Adgangskode Generator",
@@ -42,6 +44,8 @@ document.addEventListener("DOMContentLoaded", function () {
       strong: "Stærk",
       minInterestsMessage:
         "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode.",
+      specialCharacterCheckbox: "Brug Special Tegn",
+      uppercaseCheckpox: "Start Med Stort",
     },
   };
 
@@ -67,6 +71,10 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.generatedPassword;
     document.getElementById("passwordsHeader").textContent =
       selectedLang.passwordsHeader;
+    document.getElementById("labelForUppercaseLetters").textContent =
+      selectedLang.uppercaseCheckpox;
+    document.getElementById("labelForSpecialCharacters").textContent =
+      selectedLang.specialCharacterCheckbox;
 
     // Update Tags Used header
     const tagsSummaryHeader = document.getElementById("tagsSummaryHeader");
@@ -373,29 +381,40 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to calculate the strength of the password based on various criteria
   function calculateStrength(password) {
     let strength = 0;
+    const criteriaStatus = {
+      lowercase: false,
+      uppercase: false,
+      number: false,
+      special: false,
+      length: false,
+    };
 
     // Password strength criteria
     const criteria = [
-      { regex: /[a-z]/, message: "lowercase letter", score: 10 },
-      { regex: /[A-Z]/, message: "uppercase letter", score: 10 },
-      { regex: /\d/, message: "number", score: 10 },
-      { regex: /[@$!%*?&€#?]/, message: "special character", score: 10 },
-      { regex: /.{12,}/, message: "minimum 12 characters", score: 20 },
-      { regex: /^(?!.*(.)\1\1)/, message: "no repeated characters", score: 10 },
       {
-        regex: /^(?!.*[a-z]{3,}).*$/i,
-        message: "no sequential letters",
-        score: 10,
+        key: "lowercase",
+        regex: /[a-z]/,
+        message: "lowercase letter",
+        score: 20,
       },
       {
-        regex: /^(?!.*[0-9]{3,}).*$/i,
-        message: "no sequential numbers",
-        score: 10,
+        key: "uppercase",
+        regex: /[A-Z]/,
+        message: "uppercase letter",
+        score: 20,
+      },
+      { key: "number", regex: /\d/, message: "number", score: 20 },
+      {
+        key: "special",
+        regex: /[@$!%*?&€#^]/,
+        message: "special character",
+        score: 20,
       },
       {
-        regex: /^(?!.*(.)\1{2,}).*$/i,
-        message: "no repeating patterns",
-        score: 10,
+        key: "length",
+        regex: /.{12,}/,
+        message: "minimum 12 characters",
+        score: 20,
       },
     ];
 
@@ -417,38 +436,57 @@ document.addEventListener("DOMContentLoaded", function () {
     criteria.forEach((rule) => {
       if (rule.regex.test(password)) {
         strength += rule.score;
+        criteriaStatus[rule.key] = true;
       }
     });
+
     // Subtract points for weak dictionary words
     strength += dictionaryScore;
+
     // Cap the strength score between 0 and 100
     strength = Math.max(0, Math.min(strength, 100));
 
-    return strength; // Return the final strength score
+    return { strength, criteriaStatus };
   }
 
-  // Function to update the strength meter in the UI
   function updateStrengthIndicator(password) {
-    const strength = calculateStrength(password); // Calculate password strength
+    const { strength, criteriaStatus } = calculateStrength(password); // Destructure returned object
     const strengthMeterBar = document.querySelector(".strengthMeterBar");
     const strengthText = document.getElementById("strengthText");
 
-    // Adjust the width of the bar based on the strength level
     let barWidth = 0;
     let strengthLabel = selectedLang.weak; // Default to weak
 
-    if (strength >= 80) {
-      barWidth = 100; // Full width for strong
+    if (strength >= 90) {
+      barWidth = 100;
       strengthLabel = selectedLang.strong;
+    } else if (strength >= 80) {
+      barWidth = 90;
+      strengthLabel = selectedLang.strong;
+    } else if (strength >= 70) {
+      barWidth = 80;
+      strengthLabel = selectedLang.medium;
     } else if (strength >= 60) {
-      barWidth = 75; // Medium strength
+      barWidth = 70;
+      strengthLabel = selectedLang.medium;
+    } else if (strength >= 50) {
+      barWidth = 60;
+      strengthLabel = selectedLang.medium;
+    } else if (strength >= 40) {
+      barWidth = 50;
       strengthLabel = selectedLang.medium;
     } else if (strength >= 30) {
-      barWidth = 50; // Weak strength
+      barWidth = 40;
+      strengthLabel = selectedLang.weak;
+    } else if (strength >= 20) {
+      barWidth = 30;
+      strengthLabel = selectedLang.weak;
+    } else if (strength >= 10) {
+      barWidth = 20;
       strengthLabel = selectedLang.weak;
     } else {
-      barWidth = 25; // Very weak strength
-      strengthLabel = selectedLang.weak; // Remain as 'Weak' or add another label if desired
+      barWidth = 10;
+      strengthLabel = selectedLang.weak;
     }
 
     // Update the width of the bar
@@ -456,6 +494,40 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Update the text label for strength
     strengthText.textContent = strengthLabel;
+
+    // Update the strength criteria UI
+    updateStrengthCriteriaUI(criteriaStatus);
+  }
+
+  // Function to update the strength criteria list in the UI
+  function updateStrengthCriteriaUI(criteriaStatus) {
+    // Mapping between criteria keys and their corresponding HTML element IDs
+    const criteriaMap = {
+      lowercase: "criteria-lowercase",
+      uppercase: "criteria-uppercase",
+      number: "criteria-number",
+      special: "criteria-special",
+      length: "criteria-length",
+    };
+
+    // Iterate over each criterion and update its UI
+    for (const [key, isMet] of Object.entries(criteriaStatus)) {
+      const criteriaElement = document.getElementById(criteriaMap[key]);
+      if (criteriaElement) {
+        const icon = criteriaElement.querySelector("i");
+        if (isMet) {
+          criteriaElement.classList.add("met");
+          criteriaElement.classList.remove("unmet");
+          icon.classList.remove("bi-x-circle");
+          icon.classList.add("bi-check-circle");
+        } else {
+          criteriaElement.classList.add("unmet");
+          criteriaElement.classList.remove("met");
+          icon.classList.remove("bi-check-circle");
+          icon.classList.add("bi-x-circle");
+        }
+      }
+    }
   }
 
   // Function to update the base password and strength indicator
