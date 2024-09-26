@@ -67,6 +67,12 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.generatedPassword;
     document.getElementById("passwordsHeader").textContent =
       selectedLang.passwordsHeader;
+
+    // Update Tags Used header
+    const tagsSummaryHeader = document.getElementById("tagsSummaryHeader");
+    if (tagsSummaryHeader) {
+      tagsSummaryHeader.textContent = selectedLang.tagsUsed;
+    }
   }
 
   // Input field event listener to restrict characters
@@ -102,10 +108,15 @@ document.addEventListener("DOMContentLoaded", function () {
     "Zoom",
   ]; // Predefined services to add to passwords
 
+  // Array to store used parts of each tag for highlighting
+  let usedTagParts = [];
+  let usedNumberParts = []; // New array to store used number parts
+
   // Create a feedback element for minimum interests requirement
   const minInterestsFeedback = document.createElement("div");
   minInterestsFeedback.style.color = "red";
   minInterestsFeedback.style.display = "none";
+  minInterestsFeedback.id = "minInterestsFeedback";
   document.querySelector(".inputsContainer").appendChild(minInterestsFeedback);
 
   // Function to add items (tags) entered by the user
@@ -116,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
       updateItems(container, itemList); // Update the UI
       inputField.value = ""; // Clear input field
       updateBasePassword(); // Update base password when a new item is added
+      updateTagsSummary(); // Update the tags summary
     }
     checkMinimumInterests(); // Check if the minimum number of interests is met
   }
@@ -123,10 +135,11 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to update the tags container with the current list of items
   function updateItems(container, itemList) {
     container.innerHTML = itemList
-      .map((item) => `<span>${item}</span>`)
+      .map((item) => `<span>${escapeHTML(item)}</span>`)
       .join("");
   }
 
+  // Function to handle addition and removal of items (tags)
   function handleItemAddition(addButton, inputField, container, itemList) {
     addButton.addEventListener("click", function () {
       addItem(inputField, container, itemList);
@@ -147,6 +160,7 @@ document.addEventListener("DOMContentLoaded", function () {
         itemList.splice(index, 1); // Remove the item from the list
         updateItems(container, itemList); // Update the UI
         updateBasePassword(); // Update base password when an item is removed
+        updateTagsSummary(); // Update the tags summary
       }
       checkMinimumInterests(); // Re-check if minimum interests are met
     });
@@ -204,6 +218,10 @@ document.addEventListener("DOMContentLoaded", function () {
     let numbers = [];
     let nonNumberTags = [];
 
+    // Reset usedTagParts and usedNumberParts for fresh generation
+    usedTagParts = [];
+    usedNumberParts = []; // Reset usedNumberParts
+
     // Map for replacing certain characters with special symbols
     const specialCharacterMap = {
       a: "@",
@@ -243,8 +261,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const capitalizeFirst = true;
     const useSpecial = true;
 
+    let currentLength = 0;
+
     // Process non-number tags for inclusion in the password
-    nonNumberTags.forEach((tag, index) => {
+    for (let i = 0; i < nonNumberTags.length; i++) {
+      const tag = nonNumberTags[i];
       let extractedPart = tag.substring(0, charactersValue); // Get the first few characters
 
       // Replace only the first occurrence with a special character if enabled
@@ -265,25 +286,52 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // Capitalize the first letter if the option is selected
-      if (capitalizeFirst) {
+      if (capitalizeFirst && extractedPart.length > 0) {
         extractedPart =
           extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
-      basePasswordParts.push(extractedPart); // Add the processed tag to the password parts
+      // Determine how much of extractedPart can be added before reaching maxLength
+      let remainingLength = maxLength - currentLength;
+
+      if (remainingLength <= 0) {
+        break; // No more characters can be added
+      }
+
+      let partToAdd = extractedPart;
+
+      if (extractedPart.length > remainingLength) {
+        partToAdd = extractedPart.substring(0, remainingLength);
+      }
+
+      basePasswordParts.push(partToAdd);
+      usedTagParts.push(partToAdd);
+      currentLength += partToAdd.length;
 
       // Insert a number after each interest (if any numbers are left)
-      if (index < numbers.length) {
-        basePasswordParts.push(numbers[index]);
+      if (i < numbers.length) {
+        const number = numbers[i];
+        let numberPartToAdd;
+        if (currentLength + number.length > maxLength) {
+          numberPartToAdd = number.substring(0, maxLength - currentLength);
+          basePasswordParts.push(numberPartToAdd);
+          currentLength += numberPartToAdd.length;
+          usedNumberParts.push(numberPartToAdd); // Store used number part
+        } else {
+          basePasswordParts.push(number);
+          currentLength += number.length;
+          usedNumberParts.push(number); // Store used number
+        }
       }
-    });
 
-    let basePassword = basePasswordParts.join(""); // Join parts to form the base password
-
-    // Ensure the base password doesn't exceed the maximum length
-    if (basePassword.length > maxLength) {
-      basePassword = basePassword.substring(0, maxLength);
+      // If we've reached maxLength, stop
+      if (currentLength >= maxLength) {
+        break;
+      }
     }
+
+    // Join parts to form the base password
+    const basePassword = basePasswordParts.join("");
 
     return basePassword; // Return the final base password, capped to the max length
   }
@@ -400,6 +448,7 @@ document.addEventListener("DOMContentLoaded", function () {
       strengthLabel = selectedLang.weak;
     } else {
       barWidth = 25; // Very weak strength
+      strengthLabel = selectedLang.weak; // Remain as 'Weak' or add another label if desired
     }
 
     // Update the width of the bar
@@ -437,6 +486,65 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Update the strength indicator for the base password
     updateStrengthIndicator(basePassword);
+
+    // Update the tags summary to reflect the new usedTagParts and usedNumberParts
+    updateTagsSummary();
+  }
+
+  // Function to update the tags summary display with highlighted used parts
+  function updateTagsSummary() {
+    const tagsSummary = document.getElementById("tagsSummary");
+    const tagsList = document.getElementById("tagsList");
+
+    if (tags.length === 0) {
+      tagsSummary.classList.add("hidden");
+      tagsList.innerHTML = "";
+      return;
+    }
+
+    tagsSummary.classList.remove("hidden");
+
+    // Clear the existing list
+    tagsList.innerHTML = "";
+
+    let usedTagIndex = 0; // Counter for usedTagParts
+    let usedNumberIndex = 0; // Counter for usedNumberParts
+
+    // Iterate through each tag and its corresponding used part
+    tags.forEach((tag) => {
+      // Determine if the tag is a number or an interest
+      if (isNaN(tag)) {
+        // It's an interest; highlight the used part only
+        const usedPart = usedTagParts[usedTagIndex++] || "";
+        const remainingPart = tag.substring(usedPart.length);
+
+        // Create list item with highlighted used part
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<span class="used-part">${escapeHTML(
+          usedPart
+        )}</span>${escapeHTML(remainingPart)}`;
+        tagsList.appendChild(listItem);
+      } else {
+        // It's a number; highlight the used part
+        const usedNumberPart = usedNumberParts[usedNumberIndex++] || "";
+        const remainingPart = tag.substring(usedNumberPart.length);
+
+        // Create list item with highlighted used number part
+        const listItem = document.createElement("li");
+        listItem.innerHTML = `<span class="used-part">${escapeHTML(
+          usedNumberPart
+        )}</span>${escapeHTML(remainingPart)}`;
+        tagsList.appendChild(listItem);
+      }
+    });
+  }
+
+  // Function to escape HTML to prevent XSS
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 
   // Function to generate and display passwords for each service
@@ -489,14 +597,20 @@ document.addEventListener("DOMContentLoaded", function () {
             : "";
 
         return `
-          <div id="password-${index}" class="password-item">
-            <span class="service-name">${entry.serviceName}</span> - 
-            <span class="password-text">
-              ${basePart}<span class="service-password">${servicePart}</span>${remainingPassword}
-            </span>
-            <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
-          </div>
-        `;
+              <div id="password-${index}" class="password-item">
+                  <span class="service-name">${escapeHTML(
+                    entry.serviceName
+                  )}</span> - 
+                  <span class="password-text">
+                      <span class="tag-password">${escapeHTML(
+                        basePart
+                      )}</span><span class="service-password">${escapeHTML(
+          servicePart
+        )}</span>${escapeHTML(remainingPassword)}
+                  </span>
+                  <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
+              </div>
+              `;
       })
       .join("");
 
@@ -567,6 +681,9 @@ document.addEventListener("DOMContentLoaded", function () {
     charactersSlider.addEventListener("input", () => {
       charactersValue.textContent = charactersSlider.value;
       updateBasePassword(); // Update base password on slider change
+      if (passwordsGenerated) {
+        generateAndDisplayPasswords(); // Update service passwords if they have been generated
+      }
     });
 
     passwordLength.addEventListener("input", () => {
@@ -603,7 +720,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Include styles for printing
     printWindow.document.write("<style>");
     printWindow.document.write(
-      "body { font-family: Arial, sans-serif; padding: 20px; }"
+      "body { font-family: Arial, sans-serif; padding: 20px; background-color: #2c2c2c; color: white; }"
     );
     printWindow.document.write(
       ".password-item { margin-bottom: 10px; font-size: 1.2em; }"
@@ -615,19 +732,28 @@ document.addEventListener("DOMContentLoaded", function () {
     printWindow.document.write(
       ".service-password { color: #66cc00; font-weight: bold; }"
     );
+    printWindow.document.write(
+      ".tag-password { background-color: #ffeb3b; color: #000; padding: 0.2em 0.4em; border-radius: 3px; }" // Highlighted tag part
+    );
     printWindow.document.write("</style>");
     printWindow.document.write("</head><body>");
     printWindow.document.write(
-      "<h1>Password for " + entry.serviceName + "</h1>"
+      "<h1>Password for " + escapeHTML(entry.serviceName) + "</h1>"
     );
 
     // Construct the password HTML
     const passwordHTML = `
-      <div class="password-item">
-        <span class="service-name">${entry.serviceName}</span> - 
-        <span class="password-text">${entry.password}</span>
-      </div>
-    `;
+          <div class="password-item">
+              <span class="service-name">${escapeHTML(
+                entry.serviceName
+              )}</span> - 
+              <span class="password-text">
+                  <span class="tag-password">${escapeHTML(
+                    entry.password
+                  )}</span>
+              </span>
+          </div>
+      `;
 
     printWindow.document.write(passwordHTML);
     printWindow.document.write("</body></html>");
@@ -635,5 +761,13 @@ document.addEventListener("DOMContentLoaded", function () {
     printWindow.focus();
     printWindow.print();
     printWindow.close();
+  }
+
+  // Function to escape HTML to prevent XSS
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
   }
 });
