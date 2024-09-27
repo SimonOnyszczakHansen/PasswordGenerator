@@ -30,6 +30,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "Please add at least {minInterests} interests to generate a password.",
       specialCharacterCheckbox: "Use Special Character",
       uppercaseCheckpox: "Start With Uppercase",
+      lowercaseCriteria: "Lowercase Letter",
+      upperrcaseCriteria: "Uppercase Letter",
+      numberCriteria: "Number",
+      specialCharacterCriteria: "Special character",
+      characterLengthCriteria: "Minimum 12 Characters"
     },
     da: {
       header: "Adgangskode Generator",
@@ -46,6 +51,11 @@ document.addEventListener("DOMContentLoaded", function () {
         "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode.",
       specialCharacterCheckbox: "Brug Special Tegn",
       uppercaseCheckpox: "Start Med Stort",
+      lowercaseCriteria: "Små Bogstaver",
+      upperrcaseCriteria: "Store Bogstaver",
+      numberCriteria: "Tal",
+      specialCharacterCriteria: "Specialtegn",
+      characterLengthCriteria: "Minimum 12 Tegn"
     },
   };
 
@@ -75,6 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.uppercaseCheckpox;
     document.getElementById("labelForSpecialCharacters").textContent =
       selectedLang.specialCharacterCheckbox;
+      document.getElementById("lowercase-criteria").textContent = selectedLang.lowercaseCriteria;
+      document.getElementById("uppercase-criteria").textContent = selectedLang.upperrcaseCriteria;
+      document.getElementById("number-criteria").textContent = selectedLang.numberCriteria;
+      document.getElementById("special-criteria").textContent = selectedLang.specialCharacterCriteria;
+      document.getElementById("length-criteria").textContent = selectedLang.characterLengthCriteria;
+
 
     // Update Tags Used header
     const tagsSummaryHeader = document.getElementById("tagsSummaryHeader");
@@ -406,7 +422,7 @@ document.addEventListener("DOMContentLoaded", function () {
       { key: "number", regex: /\d/, message: "number", score: 20 },
       {
         key: "special",
-        regex: /[@$!%*?&€#^]/,
+        regex: /[!@#$%&*()_+\]<€^]/,
         message: "special character",
         score: 20,
       },

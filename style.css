@@ -362,12 +362,12 @@ input[type="range"] {
 /* Individual Criteria Item */
 .criteria-item {
     display: flex;
-    align-items: center;
     background-color: #3b3b3b;
     padding: 0.8em 1em;
     border-radius: 8px;
     transition: background-color 0.3s ease, transform 0.3s ease;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    text-align: center;
 }
 
 .criteria-item:hover {
@@ -383,32 +383,30 @@ input[type="range"] {
 }
 
 /* Text Styling */
-.criteria-item span {
+.criteria-item label {
     font-size: 1em;
     color: #ffffff;
-    font-weight: 500;
+    font-weight: bold;
+    margin-top: 0.1em;
 }
 
 /* Met Criteria Styles */
 .criteria-item.met {
     background-color: #3b3b3b;
-    /* Optional: Add a slight green border to indicate success */
     border-left: 4px solid #66cc00;
 }
 
 .criteria-item.met i {
-    color: #66cc00; /* Green checkmark */
+    color: #66cc00;
 }
 
-/* Unmet Criteria Styles */
 .criteria-item.unmet {
     background-color: #3b3b3b;
-    /* Optional: Add a slight red border to indicate failure */
     border-left: 4px solid #ff4d4d;
 }
 
 .criteria-item.unmet i {
-    color: #ff4d4d; /* Red cross */
+    color: #ff4d4d;
 }
 
 .checkboxesContainer {
