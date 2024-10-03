@@ -34,7 +34,9 @@ document.addEventListener("DOMContentLoaded", function () {
       upperrcaseCriteria: "Uppercase Letter",
       numberCriteria: "Number",
       specialCharacterCriteria: "Special character",
-      characterLengthCriteria: "Minimum 12 Characters"
+      characterLengthCriteria: "Minimum 12 Characters",
+      tagsUsed: "Tags Used",
+      convertedMessage: "Converted {originalChar} to {specialChar}",
     },
     da: {
       header: "Adgangskode Generator",
@@ -55,7 +57,9 @@ document.addEventListener("DOMContentLoaded", function () {
       upperrcaseCriteria: "Store Bogstaver",
       numberCriteria: "Tal",
       specialCharacterCriteria: "Specialtegn",
-      characterLengthCriteria: "Minimum 12 Tegn"
+      characterLengthCriteria: "Minimum 12 Tegn",
+      tagsUsed: "Anvendte Tags",
+      convertedMessage: "Konverterede {originalChar} til {specialChar}",
     },
   };
 
@@ -85,12 +89,16 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.uppercaseCheckpox;
     document.getElementById("labelForSpecialCharacters").textContent =
       selectedLang.specialCharacterCheckbox;
-      document.getElementById("lowercase-criteria").textContent = selectedLang.lowercaseCriteria;
-      document.getElementById("uppercase-criteria").textContent = selectedLang.upperrcaseCriteria;
-      document.getElementById("number-criteria").textContent = selectedLang.numberCriteria;
-      document.getElementById("special-criteria").textContent = selectedLang.specialCharacterCriteria;
-      document.getElementById("length-criteria").textContent = selectedLang.characterLengthCriteria;
-
+    document.getElementById("lowercase-criteria").textContent =
+      selectedLang.lowercaseCriteria;
+    document.getElementById("uppercase-criteria").textContent =
+      selectedLang.upperrcaseCriteria;
+    document.getElementById("number-criteria").textContent =
+      selectedLang.numberCriteria;
+    document.getElementById("special-criteria").textContent =
+      selectedLang.specialCharacterCriteria;
+    document.getElementById("length-criteria").textContent =
+      selectedLang.characterLengthCriteria;
 
     // Update Tags Used header
     const tagsSummaryHeader = document.getElementById("tagsSummaryHeader");
@@ -112,6 +120,39 @@ document.addEventListener("DOMContentLoaded", function () {
     applyTranslation("en"); // Default to English
   }
 
+  // Define the special character mapping at the top level
+  const specialCharacterMap = {
+    "-": "e,i",
+    "+": "?",
+    "!": "i,I,L,1",
+    '"': "?",
+    "#": "0,8",
+    "%": "P,p",
+    "&": "O,o",
+    "/": "L,l,i,I",
+    "(": "L,i,I,l,c,C",
+    ")": "L,i,I,l",
+    "=": "?",
+    "?": " ",
+  };
+
+  // Function to invert the special character mapping
+  function invertMapping(specialCharacterMap) {
+    const invertedMap = {};
+    for (const [specialChar, lettersStr] of Object.entries(
+      specialCharacterMap
+    )) {
+      const letters = lettersStr.split(",");
+      letters.forEach((letter) => {
+        invertedMap[letter.toLowerCase()] = specialChar;
+      });
+    }
+    return invertedMap;
+  }
+
+  // Create the inverted map at the top level
+  const invertedMap = invertMapping(specialCharacterMap);
+
   // Tags array to store user input
   let tags = [];
   let selectedServices = [
@@ -132,9 +173,15 @@ document.addEventListener("DOMContentLoaded", function () {
     "Zoom",
   ]; // Predefined services to add to passwords
 
-  // Array to store used parts of each tag for highlighting
+  // Arrays to store used parts and items
   let usedTagParts = [];
-  let usedNumberParts = []; // New array to store used number parts
+  let usedNumberParts = [];
+  let usedTags = [];
+  let usedNumbers = [];
+  let usedItems = []; // New array to store used items in order
+
+  // Variable to store the special character mapping
+  let specialCharacterMapping = {};
 
   // Create a feedback element for minimum interests requirement
   const minInterestsFeedback = document.createElement("div");
@@ -151,7 +198,6 @@ document.addEventListener("DOMContentLoaded", function () {
       updateItems(container, itemList); // Update the UI
       inputField.value = ""; // Clear input field
       updateBasePassword(); // Update base password when a new item is added
-      updateTagsSummary(); // Update the tags summary
     }
     checkMinimumInterests(); // Check if the minimum number of interests is met
   }
@@ -184,7 +230,6 @@ document.addEventListener("DOMContentLoaded", function () {
         itemList.splice(index, 1); // Remove the item from the list
         updateItems(container, itemList); // Update the UI
         updateBasePassword(); // Update base password when an item is removed
-        updateTagsSummary(); // Update the tags summary
       }
       checkMinimumInterests(); // Re-check if minimum interests are met
     });
@@ -206,15 +251,12 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to check if the user has added the minimum number of interests
   function checkMinimumInterests() {
     const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
-    const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
     const charactersPerInterest = parseInt(charactersSlider.value, 10); // Characters per interest
 
     const nonNumberTags = tags.filter((tag) => isNaN(tag)); // Filter out numbers from the tags
 
     // Calculate minimum number of interests required
-    const minInterests = Math.ceil(
-      (totalPasswordLength - serviceNameLength) / charactersPerInterest
-    );
+    const minInterests = Math.ceil(totalPasswordLength / charactersPerInterest);
 
     // Display a message if the user hasn't added enough interests
     if (nonNumberTags.length < minInterests) {
@@ -242,34 +284,14 @@ document.addEventListener("DOMContentLoaded", function () {
     let numbers = [];
     let nonNumberTags = [];
 
-    // Reset usedTagParts and usedNumberParts for fresh generation
+    // Reset usedTagParts, usedNumberParts, and specialCharacterMapping for fresh generation
     usedTagParts = [];
-    usedNumberParts = []; // Reset usedNumberParts
+    usedNumberParts = [];
+    usedTags = [];
+    usedNumbers = [];
+    usedItems = [];
+    specialCharacterMapping = {};
 
-    // Map for replacing certain characters with special symbols
-    const specialCharacterMap = {
-      a: "@",
-      b: "!",
-      c: "(",
-      d: "#",
-      e: "€",
-      f: "*",
-      g: "&",
-      h: "#",
-      i: "!",
-      j: "]",
-      k: "<",
-      l: "!",
-      m: "^",
-      n: "^",
-      o: "@",
-      p: "%",
-      q: "&",
-      r: "#",
-      s: "$",
-      t: "+",
-      u: "_",
-    };
     let specialCharacterInserted = false; // Flag to track if a special character has been inserted
 
     // Separate numbers and non-number tags from the user's input
@@ -297,12 +319,15 @@ document.addEventListener("DOMContentLoaded", function () {
         extractedPart = extractedPart
           .split("")
           .map((char) => {
-            if (
-              specialCharacterMap[char.toLowerCase()] &&
-              !specialCharacterInserted
-            ) {
+            const replacement = invertedMap[char.toLowerCase()]; // Convert char to lowercase
+            if (replacement && !specialCharacterInserted) {
               specialCharacterInserted = true; // Mark that we've inserted a special character
-              return specialCharacterMap[char.toLowerCase()];
+
+              // Store the original and special character mapping
+              specialCharacterMapping.originalChar = char;
+              specialCharacterMapping.specialChar = replacement;
+
+              return replacement;
             }
             return char;
           })
@@ -330,21 +355,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
       basePasswordParts.push(partToAdd);
       usedTagParts.push(partToAdd);
+      usedTags.push(tag);
+      usedItems.push({ type: "tag", value: partToAdd, original: tag });
       currentLength += partToAdd.length;
 
       // Insert a number after each interest (if any numbers are left)
-      if (i < numbers.length) {
-        const number = numbers[i];
+      if (numbers.length > 0) {
+        const number = numbers.shift();
         let numberPartToAdd;
         if (currentLength + number.length > maxLength) {
           numberPartToAdd = number.substring(0, maxLength - currentLength);
           basePasswordParts.push(numberPartToAdd);
           currentLength += numberPartToAdd.length;
           usedNumberParts.push(numberPartToAdd); // Store used number part
+          usedNumbers.push(number);
+          usedItems.push({
+            type: "number",
+            value: numberPartToAdd,
+            original: number,
+          });
         } else {
           basePasswordParts.push(number);
           currentLength += number.length;
           usedNumberParts.push(number); // Store used number
+          usedNumbers.push(number);
+          usedItems.push({ type: "number", value: number, original: number });
         }
       }
 
@@ -354,44 +389,34 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     }
 
+    // If there is still space and numbers left, add them
+    while (currentLength < maxLength && numbers.length > 0) {
+      const number = numbers.shift();
+      let numberPartToAdd;
+      if (currentLength + number.length > maxLength) {
+        numberPartToAdd = number.substring(0, maxLength - currentLength);
+        basePasswordParts.push(numberPartToAdd);
+        currentLength += numberPartToAdd.length;
+        usedNumberParts.push(numberPartToAdd); // Store used number part
+        usedNumbers.push(number);
+        usedItems.push({
+          type: "number",
+          value: numberPartToAdd,
+          original: number,
+        });
+      } else {
+        basePasswordParts.push(number);
+        currentLength += number.length;
+        usedNumberParts.push(number); // Store used number
+        usedNumbers.push(number);
+        usedItems.push({ type: "number", value: number, original: number });
+      }
+    }
+
     // Join parts to form the base password
     const basePassword = basePasswordParts.join("");
 
     return basePassword; // Return the final base password, capped to the max length
-  }
-
-  // Function to insert the service name into the generated password
-  function insertServiceName(
-    password,
-    serviceName,
-    serviceNameLength,
-    totalLength
-  ) {
-    serviceNameLength = parseInt(serviceNameLength, 10);
-    totalLength = parseInt(totalLength, 10);
-
-    const specialCharacterIndex = password.search(/[!@#$%&*()_+\]<€^]/);
-    let servicePart = serviceName.substring(0, serviceNameLength); // Extract part of the service name
-
-    let newPassword;
-    // Insert the service name after a special character, if one exists
-    if (specialCharacterIndex !== -1) {
-      newPassword =
-        password.slice(0, specialCharacterIndex + 1) +
-        servicePart +
-        password.slice(specialCharacterIndex + 1);
-    } else {
-      newPassword = password + servicePart; // Otherwise, append the service name to the end
-    }
-
-    // Ensure the password is exactly the required length, by trimming extra characters if needed
-    if (newPassword.length > totalLength) {
-      return newPassword.substring(0, totalLength); // Trim the password if it's too long
-    } else if (newPassword.length < totalLength) {
-      return newPassword; // Don't pad with asterisks; just return the password as is
-    }
-
-    return newPassword; // Return the generated password
   }
 
   // Function to calculate the strength of the password based on various criteria
@@ -405,31 +430,41 @@ document.addEventListener("DOMContentLoaded", function () {
       length: false,
     };
 
+    // Generate the special characters regex dynamically
+    const specialChars = Object.keys(specialCharacterMap)
+      .join("")
+      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // Escape special regex characters
+
     // Password strength criteria
     const criteria = [
       {
         key: "lowercase",
         regex: /[a-z]/,
-        message: "lowercase letter",
+        message: selectedLang.lowercaseCriteria,
         score: 20,
       },
       {
         key: "uppercase",
         regex: /[A-Z]/,
-        message: "uppercase letter",
+        message: selectedLang.upperrcaseCriteria,
         score: 20,
       },
-      { key: "number", regex: /\d/, message: "number", score: 20 },
+      {
+        key: "number",
+        regex: /\d/,
+        message: selectedLang.numberCriteria,
+        score: 20,
+      },
       {
         key: "special",
-        regex: /[!@#$%&*()_+\]<€^]/,
-        message: "special character",
+        regex: new RegExp("[" + specialChars + "]"),
+        message: selectedLang.specialCharacterCriteria,
         score: 20,
       },
       {
         key: "length",
         regex: /.{12,}/,
-        message: "minimum 12 characters",
+        message: selectedLang.characterLengthCriteria,
         score: 20,
       },
     ];
@@ -559,13 +594,12 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
-    const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
 
     // Generate a base password based on user inputs
     const basePassword = generateBasePassword(
       tags,
       charactersSlider.value,
-      totalPasswordLength - serviceNameLength
+      totalPasswordLength
     );
 
     // Update the base password text
@@ -579,53 +613,66 @@ document.addEventListener("DOMContentLoaded", function () {
     updateTagsSummary();
   }
 
-  // Function to update the tags summary display with highlighted used parts
   function updateTagsSummary() {
     const tagsSummary = document.getElementById("tagsSummary");
     const tagsList = document.getElementById("tagsList");
+    const specialCharInfo = document.getElementById("specialCharInfo");
 
-    if (tags.length === 0) {
-      tagsSummary.classList.add("hidden");
-      tagsList.innerHTML = "";
-      return;
+    if (usedItems.length === 0) {
+        tagsSummary.classList.add("hidden");
+        tagsList.innerHTML = "";
+        specialCharInfo.innerHTML = "";
+        return;
     }
 
     tagsSummary.classList.remove("hidden");
 
-    // Clear the existing list
+    // Clear the existing list and special character info
     tagsList.innerHTML = "";
+    specialCharInfo.innerHTML = "";
 
-    let usedTagIndex = 0; // Counter for usedTagParts
-    let usedNumberIndex = 0; // Counter for usedNumberParts
+    // To keep track of the current indentation level
+    let totalUsedLength = 0;
 
-    // Iterate through each tag and its corresponding used part
-    tags.forEach((tag) => {
-      // Determine if the tag is a number or an interest
-      if (isNaN(tag)) {
-        // It's an interest; highlight the used part only
-        const usedPart = usedTagParts[usedTagIndex++] || "";
-        const remainingPart = tag.substring(usedPart.length);
-
-        // Create list item with highlighted used part
+    // Iterate through usedItems and display them
+    usedItems.forEach((item) => {
         const listItem = document.createElement("li");
-        listItem.innerHTML = `<span class="used-part">${escapeHTML(
-          usedPart
-        )}</span>${escapeHTML(remainingPart)}`;
-        tagsList.appendChild(listItem);
-      } else {
-        // It's a number; highlight the used part
-        const usedNumberPart = usedNumberParts[usedNumberIndex++] || "";
-        const remainingPart = tag.substring(usedNumberPart.length);
 
-        // Create list item with highlighted used number part
-        const listItem = document.createElement("li");
-        listItem.innerHTML = `<span class="used-part">${escapeHTML(
-          usedNumberPart
-        )}</span>${escapeHTML(remainingPart)}`;
+        const usedPart = item.value || "";
+        const remainingPart = item.original.substring(usedPart.length);
+
+        // Set up indentation based on the total length of the parts used so far
+        const indent = totalUsedLength * 10; // Adjust the multiplier for better spacing if needed
+
+        // Create a div with increasing margin-left to simulate the stair-step effect
+        listItem.innerHTML = `
+            <div style="margin-left: ${indent}px;">
+                <span class="used-part">${escapeHTML(usedPart)}</span>${escapeHTML(remainingPart)}
+            </div>
+        `;
+
         tagsList.appendChild(listItem);
-      }
+
+        // Update the total used length
+        totalUsedLength += usedPart.length;
     });
-  }
+
+    // Display the special character mapping if any
+    if (specialCharacterMapping.originalChar) {
+        const convertedMessage = selectedLang.convertedMessage
+            .replace(
+                "{originalChar}",
+                `<span class="converted-char">${escapeHTML(specialCharacterMapping.originalChar)}</span>`
+            )
+            .replace(
+                "{specialChar}",
+                `<span class="converted-char">${escapeHTML(specialCharacterMapping.specialChar)}</span>`
+            );
+
+        specialCharInfo.innerHTML = convertedMessage;
+    }
+}
+
 
   // Function to escape HTML to prevent XSS
   function escapeHTML(str) {
@@ -637,19 +684,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Function to generate and display passwords for each service
   function generateAndDisplayServicePasswords(basePassword) {
-    const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
     const serviceNameLength = parseInt(serviceNameSlider.value, 10); // Length from service name
 
     // Generate passwords for each selected service
     const passwords = selectedServices.map((service) => {
       return {
         serviceName: service,
-        password: insertServiceName(
-          basePassword,
-          service,
-          serviceNameLength,
-          totalPasswordLength
-        ),
+        password: insertServiceName(basePassword, service, serviceNameLength),
       };
     });
 
@@ -657,48 +698,37 @@ document.addEventListener("DOMContentLoaded", function () {
     const passwordsContainer = document.getElementById("passwords");
     passwordsContainer.innerHTML = passwords
       .map((entry, index) => {
-        // Find the first special character index
-        const specialCharacterIndex =
-          entry.password.search(/[!@#$%&*()_+\]<€^]/);
+        const servicePart = entry.serviceName.substring(0, serviceNameLength);
+        const servicePartIndex = entry.password.indexOf(servicePart);
 
-        // Extract the base password up to and including the special character
-        const basePart =
-          specialCharacterIndex !== -1
-            ? entry.password.slice(0, specialCharacterIndex + 1)
-            : entry.password.slice(0, totalPasswordLength - serviceNameLength);
+        let basePart = "";
+        let remainingPassword = "";
 
-        // Extract the service part of the password based on the serviceNameLength (slider value)
-        const servicePart =
-          specialCharacterIndex !== -1
-            ? entry.password.slice(
-                specialCharacterIndex + 1,
-                specialCharacterIndex + 1 + serviceNameLength
-              )
-            : entry.password.slice(-serviceNameLength);
-
-        // Get the remaining part of the password (if any) after the service name portion
-        const remainingPassword =
-          specialCharacterIndex !== -1
-            ? entry.password.slice(
-                specialCharacterIndex + 1 + serviceNameLength
-              )
-            : "";
+        if (servicePartIndex !== -1) {
+          basePart = entry.password.slice(0, servicePartIndex);
+          remainingPassword = entry.password.slice(
+            servicePartIndex + servicePart.length
+          );
+        } else {
+          basePart = entry.password;
+          remainingPassword = "";
+        }
 
         return `
-              <div id="password-${index}" class="password-item">
-                  <span class="service-name">${escapeHTML(
-                    entry.serviceName
-                  )}</span> - 
-                  <span class="password-text">
-                      <span class="tag-password">${escapeHTML(
-                        basePart
-                      )}</span><span class="service-password">${escapeHTML(
+          <div id="password-${index}" class="password-item">
+            <span class="service-name">${escapeHTML(
+              entry.serviceName
+            )}</span> - 
+            <span class="password-text">
+              <span class="tag-password">${escapeHTML(
+                basePart
+              )}</span><span class="service-password">${escapeHTML(
           servicePart
         )}</span>${escapeHTML(remainingPassword)}
-                  </span>
-                  <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
-              </div>
-              `;
+            </span>
+            <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
+          </div>
+        `;
       })
       .join("");
 
@@ -713,6 +743,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Show the passwords container
     document.getElementById("passwordsContainer").classList.remove("hidden");
+  }
+
+  // Function to insert the service name into the generated password
+  function insertServiceName(password, serviceName, serviceNameLength) {
+    serviceNameLength = parseInt(serviceNameLength, 10);
+
+    const specialCharacterIndex = password.search(/[-+!"#%&/()=?]/);
+    let servicePart = serviceName.substring(0, serviceNameLength); // Extract part of the service name
+
+    let newPassword;
+    // Insert the service name after a special character, if one exists
+    if (specialCharacterIndex !== -1) {
+      newPassword =
+        password.slice(0, specialCharacterIndex + 1) +
+        servicePart +
+        password.slice(specialCharacterIndex + 1);
+    } else {
+      newPassword = password + servicePart; // Otherwise, append the service name to the end
+    }
+
+    // No trimming of the final password length
+    return newPassword; // Return the generated password
   }
 
   // Function to generate and display passwords when the button is clicked
@@ -831,17 +883,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Construct the password HTML
     const passwordHTML = `
-          <div class="password-item">
-              <span class="service-name">${escapeHTML(
-                entry.serviceName
-              )}</span> - 
-              <span class="password-text">
-                  <span class="tag-password">${escapeHTML(
-                    entry.password
-                  )}</span>
-              </span>
-          </div>
-      `;
+      <div class="password-item">
+        <span class="service-name">${escapeHTML(entry.serviceName)}</span> - 
+        <span class="password-text">
+          <span class="tag-password">${escapeHTML(entry.password)}</span>
+        </span>
+      </div>
+    `;
 
     printWindow.document.write(passwordHTML);
     printWindow.document.write("</body></html>");
