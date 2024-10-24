@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
       strong: "Strong",
       minInterestsMessage:
         "Please add at least {minInterests} interests to generate a password.",
+      numberRequiredMessage:
+        "Please add at least one number to generate a password",
+
       specialCharacterCheckbox: "Use Special Character",
       uppercaseCheckpox: "Start With Uppercase",
       lowercaseCriteria: "Lowercase Letter",
@@ -35,8 +38,87 @@ document.addEventListener("DOMContentLoaded", function () {
       numberCriteria: "Number",
       specialCharacterCriteria: "Special character",
       characterLengthCriteria: "Minimum 12 Characters",
-      tagsUsed: "Tags Used",
+      tagsUsed: "Used Interests",
       convertedMessage: "Converted {originalChar} to {specialChar}",
+      infoSection1:
+        "Enter your interests and favorite number, and we will generate a hacker-proof password for you.",
+      infoSection2:
+        "THIS IS A BETA PROJECT - Email chris@avirus.dk for ideas and feedback.",
+      infoSection3: "--More to come--.",
+      tooltipTextInterests:
+        "Type your interests, what makes you happy, what you are interested in, and also write your favorite number.",
+      tooltipTextCharactersPerInterest:
+        "Specify how many characters of each interest to use in your new password.",
+      tooltipTextPasswordLength:
+        "The length of the final password - nowadays, 15 is actually the minimum recommended.",
+      tooltipTextServiceName:
+        "Number of characters from the website name to include.",
+      tooltipTextGeneratedPasswords:
+        "This section displays the passwords generated based on your inputs.",
+      toolTipTextUsedInterests:
+        "Here you can see the interests and numbers you have mentioned, presented so you understand how they are assembled, helping you remember them better.",
+      predefinedInterests: [
+        "golf",
+        "badminton",
+        "soccer",
+        "dance",
+        "running",
+        "cycling",
+        "friends",
+        "drinking",
+        "cars",
+        "computer",
+        "gaming",
+        "krolf",
+        "handball",
+        "knitting",
+        "hunting",
+        "stamps",
+        "cards",
+        "horses",
+        "walking",
+        "bowling",
+        "cats",
+        "dogs",
+        "flowers",
+        "floorball",
+        "beer",
+        "fitness",
+        "motorcycles",
+        "art",
+        "swimming",
+        "food",
+        "fishing",
+        "boxing",
+        "camping",
+        "parkour",
+        "music",
+        "gymnastics",
+        "books",
+        "astronomy",
+      ],
+      typeYourOwnInterests: "TYPE YOUR OWN INTEREST",
+      openVideoButton: "Watch Tutorial Video",
+      interestsHeader: "Recommended Interests",
+      colorsHeader: "Recommended Colors",
+      typeYourOwnColors: "TYPE YOUR OWN COLORS",
+      predefinedColors: [
+        "Red",
+        "Green",
+        "Blue",
+        "Yellow",
+        "Orange",
+        "Purple",
+        "Black",
+        "White",
+        "Pink",
+        "Brown",
+        "Gray",
+        "Turquoise",
+      ],
+      numbersHeader: "Recommended Numbers",
+      predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      typeYourOwnNumbers: "TYPE YOUR OWN NUMBER",
     },
     da: {
       header: "Adgangskode Generator",
@@ -51,6 +133,8 @@ document.addEventListener("DOMContentLoaded", function () {
       strong: "Stærk",
       minInterestsMessage:
         "Tilføj venligst mindst {minInterests} interesser for at generere en adgangskode.",
+      numberRequiredMessage:
+        "Tilføj venligst mindst et tal for at generere et password",
       specialCharacterCheckbox: "Brug Special Tegn",
       uppercaseCheckpox: "Start Med Stort",
       lowercaseCriteria: "Små Bogstaver",
@@ -58,8 +142,87 @@ document.addEventListener("DOMContentLoaded", function () {
       numberCriteria: "Tal",
       specialCharacterCriteria: "Specialtegn",
       characterLengthCriteria: "Minimum 12 Tegn",
-      tagsUsed: "Anvendte Tags",
+      tagsUsed: "Anvendte Interesser",
       convertedMessage: "Konverterede {originalChar} til {specialChar}",
+      infoSection1:
+        "Skriv dine interesser, og dit yndlingstal, så genererer vi en hacker-sikker adgangskode til dig.",
+      infoSection2:
+        "DETTE ER ET BETA PROJEKT - Skriv mail til chris@avirus.dk for ideer og feedback.",
+      infoSection3: "--- Der kommer mere ---.",
+      tooltipTextInterests:
+        "Skriv dine interesser, hvad der gør dig glad, hvad du interesserer dig for, og skriv også dit yndlingstal.",
+      tooltipTextCharactersPerInterest:
+        "Angiv hvor mange tegn af hver interesse, der skal bruges i dit nye password.",
+      tooltipTextPasswordLength:
+        "Længden på det færdige password - i dag er 15 faktisk det mindste, der anbefales.",
+      tooltipTextServiceName:
+        "Antal tegn fra hjemmesidens navn, der skal inkluderes.",
+      tooltipTextGeneratedPasswords:
+        "Dette afsnit viser de adgangskoder, der er genereret baseret på dine input.",
+      toolTipTextUsedInterests:
+        "Se her de interesser og tal som du har nævnt, så står de så du forstår hvordan de er sat sammen, så husker du det bedre.",
+      predefinedInterests: [
+        "golf",
+        "badminton",
+        "fodbold",
+        "dans",
+        "løb",
+        "cykling",
+        "venner",
+        "druk",
+        "biler",
+        "computer",
+        "gaming",
+        "krolf",
+        "håndbold",
+        "strikning",
+        "jagt",
+        "frimærker",
+        "kort",
+        "heste",
+        "gåture",
+        "bowling",
+        "katte",
+        "hunde",
+        "blomster",
+        "floorball",
+        "øl",
+        "fitness",
+        "motorcykler",
+        "kunst",
+        "svømning",
+        "mad",
+        "fiskeri",
+        "boksning",
+        "camping",
+        "parkour",
+        "musik",
+        "gymnastik",
+        "bøger",
+        "astronomi",
+      ],
+      typeYourOwnInterests: "SKRIV SELV DIN EGEN INTERESSE",
+      openVideoButton: "Se Intro Video",
+      interestsHeader: "Anbefalede Interesser",
+      colorsHeader: "Anbefalede Farver",
+      typeYourOwnColors: "SRIV SELV DINE EGNE FARVER",
+      predefinedColors: [
+        "Rød",
+        "Grøn",
+        "Blå",
+        "Gul",
+        "Orange",
+        "Lilla",
+        "Sort",
+        "Hvid",
+        "Pink",
+        "Brun",
+        "Grå",
+        "Turkis",
+      ],
+      numbersHeader: "Anbefalede Tal",
+      predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
+      typeYourOwnNumbers: "SKRIV SELV DIT EGET TAL",
     },
   };
 
@@ -99,12 +262,43 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.specialCharacterCriteria;
     document.getElementById("length-criteria").textContent =
       selectedLang.characterLengthCriteria;
+    document.getElementById("tooltip-text-interest").textContent =
+      selectedLang.tooltipTextInterests;
+    document.getElementById(
+      "tooltip-text-characters-per-interest"
+    ).textContent = selectedLang.tooltipTextCharactersPerInterest;
+    document.getElementById("tooltip-text-password-length").textContent =
+      selectedLang.tooltipTextPasswordLength;
+    document.getElementById("tooltip-text-service-name").textContent =
+      selectedLang.tooltipTextServiceName;
+    document.getElementById("tooltip-text-generated-passwords").textContent =
+      selectedLang.tooltipTextGeneratedPasswords;
+    document.getElementById("tooltip-text-used-interests").textContent =
+      selectedLang.toolTipTextUsedInterests;
+    document.getElementById("openVideoButton").textContent =
+      selectedLang.openVideoButton;
+    document.getElementById("interestsHeader").textContent =
+      selectedLang.interestsHeader;
+    document.getElementById("colorsHeader").textContent =
+      selectedLang.colorsHeader;
+    document.getElementById("numbersHeader").textContent =
+      selectedLang.numbersHeader;
+
+    const infoSectionParagraphs = document.querySelectorAll(".info-section p");
+    infoSectionParagraphs[0].textContent = selectedLang.infoSection1;
+    infoSectionParagraphs[1].textContent = selectedLang.infoSection2;
+    infoSectionParagraphs[2].textContent = selectedLang.infoSection3;
 
     // Update Tags Used header
     const tagsSummaryHeader = document.getElementById("tagsSummaryHeader");
     if (tagsSummaryHeader) {
       tagsSummaryHeader.textContent = selectedLang.tagsUsed;
     }
+
+    // Render predefined interests and colors based on the selected language
+    renderPredefinedInterests();
+    renderPredefinedColors();
+    renderPredefinedNumbers();
   }
 
   // Input field event listener to restrict characters
@@ -133,7 +327,9 @@ document.addEventListener("DOMContentLoaded", function () {
     "(": "L,i,I,l,c,C",
     ")": "L,i,I,l",
     "=": "?",
-    "?": " ",
+    "?": "æ,Æ",
+    "@": "ø,Ø",
+    "*": "å,Å",
   };
 
   // Function to invert the special character mapping
@@ -248,23 +444,43 @@ document.addEventListener("DOMContentLoaded", function () {
   updateSlider(passwordLength, passwordLengthValue);
   updateSlider(serviceNameSlider, serviceNameValue);
 
-  // Function to check if the user has added the minimum number of interests
+  // Function to check if the user has added enough interests and numbers
   function checkMinimumInterests() {
-    const totalPasswordLength = parseInt(passwordLength.value, 10); // Password length
+    const totalPasswordLength = parseInt(passwordLength.value, 10); // Desired password length
     const charactersPerInterest = parseInt(charactersSlider.value, 10); // Characters per interest
 
-    const nonNumberTags = tags.filter((tag) => isNaN(tag)); // Filter out numbers from the tags
+    const nonNumberTags = tags.filter((tag) => isNaN(tag)); // Interests
+    const numbers = tags.filter((tag) => !isNaN(tag)); // Numbers
 
-    // Calculate minimum number of interests required
-    const minInterests = Math.ceil(totalPasswordLength / charactersPerInterest);
+    // Calculate expected password length
+    const expectedLength =
+      nonNumberTags.length * charactersPerInterest +
+      numbers.reduce((sum, num) => sum + num.length, 0) +
+      1; // +1 for special character
 
-    // Display a message if the user hasn't added enough interests
-    if (nonNumberTags.length < minInterests) {
+    let errorMessages = [];
+
+    // Check if the expected password length meets the desired password length
+    if (expectedLength < totalPasswordLength) {
+      const minInterestsRequired = Math.ceil(
+        (totalPasswordLength -
+          numbers.reduce((sum, num) => sum + num.length, 0) -
+          1) / // Subtract numbers and special character
+          charactersPerInterest
+      );
+
       const minInterestsMessage = selectedLang.minInterestsMessage.replace(
         "{minInterests}",
-        minInterests
+        minInterestsRequired
       );
-      minInterestsFeedback.textContent = minInterestsMessage;
+      errorMessages.push(minInterestsMessage);
+    } else if (numbers.length === 0) {
+      const numberRequiredMessage = selectedLang.numberRequiredMessage;
+      errorMessages.push(numberRequiredMessage);
+    }
+
+    if (errorMessages.length > 0) {
+      minInterestsFeedback.innerHTML = errorMessages.join("<br>");
       minInterestsFeedback.style.display = "block";
       document.getElementById("generatePassword").disabled = true; // Disable password generation
       return false;
@@ -275,10 +491,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Function to generate a base password using the user's interests and inputs
-  function generateBasePassword(tags, charactersValue, maxLength) {
+  // Modified generateBasePassword function
+  function generateBasePassword(tags, charactersValue, minLength) {
     charactersValue = parseInt(charactersValue, 10);
-    maxLength = parseInt(maxLength, 10);
+    minLength = parseInt(minLength, 10); // Now treated as minimum length
 
     let basePasswordParts = [];
     let numbers = [];
@@ -307,20 +523,29 @@ document.addEventListener("DOMContentLoaded", function () {
     const capitalizeFirst = true;
     const useSpecial = true;
 
-    let currentLength = 0;
-
     // Process non-number tags for inclusion in the password
     for (let i = 0; i < nonNumberTags.length; i++) {
       const tag = nonNumberTags[i];
-      let extractedPart = tag.substring(0, charactersValue); // Get the first few characters
+      let extractedPart = tag.substring(0, charactersValue); // Get exactly charactersValue characters
 
-      // Replace only the first occurrence with a special character if enabled
-      if (useSpecial && !specialCharacterInserted) {
-        extractedPart = extractedPart
-          .split("")
-          .map((char) => {
-            const replacement = invertedMap[char.toLowerCase()]; // Convert char to lowercase
-            if (replacement && !specialCharacterInserted) {
+      // Replace æ, ø, å characters no matter what
+      extractedPart = extractedPart
+        .split("")
+        .map((char) => {
+          const replacement = invertedMap[char.toLowerCase()];
+
+          if (["æ", "ø", "å"].includes(char.toLowerCase())) {
+            if (replacement) {
+              // Store the original and special character mapping, but only the first time
+              if (!specialCharacterMapping.originalChar) {
+                specialCharacterMapping.originalChar = char;
+                specialCharacterMapping.specialChar = replacement;
+              }
+
+              return replacement;
+            }
+          } else if (useSpecial && !specialCharacterInserted) {
+            if (replacement) {
               specialCharacterInserted = true; // Mark that we've inserted a special character
 
               // Store the original and special character mapping
@@ -329,10 +554,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
               return replacement;
             }
-            return char;
-          })
-          .join("");
-      }
+          }
+
+          return char;
+        })
+        .join("");
 
       // Capitalize the first letter if the option is selected
       if (capitalizeFirst && extractedPart.length > 0) {
@@ -340,83 +566,40 @@ document.addEventListener("DOMContentLoaded", function () {
           extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
       }
 
-      // Determine how much of extractedPart can be added before reaching maxLength
-      let remainingLength = maxLength - currentLength;
-
-      if (remainingLength <= 0) {
-        break; // No more characters can be added
-      }
-
-      let partToAdd = extractedPart;
-
-      if (extractedPart.length > remainingLength) {
-        partToAdd = extractedPart.substring(0, remainingLength);
-      }
-
-      basePasswordParts.push(partToAdd);
-      usedTagParts.push(partToAdd);
+      basePasswordParts.push(extractedPart);
+      usedTagParts.push(extractedPart);
       usedTags.push(tag);
-      usedItems.push({ type: "tag", value: partToAdd, original: tag });
-      currentLength += partToAdd.length;
+      usedItems.push({ type: "tag", value: extractedPart, original: tag });
 
       // Insert a number after each interest (if any numbers are left)
       if (numbers.length > 0) {
         const number = numbers.shift();
-        let numberPartToAdd;
-        if (currentLength + number.length > maxLength) {
-          numberPartToAdd = number.substring(0, maxLength - currentLength);
-          basePasswordParts.push(numberPartToAdd);
-          currentLength += numberPartToAdd.length;
-          usedNumberParts.push(numberPartToAdd); // Store used number part
-          usedNumbers.push(number);
-          usedItems.push({
-            type: "number",
-            value: numberPartToAdd,
-            original: number,
-          });
-        } else {
-          basePasswordParts.push(number);
-          currentLength += number.length;
-          usedNumberParts.push(number); // Store used number
-          usedNumbers.push(number);
-          usedItems.push({ type: "number", value: number, original: number });
-        }
-      }
-
-      // If we've reached maxLength, stop
-      if (currentLength >= maxLength) {
-        break;
-      }
-    }
-
-    // If there is still space and numbers left, add them
-    while (currentLength < maxLength && numbers.length > 0) {
-      const number = numbers.shift();
-      let numberPartToAdd;
-      if (currentLength + number.length > maxLength) {
-        numberPartToAdd = number.substring(0, maxLength - currentLength);
-        basePasswordParts.push(numberPartToAdd);
-        currentLength += numberPartToAdd.length;
-        usedNumberParts.push(numberPartToAdd); // Store used number part
-        usedNumbers.push(number);
-        usedItems.push({
-          type: "number",
-          value: numberPartToAdd,
-          original: number,
-        });
-      } else {
         basePasswordParts.push(number);
-        currentLength += number.length;
         usedNumberParts.push(number); // Store used number
         usedNumbers.push(number);
         usedItems.push({ type: "number", value: number, original: number });
       }
     }
 
+    // If there are remaining numbers, add them at the end
+    while (numbers.length > 0) {
+      const number = numbers.shift();
+      basePasswordParts.push(number);
+      usedNumberParts.push(number);
+      usedNumbers.push(number);
+      usedItems.push({ type: "number", value: number, original: number });
+    }
+
+    // If no special character was inserted, add '!' at the end
+    if (!specialCharacterInserted) {
+      basePasswordParts.push("!");
+      usedItems.push({ type: "special", value: "!", original: "!" });
+    }
+
     // Join parts to form the base password
     const basePassword = basePasswordParts.join("");
 
-    return basePassword; // Return the final base password, capped to the max length
+    return basePassword; // Return the final base password
   }
 
   // Function to calculate the strength of the password based on various criteria
@@ -619,10 +802,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const specialCharInfo = document.getElementById("specialCharInfo");
 
     if (usedItems.length === 0) {
-        tagsSummary.classList.add("hidden");
-        tagsList.innerHTML = "";
-        specialCharInfo.innerHTML = "";
-        return;
+      tagsSummary.classList.add("hidden");
+      tagsList.innerHTML = "";
+      specialCharInfo.innerHTML = "";
+      return;
     }
 
     tagsSummary.classList.remove("hidden");
@@ -636,43 +819,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Iterate through usedItems and display them
     usedItems.forEach((item) => {
-        const listItem = document.createElement("li");
+      const listItem = document.createElement("li");
 
-        const usedPart = item.value || "";
-        const remainingPart = item.original.substring(usedPart.length);
+      const usedPart = item.value || "";
+      const remainingPart = item.original.substring(usedPart.length);
 
-        // Set up indentation based on the total length of the parts used so far
-        const indent = totalUsedLength * 10; // Adjust the multiplier for better spacing if needed
+      // Set up indentation based on the total length of the parts used so far
+      const indent = totalUsedLength * 10; // Adjust the multiplier for better spacing if needed
 
-        // Create a div with increasing margin-left to simulate the stair-step effect
-        listItem.innerHTML = `
-            <div style="margin-left: ${indent}px;">
-                <span class="used-part">${escapeHTML(usedPart)}</span>${escapeHTML(remainingPart)}
-            </div>
-        `;
+      // Create a div with increasing margin-left to simulate the stair-step effect
+      listItem.innerHTML = `
+              <div style="margin-left: ${indent}px;">
+                  <span class="used-part">${escapeHTML(
+                    usedPart
+                  )}</span>${escapeHTML(remainingPart)}
+              </div>
+          `;
 
-        tagsList.appendChild(listItem);
+      tagsList.appendChild(listItem);
 
-        // Update the total used length
-        totalUsedLength += usedPart.length;
+      // Update the total used length
+      totalUsedLength += usedPart.length;
     });
 
     // Display the special character mapping if any
     if (specialCharacterMapping.originalChar) {
-        const convertedMessage = selectedLang.convertedMessage
-            .replace(
-                "{originalChar}",
-                `<span class="converted-char">${escapeHTML(specialCharacterMapping.originalChar)}</span>`
-            )
-            .replace(
-                "{specialChar}",
-                `<span class="converted-char">${escapeHTML(specialCharacterMapping.specialChar)}</span>`
-            );
+      const convertedMessage = selectedLang.convertedMessage
+        .replace(
+          "{originalChar}",
+          `<span class="converted-char">${escapeHTML(
+            specialCharacterMapping.originalChar
+          )}</span>`
+        )
+        .replace(
+          "{specialChar}",
+          `<span class="converted-char">${escapeHTML(
+            specialCharacterMapping.specialChar
+          )}</span>`
+        );
 
-        specialCharInfo.innerHTML = convertedMessage;
+      specialCharInfo.innerHTML = convertedMessage;
     }
-}
-
+  }
 
   // Function to escape HTML to prevent XSS
   function escapeHTML(str) {
@@ -715,20 +903,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         return `
-          <div id="password-${index}" class="password-item">
-            <span class="service-name">${escapeHTML(
-              entry.serviceName
-            )}</span> - 
-            <span class="password-text">
-              <span class="tag-password">${escapeHTML(
-                basePart
-              )}</span><span class="service-password">${escapeHTML(
+            <div id="password-${index}" class="password-item">
+              <span class="service-name">${escapeHTML(
+                entry.serviceName
+              )}</span> - 
+              <span class="password-text">
+                <span class="tag-password">${escapeHTML(
+                  basePart
+                )}</span><span class="service-password">${escapeHTML(
           servicePart
         )}</span>${escapeHTML(remainingPassword)}
-            </span>
-            <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
-          </div>
-        `;
+              </span>
+              <i class="bi bi-printer-fill print-password-icon" data-index="${index}" title="Print"></i>
+            </div>
+          `;
       })
       .join("");
 
@@ -749,7 +937,7 @@ document.addEventListener("DOMContentLoaded", function () {
   function insertServiceName(password, serviceName, serviceNameLength) {
     serviceNameLength = parseInt(serviceNameLength, 10);
 
-    const specialCharacterIndex = password.search(/[-+!"#%&/()=?]/);
+    const specialCharacterIndex = password.search(/[-+!"#@%&/()=?]/);
     let servicePart = serviceName.substring(0, serviceNameLength); // Extract part of the service name
 
     let newPassword;
@@ -848,6 +1036,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("originalPasswordContainer").classList.add("hidden");
 
   // Call this function after setting up the sliders
+  // Call this function after setting up the sliders
   handleSliderUpdates();
 
   // Implement the printPassword function
@@ -873,7 +1062,7 @@ document.addEventListener("DOMContentLoaded", function () {
       ".service-password { color: #66cc00; font-weight: bold; }"
     );
     printWindow.document.write(
-      ".tag-password { background-color: #ffeb3b; color: #000; padding: 0.2em 0.4em; border-radius: 3px; }" // Highlighted tag part
+      ".tag-password { background-color: #ffeb3b; color: #000; padding: 0.2em 0.4em; border-radius: 3px; }"
     );
     printWindow.document.write("</style>");
     printWindow.document.write("</head><body>");
@@ -883,13 +1072,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Construct the password HTML
     const passwordHTML = `
-      <div class="password-item">
-        <span class="service-name">${escapeHTML(entry.serviceName)}</span> - 
-        <span class="password-text">
-          <span class="tag-password">${escapeHTML(entry.password)}</span>
-        </span>
-      </div>
-    `;
+            <div class="password-item">
+              <span class="service-name">${escapeHTML(entry.serviceName)}</span> - 
+              <span class="password-text">
+                <span class="tag-password">${escapeHTML(entry.password)}</span>
+              </span>
+            </div>
+          `;
 
     printWindow.document.write(passwordHTML);
     printWindow.document.write("</body></html>");
@@ -899,11 +1088,204 @@ document.addEventListener("DOMContentLoaded", function () {
     printWindow.close();
   }
 
-  // Function to escape HTML to prevent XSS
-  function escapeHTML(str) {
-    return str
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;");
+  // Function to render predefined interests
+  function renderPredefinedInterests() {
+    const predefinedInterestsDiv = document.getElementById(
+      "predefinedInterests"
+    );
+    predefinedInterestsDiv.innerHTML = selectedLang.predefinedInterests
+      .map(
+        (interest) =>
+          `<button class="predefined-interest-button">${escapeHTML(
+            interest
+          )}</button>`
+      )
+      .join("");
+
+    // Add the 'Type your own interests' button
+    predefinedInterestsDiv.innerHTML += `<button id="typeYourOwnInterestsButton" class="predefined-interest-button special-button">${escapeHTML(
+      selectedLang.typeYourOwnInterests
+    )}</button>`;
+
+    const typeYourOwnInterestsButton = document.getElementById(
+      "typeYourOwnInterestsButton"
+    );
+    typeYourOwnInterestsButton.addEventListener("click", function (event) {
+      inputField.focus();
+      event.stopPropagation(); // Prevent event from bubbling up
+    });
   }
+
+  // Handle clicks on predefined interest buttons
+  function handlePredefinedInterestClicks() {
+    const predefinedInterestsDiv = document.getElementById(
+      "predefinedInterests"
+    );
+    predefinedInterestsDiv.addEventListener("click", function (event) {
+      if (event.target && event.target.nodeName === "BUTTON") {
+        const interest = event.target.textContent;
+        // Add the interest to the tags
+        tags.push(interest);
+        updateItems(tagsDiv, tags); // Update the UI
+        updateBasePassword(); // Update base password
+        checkMinimumInterests(); // Check if minimum interests are met
+      }
+    });
+  }
+
+  function handleTypeYourOwnColorsButton() {
+    const typeYourOwnColorsButton = document.getElementById(
+      "typeYourOwnColorsButton"
+    );
+    typeYourOwnColorsButton.addEventListener("click", function (event) {
+      inputField.focus();
+      event.stopPropagation(); // Prevent event from bubbling up
+    });
+  }
+
+  function renderPredefinedColors() {
+    const predefinedColorsDiv = document.getElementById("predefinedColors");
+    predefinedColorsDiv.innerHTML = selectedLang.predefinedColors
+      .map(
+        (color) =>
+          `<button class="predefined-color-button">${escapeHTML(
+            color
+          )}</button>`
+      )
+      .join("");
+
+    // Add the 'Type your own colors' button
+    predefinedColorsDiv.innerHTML += `<button id="typeYourOwnColorsButton" class="predefined-color-button special-button">${escapeHTML(
+      selectedLang.typeYourOwnColors
+    )}</button>`;
+
+    // Add event listener to the 'Type Your Own Colors' button
+    const typeYourOwnColorsButton = document.getElementById(
+      "typeYourOwnColorsButton"
+    );
+    typeYourOwnColorsButton.addEventListener("click", function (event) {
+      inputField.focus();
+      event.stopPropagation(); // Prevent event from bubbling up
+    });
+  }
+
+  // Function to handle clicks on predefined color buttons
+  function handlePredefinedColorClicks() {
+    const predefinedColorsDiv = document.getElementById("predefinedColors");
+    predefinedColorsDiv.addEventListener("click", function (event) {
+      if (event.target && event.target.nodeName === "BUTTON") {
+        const color = event.target.textContent;
+
+        // Check if the clicked button is the 'Type Your Own Colors' button
+        if (color === selectedLang.typeYourOwnColors) {
+          // Focus the input field
+          inputField.focus();
+          event.stopPropagation(); // Prevent event from bubbling up
+        } else {
+          // Add the color to the tags
+          tags.push(color);
+          updateItems(tagsDiv, tags); // Update the UI
+          updateBasePassword(); // Update base password
+          checkMinimumInterests(); // Check if minimum interests are met
+        }
+      }
+    });
+  }
+
+  // Function to render predefined numbers
+function renderPredefinedNumbers() {
+  const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
+  predefinedNumbersDiv.innerHTML = selectedLang.predefinedNumbers
+    .map(
+      (number) =>
+        `<button class="predefined-number-button">${escapeHTML(
+          number
+        )}</button>`
+    )
+    .join("");
+
+  // Add the 'Type your own numbers' button
+  predefinedNumbersDiv.innerHTML += `<button id="typeYourOwnNumbersButton" class="predefined-number-button special-button">${escapeHTML(
+    selectedLang.typeYourOwnNumbers
+  )}</button>`;
+
+  // Add event listener to the 'Type Your Own Numbers' button
+  const typeYourOwnNumbersButton = document.getElementById(
+    "typeYourOwnNumbersButton"
+  );
+  typeYourOwnNumbersButton.addEventListener("click", function (event) {
+    inputField.focus();
+    event.stopPropagation(); // Prevent event from bubbling up
+  });
+}
+
+// Function to handle clicks on predefined number buttons
+function handlePredefinedNumberClicks() {
+  const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
+  predefinedNumbersDiv.addEventListener("click", function (event) {
+    if (event.target && event.target.nodeName === "BUTTON") {
+      const number = event.target.textContent;
+
+      // Check if the clicked button is the 'Type Your Own Numbers' button
+      if (number === selectedLang.typeYourOwnNumbers) {
+        // Focus the input field
+        inputField.focus();
+        event.stopPropagation(); // Prevent event from bubbling up
+      } else {
+        // Add the number to the tags
+        tags.push(number);
+        updateItems(tagsDiv, tags); // Update the UI
+        updateBasePassword(); // Update base password
+        checkMinimumInterests(); // Check if minimum interests are met
+      }
+    }
+  });
+}
+
+
+  // Call these functions after your existing initialization code
+  renderPredefinedInterests();
+  handlePredefinedInterestClicks();
+  renderPredefinedColors();
+  handlePredefinedColorClicks();
+  renderPredefinedNumbers();
+  handlePredefinedNumberClicks();
+
+  // Get modal elements
+  const modal = document.getElementById("videoModal");
+  const openVideoButton = document.getElementById("openVideoButton");
+  const closeModalButton = document.getElementById("closeModal");
+  const tutorialVideo = document.getElementById("tutorialVideo");
+
+  // Open the modal when the button is clicked
+  openVideoButton.addEventListener("click", function () {
+    modal.style.display = "block";
+    // Play the video from the beginning
+    tutorialVideo.currentTime = 0;
+    tutorialVideo.pause();
+  });
+
+  // Close the modal when the close button is clicked
+  closeModalButton.addEventListener("click", function () {
+    modal.style.display = "none";
+    tutorialVideo.pause();
+  });
+
+  // Close the modal when the user clicks outside the modal content
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+      tutorialVideo.pause();
+    }
+  });
+
+  // Close modal on 'Esc' key press
+  document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+      if (modal.style.display === "block") {
+        modal.style.display = "none";
+        tutorialVideo.pause();
+      }
+    }
+  });
 });
