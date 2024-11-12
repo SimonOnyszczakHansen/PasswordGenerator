@@ -119,6 +119,10 @@ document.addEventListener("DOMContentLoaded", function () {
       numbersHeader: "Recommended Numbers",
       predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       typeYourOwnNumbers: "TYPE YOUR OWN NUMBER",
+      whoAmI: "Who am i",
+      areYouParanoid: "Are you paranoid?",
+      whoCanUseThis: "Who can use this site",
+      sponsoredBy: "Sponsored by avirus.dk"
     },
     da: {
       header: "Adgangskode Generator",
@@ -223,6 +227,10 @@ document.addEventListener("DOMContentLoaded", function () {
       numbersHeader: "Anbefalede Tal",
       predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       typeYourOwnNumbers: "SKRIV SELV DIT EGET TAL",
+      whoAmI: "Hvem er jeg",
+      areYouParanoid: "Er du paranoid?",
+      whoCanUseThis: "Hvem kan bruge denne side",
+      sponsoredBy: "Sponsoreret af avirus.dk"
     },
   };
 
@@ -283,6 +291,10 @@ document.addEventListener("DOMContentLoaded", function () {
       selectedLang.colorsHeader;
     document.getElementById("numbersHeader").textContent =
       selectedLang.numbersHeader;
+    document.getElementById("whoAmI").textContent = selectedLang.whoAmI;
+    document.getElementById("areYouParanoid").textContent = selectedLang.areYouParanoid;
+    document.getElementById("whoCanUseThis").textContent = selectedLang.whoCanUseThis;
+    document.getElementById("sponsoredBy").textContent = selectedLang.sponsoredBy;
 
     const infoSectionParagraphs = document.querySelectorAll(".info-section p");
     infoSectionParagraphs[0].textContent = selectedLang.infoSection1;
