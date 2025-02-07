@@ -395,6 +395,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const minInterestsFeedback = document.createElement("div");
   minInterestsFeedback.style.color = "red";
   minInterestsFeedback.style.display = "none";
+  minInterestsFeedback.style.marginTop = "1rem";
   minInterestsFeedback.id = "minInterestsFeedback";
   document.querySelector(".inputsContainer").appendChild(minInterestsFeedback);
 
@@ -503,16 +504,14 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Modified generateBasePassword function
   function generateBasePassword(tags, charactersValue, minLength) {
     charactersValue = parseInt(charactersValue, 10);
-    minLength = parseInt(minLength, 10); // Now treated as minimum length
+    minLength = parseInt(minLength, 10);
 
     let basePasswordParts = [];
     let numbers = [];
     let nonNumberTags = [];
 
-    // Reset usedTagParts, usedNumberParts, and specialCharacterMapping for fresh generation
     usedTagParts = [];
     usedNumberParts = [];
     usedTags = [];
@@ -520,27 +519,23 @@ document.addEventListener("DOMContentLoaded", function () {
     usedItems = [];
     specialCharacterMapping = {};
 
-    let specialCharacterInserted = false; // Flag to track if a special character has been inserted
+    let specialCharacterInserted = false;
 
-    // Separate numbers and non-number tags from the user's input
     tags.forEach((tag) => {
       if (!isNaN(tag)) {
-        numbers.push(tag); // Numbers
+        numbers.push(tag);
       } else {
-        nonNumberTags.push(tag); // Non-number tags (interests)
+        nonNumberTags.push(tag);
       }
     });
 
-    // Hardcoded preferences
     const capitalizeFirst = true;
     const useSpecial = true;
 
-    // Process non-number tags for inclusion in the password
     for (let i = 0; i < nonNumberTags.length; i++) {
       const tag = nonNumberTags[i];
-      let extractedPart = tag.substring(0, charactersValue); // Get exactly charactersValue characters
+      let extractedPart = tag.substring(0, charactersValue);
 
-      // Replace æ, ø, å characters no matter what
       extractedPart = extractedPart
         .split("")
         .map((char) => {
@@ -548,7 +543,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
           if (["æ", "ø", "å"].includes(char.toLowerCase())) {
             if (replacement) {
-              // Store the original and special character mapping, but only the first time
               if (!specialCharacterMapping.originalChar) {
                 specialCharacterMapping.originalChar = char;
                 specialCharacterMapping.specialChar = replacement;
@@ -558,9 +552,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           } else if (useSpecial && !specialCharacterInserted) {
             if (replacement) {
-              specialCharacterInserted = true; // Mark that we've inserted a special character
+              specialCharacterInserted = true;
 
-              // Store the original and special character mapping
               specialCharacterMapping.originalChar = char;
               specialCharacterMapping.specialChar = replacement;
 
@@ -572,7 +565,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .join("");
 
-      // Capitalize the first letter if the option is selected
       if (capitalizeFirst && extractedPart.length > 0) {
         extractedPart =
           extractedPart.charAt(0).toUpperCase() + extractedPart.slice(1);
@@ -583,17 +575,15 @@ document.addEventListener("DOMContentLoaded", function () {
       usedTags.push(tag);
       usedItems.push({ type: "tag", value: extractedPart, original: tag });
 
-      // Insert a number after each interest (if any numbers are left)
       if (numbers.length > 0) {
         const number = numbers.shift();
         basePasswordParts.push(number);
-        usedNumberParts.push(number); // Store used number
+        usedNumberParts.push(number);
         usedNumbers.push(number);
         usedItems.push({ type: "number", value: number, original: number });
       }
     }
 
-    // If there are remaining numbers, add them at the end
     while (numbers.length > 0) {
       const number = numbers.shift();
       basePasswordParts.push(number);
@@ -602,16 +592,14 @@ document.addEventListener("DOMContentLoaded", function () {
       usedItems.push({ type: "number", value: number, original: number });
     }
 
-    // If no special character was inserted, add '!' at the end
     if (!specialCharacterInserted) {
       basePasswordParts.push("!");
       usedItems.push({ type: "special", value: "!", original: "!" });
     }
 
-    // Join parts to form the base password
     const basePassword = basePasswordParts.join("");
 
-    return basePassword; // Return the final base password
+    return basePassword;
   }
 
   // Function to calculate the strength of the password based on various criteria
