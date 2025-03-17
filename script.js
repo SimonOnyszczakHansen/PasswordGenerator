@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Define language translations for English and Danish
   const languages = {
     en: {
-      header: "Password Generator",
+      header: "MY UNIque, STRong, AND PERsonal PASsword",//Engelsk header, relevant for seo
       inputsTextField: "Type interest or number",
       characters: "Characters Per Interest",
       passwordLength: "Password Length",
@@ -41,10 +41,9 @@ document.addEventListener("DOMContentLoaded", function () {
       tagsUsed: "Used Interests",
       convertedMessage: "Converted {originalChar} to {specialChar}",
       infoSection1:
-        "Enter your interests and favorite number, and we will generate a hacker-proof password for you.",
-      infoSection2:
-        "THIS IS A BETA PROJECT - Email chris@avirus.dk for ideas and feedback.",
-      infoSection3: "--More to come--.",
+        "Enter your interests, communities, and favorite number, and we'll create a unique password just for you. It's designed to be memorable, as it's based on your personal information. You'll smile when you type it because it's yours and yours alone. And remember, even in a week, you'll still recognize it.",
+      infoSection2: "This personalized password only makes sense to YOU.",
+      infoSection3: "Please email chris@avirus.dk for further assistance.",
       tooltipTextInterests:
         "Type your interests, what makes you happy, what you are interested in, and also write your favorite number.",
       tooltipTextCharactersPerInterest:
@@ -99,8 +98,8 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       typeYourOwnInterests: "TYPE YOUR OWN INTEREST",
       openVideoButton: "Watch Tutorial Video",
-      interestsHeader: "Recommended Interests",
-      colorsHeader: "Recommended Colors",
+      interestsHeader: "Ideas for Interests, Communities",
+      colorsHeader: "Favourite Color?",
       typeYourOwnColors: "TYPE YOUR OWN COLORS",
       predefinedColors: [
         "Red",
@@ -116,16 +115,16 @@ document.addEventListener("DOMContentLoaded", function () {
         "Gray",
         "Turquoise",
       ],
-      numbersHeader: "Recommended Numbers",
+      numbersHeader: "Favourite Number",
       predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       typeYourOwnNumbers: "TYPE YOUR OWN NUMBER",
       whoAmI: "Who am i",
       areYouParanoid: "Are you paranoid?",
       whoCanUseThis: "Who can use this site",
-      sponsoredBy: "Sponsored by avirus.dk"
+      sponsoredBy: "Sponsored by avirus.dk",
     },
     da: {
-      header: "Adgangskode Generator",
+      header: "MIT UNIkke, ST@rke OG PERsonlige PASsword",// dansk header, relevant for seo
       inputsTextField: "Indtast interesse eller tal",
       characters: "Tegn pr. Interesse",
       passwordLength: "Adgangskode Længde",
@@ -149,10 +148,10 @@ document.addEventListener("DOMContentLoaded", function () {
       tagsUsed: "Anvendte Interesser",
       convertedMessage: "Konverterede {originalChar} til {specialChar}",
       infoSection1:
-        "Skriv dine interesser, og dit yndlingstal, så genererer vi en hacker-sikker adgangskode til dig.",
+        "Skriv dine interesser, dine fællesskaber og dit yndlingstal, så sætter vi det sammen, så at: Du smiler når du taster det, du kan huske det, for det er dine interesser og fællesskaber, og det er også dit yndlingstal. Og så er det til at huske - måske mere om en uge, men så har du dette, og du behøver kun dette.",
       infoSection2:
-        "DETTE ER ET BETA PROJEKT - Skriv mail til chris@avirus.dk for ideer og feedback.",
-      infoSection3: "--- Der kommer mere ---.",
+        "Dette personligt generede Password, giver KUN mening for DIG.",
+      infoSection3: "Skriv mail til chris@avirus.dk for forbedring.",
       tooltipTextInterests:
         "Skriv dine interesser, hvad der gør dig glad, hvad du interesserer dig for, og skriv også dit yndlingstal.",
       tooltipTextCharactersPerInterest:
@@ -207,8 +206,8 @@ document.addEventListener("DOMContentLoaded", function () {
       ],
       typeYourOwnInterests: "SKRIV SELV DIN EGEN INTERESSE",
       openVideoButton: "Se Intro Video",
-      interestsHeader: "Anbefalede Interesser",
-      colorsHeader: "Anbefalede Farver",
+      interestsHeader: "Ideer til interesser, Fælleskaber ",
+      colorsHeader: "Yndlingsfarve?",
       typeYourOwnColors: "SRIV SELV DINE EGNE FARVER",
       predefinedColors: [
         "Rød",
@@ -224,13 +223,13 @@ document.addEventListener("DOMContentLoaded", function () {
         "Grå",
         "Turkis",
       ],
-      numbersHeader: "Anbefalede Tal",
+      numbersHeader: "Yndlings Tal",
       predefinedNumbers: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
       typeYourOwnNumbers: "SKRIV SELV DIT EGET TAL",
       whoAmI: "Hvem er jeg",
       areYouParanoid: "Er du paranoid?",
       whoCanUseThis: "Hvem kan bruge denne side",
-      sponsoredBy: "Sponsoreret af avirus.dk"
+      sponsoredBy: "Sponsoreret af avirus.dk",
     },
   };
 
@@ -292,9 +291,12 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("numbersHeader").textContent =
       selectedLang.numbersHeader;
     document.getElementById("whoAmI").textContent = selectedLang.whoAmI;
-    document.getElementById("areYouParanoid").textContent = selectedLang.areYouParanoid;
-    document.getElementById("whoCanUseThis").textContent = selectedLang.whoCanUseThis;
-    document.getElementById("sponsoredBy").textContent = selectedLang.sponsoredBy;
+    document.getElementById("areYouParanoid").textContent =
+      selectedLang.areYouParanoid;
+    document.getElementById("whoCanUseThis").textContent =
+      selectedLang.whoCanUseThis;
+    document.getElementById("sponsoredBy").textContent =
+      selectedLang.sponsoredBy;
 
     const infoSectionParagraphs = document.querySelectorAll(".info-section p");
     infoSectionParagraphs[0].textContent = selectedLang.infoSection1;
@@ -326,7 +328,6 @@ document.addEventListener("DOMContentLoaded", function () {
     applyTranslation("en"); // Default to English
   }
 
-  // Define the special character mapping at the top level
   const specialCharacterMap = {
     "-": "e,i",
     "+": "?",
@@ -504,6 +505,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
+  // Function to generate the base password based on tags, with only one special character conversion for Nordic letters
   function generateBasePassword(tags, charactersValue, minLength) {
     charactersValue = parseInt(charactersValue, 10);
     minLength = parseInt(minLength, 10);
@@ -519,7 +521,7 @@ document.addEventListener("DOMContentLoaded", function () {
     usedItems = [];
     specialCharacterMapping = {};
 
-    let specialCharacterInserted = false;
+    let specialCharacterInserted = false; // Flag to ensure only one special conversion is done
 
     tags.forEach((tag) => {
       if (!isNaN(tag)) {
@@ -539,28 +541,19 @@ document.addEventListener("DOMContentLoaded", function () {
       extractedPart = extractedPart
         .split("")
         .map((char) => {
-          const replacement = invertedMap[char.toLowerCase()];
-
-          if (["æ", "ø", "å"].includes(char.toLowerCase())) {
-            if (replacement) {
-              if (!specialCharacterMapping.originalChar) {
+          // Check if the character is one of the Nordic letters and if no special character has been inserted yet
+          if (["æ", "ø", "å", "Æ", "Ø", "Å"].includes(char.toLowerCase())) {
+            if (!specialCharacterInserted) {
+              const replacement = invertedMap[char.toLowerCase()];
+              if (replacement) {
+                specialCharacterInserted = true;
                 specialCharacterMapping.originalChar = char;
                 specialCharacterMapping.specialChar = replacement;
+                return replacement;
               }
-
-              return replacement;
-            }
-          } else if (useSpecial && !specialCharacterInserted) {
-            if (replacement) {
-              specialCharacterInserted = true;
-
-              specialCharacterMapping.originalChar = char;
-              specialCharacterMapping.specialChar = replacement;
-
-              return replacement;
             }
           }
-
+          // Otherwise, return the original character
           return char;
         })
         .join("");
@@ -1036,7 +1029,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("originalPasswordContainer").classList.add("hidden");
 
   // Call this function after setting up the sliders
-  // Call this function after setting up the sliders
   handleSliderUpdates();
 
   // Implement the printPassword function
@@ -1073,7 +1065,9 @@ document.addEventListener("DOMContentLoaded", function () {
     // Construct the password HTML
     const passwordHTML = `
             <div class="password-item">
-              <span class="service-name">${escapeHTML(entry.serviceName)}</span> - 
+              <span class="service-name">${escapeHTML(
+                entry.serviceName
+              )}</span> - 
               <span class="password-text">
                 <span class="tag-password">${escapeHTML(entry.password)}</span>
               </span>
@@ -1193,55 +1187,54 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Function to render predefined numbers
-function renderPredefinedNumbers() {
-  const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
-  predefinedNumbersDiv.innerHTML = selectedLang.predefinedNumbers
-    .map(
-      (number) =>
-        `<button class="predefined-number-button">${escapeHTML(
-          number
-        )}</button>`
-    )
-    .join("");
+  function renderPredefinedNumbers() {
+    const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
+    predefinedNumbersDiv.innerHTML = selectedLang.predefinedNumbers
+      .map(
+        (number) =>
+          `<button class="predefined-number-button">${escapeHTML(
+            number
+          )}</button>`
+      )
+      .join("");
 
-  // Add the 'Type your own numbers' button
-  predefinedNumbersDiv.innerHTML += `<button id="typeYourOwnNumbersButton" class="predefined-number-button special-button">${escapeHTML(
-    selectedLang.typeYourOwnNumbers
-  )}</button>`;
+    // Add the 'Type your own numbers' button
+    predefinedNumbersDiv.innerHTML += `<button id="typeYourOwnNumbersButton" class="predefined-number-button special-button">${escapeHTML(
+      selectedLang.typeYourOwnNumbers
+    )}</button>`;
 
-  // Add event listener to the 'Type Your Own Numbers' button
-  const typeYourOwnNumbersButton = document.getElementById(
-    "typeYourOwnNumbersButton"
-  );
-  typeYourOwnNumbersButton.addEventListener("click", function (event) {
-    inputField.focus();
-    event.stopPropagation(); // Prevent event from bubbling up
-  });
-}
+    // Add event listener to the 'Type Your Own Numbers' button
+    const typeYourOwnNumbersButton = document.getElementById(
+      "typeYourOwnNumbersButton"
+    );
+    typeYourOwnNumbersButton.addEventListener("click", function (event) {
+      inputField.focus();
+      event.stopPropagation(); // Prevent event from bubbling up
+    });
+  }
 
-// Function to handle clicks on predefined number buttons
-function handlePredefinedNumberClicks() {
-  const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
-  predefinedNumbersDiv.addEventListener("click", function (event) {
-    if (event.target && event.target.nodeName === "BUTTON") {
-      const number = event.target.textContent;
+  // Function to handle clicks on predefined number buttons
+  function handlePredefinedNumberClicks() {
+    const predefinedNumbersDiv = document.getElementById("predefinedNumbers");
+    predefinedNumbersDiv.addEventListener("click", function (event) {
+      if (event.target && event.target.nodeName === "BUTTON") {
+        const number = event.target.textContent;
 
-      // Check if the clicked button is the 'Type Your Own Numbers' button
-      if (number === selectedLang.typeYourOwnNumbers) {
-        // Focus the input field
-        inputField.focus();
-        event.stopPropagation(); // Prevent event from bubbling up
-      } else {
-        // Add the number to the tags
-        tags.push(number);
-        updateItems(tagsDiv, tags); // Update the UI
-        updateBasePassword(); // Update base password
-        checkMinimumInterests(); // Check if minimum interests are met
+        // Check if the clicked button is the 'Type Your Own Numbers' button
+        if (number === selectedLang.typeYourOwnNumbers) {
+          // Focus the input field
+          inputField.focus();
+          event.stopPropagation(); // Prevent event from bubbling up
+        } else {
+          // Add the number to the tags
+          tags.push(number);
+          updateItems(tagsDiv, tags); // Update the UI
+          updateBasePassword(); // Update base password
+          checkMinimumInterests(); // Check if minimum interests are met
+        }
       }
-    }
-  });
-}
-
+    });
+  }
 
   // Call these functions after your existing initialization code
   renderPredefinedInterests();

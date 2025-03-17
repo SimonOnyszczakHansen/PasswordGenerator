@@ -1,21 +1,61 @@
 <!DOCTYPE html>
-<html lang="da">
+<html lang="en">
 
 <head>
-    <meta name="viewport" content="width=device-width">
-    <meta name="description"
-        content="Generate secure, customized passwords easily with our password generator. Choose character length, include services, and more.">
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <!--SEO Description-->
+    <meta name="keywords"
+        content="secure password generator, unique password, personalized password, password maker, strong password, password security">
+    <!-- SEO keywords -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://createastrongpersonalizeduniquepassword.com/">
+
+
+    <!-- Skulle forbedre når man deler siden på sociale medier-->
+    <meta property="og:title" content="Secure & Unique Password Generator | Create Strong Personalized Passwords">
+    <meta property="og:description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://createastrongpersonalizeduniquepassword.com/">
+    <meta property="og:image" content="https://createastrongpersonalizeduniquepassword.com/assets/images/lock.png">
+
+    <!-- kort til hvis siden bliver delt på twitter/x-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Secure & Unique Password Generator | Create Strong Personalized Passwords">
+    <meta name="twitter:description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <meta name="twitter:image" content="https://createastrongpersonalizeduniquepassword.com/assets/images/lock.png">
+
+    <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Secure Password Generator",
+              "operatingSystem": "Web",
+              "applicationCategory": "SecurityApplication",
+              "offers": { "@type": "Offer", "price": "0" },
+              "description": "Generate secure, personalized passwords using your interests and numbers.",
+              "keywords": "secure password generator, unique password, password security"
+            }
+            </script>
+
+    <link rel="stylesheet preconnect" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet preconnect" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/x-icon" href="assets/images/lock.png">
-    <title>Password Generator</title>
+
+    <link rel="icon" type="image/x-icon" href="assets/images/lock.png" alt="lock icon for password security">
+
+    <title>Create A Strong Personalized Unique Password</title>
+    <!-- titel i toppen af vinduet i browser, skulle også være relevant for seo-->
 </head>
 
 <body>
     <div class="container">
-        <label id="header" class="header"></label>
+        <h1 id="header" class="header"></h1>
+        <!--Header som vi importerer fra js filen, skulle også være relevant for seo-->
         <div class="info-section">
             <p></p>
             <p></p>
@@ -27,9 +67,7 @@
             <div class="modal-content">
                 <span id="closeModal" class="close-button" aria-label="Close Modal">&times;</span>
                 <video id="tutorialVideo" controls>
-                    <source
-                        src="assets/videos/"
-                        type="video/mp4">
+                    <source src="assets/videos/intro-video.mp4" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>
             </div>
@@ -50,8 +88,7 @@
 
 
             <div class="inputGroup">
-                <input id="inputsTextField" type="text" placeholder="Type interest or number" autocomplete="off"
-                    maxlength="40" />
+                <input id="inputsTextField" type="text" placeholder="Type interest or number" autocomplete="off" maxlength="40" />
                 <button id="addButton" class="btn btn-primary">+</button>
                 <div class="info-button-container">
                     <button id="infoButton" class="btn btn-secondary">?</button>
@@ -201,17 +238,19 @@
     </div>
     <footer>
         <div id="footerContent">
-            <a href="https://www.dr.dk" target="_blank" rel="noopener noreferrer">www.dr.dk</a>
+            <a href="https://avirus.dk/create-a-strong-personalized-unique-password-com-q-a" target="_blank"
+                rel="noopener noreferrer">Q&A avirus.dk</a>
             <span>&copy; 2024</span>
             <span id="whoAmI"></span>
             <span id="areYouParanoid"></span>
             <span id="whoCanUseThis"></span>
-            <span id="version">V1.0</span>
-            <span id="cvr">87234234</span>
+            <span id="version">V2.4</span>
+            <span id="cvr">CVR:DK31351332</span>
             <span id="sponsoredBy"></span>
         </div>
     </footer>
-    
+
     <script src="script.js"></script>
 </body>
+
 </html>
