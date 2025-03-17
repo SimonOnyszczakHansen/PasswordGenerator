@@ -832,6 +832,9 @@ footer {
     opacity: 0.5;
 }
 
+#minInterestsFeedback {
+    color: red;
+}
 /* Mobile Styles */
 @media (max-width: 768px) {
     .header {

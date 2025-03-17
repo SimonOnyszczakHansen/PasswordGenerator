@@ -1,0 +1,4 @@
+RewriteEnginge On
+RewriteCond %{HTTP:Accept-Language} ^da [NC]
+RewriteRule ^$ /da/ [L,R=301]
+RewriteRule ^$ /en/ [L,R=301]
