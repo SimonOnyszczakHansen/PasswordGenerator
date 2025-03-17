@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <!--SEO Description-->
+    <meta name="keywords"
+        content="secure password generator, unique password, personalized password, password maker, strong password, password security">
+    <!-- SEO keywords -->
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://createastrongpersonalizeduniquepassword.com/">
+
+
+    <!-- Skulle forbedre når man deler siden på sociale medier-->
+    <meta property="og:title" content="Secure & Unique Password Generator | Create Strong Personalized Passwords">
+    <meta property="og:description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://createastrongpersonalizeduniquepassword.com/">
+    <meta property="og:image" content="https://createastrongpersonalizeduniquepassword.com/assets/images/lock.png">
+
+    <!-- kort til hvis siden bliver delt på twitter/x-->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Secure & Unique Password Generator | Create Strong Personalized Passwords">
+    <meta name="twitter:description"
+        content="Generate secure, customized passwords easily with our secure password generator. Create personalized and unique passwords with our easy-to-use tool.">
+    <meta name="twitter:image" content="https://createastrongpersonalizeduniquepassword.com/assets/images/lock.png">
+
+    <script type="application/ld+json">
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Secure Password Generator",
+              "operatingSystem": "Web",
+              "applicationCategory": "SecurityApplication",
+              "offers": { "@type": "Offer", "price": "0" },
+              "description": "Generate secure, personalized passwords using your interests and numbers.",
+              "keywords": "secure password generator, unique password, password security"
+            }
+            </script>
+
+    <link rel="stylesheet preconnect" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet preconnect" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+
+    <link rel="icon" type="image/x-icon" href="assets/images/lock.png" alt="lock icon for password security">
+
+    <title>Create A Strong Personalized Unique Password</title>
+    <!-- titel i toppen af vinduet i browser, skulle også være relevant for seo-->
+</head>
+
+<body>
+    <div class="container">
+        <h1 id="header" class="header"></h1>
+        <!--Header som vi importerer fra js filen, skulle også være relevant for seo-->
+        <div class="info-section">
+            <p></p>
+            <p></p>
+            <p></p>
+            <button id="openVideoButton" class="btn video-button"></button>
+        </div>
+
+        <div id="videoModal" class="modal">
+            <div class="modal-content">
+                <span id="closeModal" class="close-button" aria-label="Close Modal">&times;</span>
+                <video id="tutorialVideo" controls>
+                    <source src="assets/videos/intro-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <p id="interestsHeader" class="predefinedHeader"></p>
+        <div class="inputsContainer">
+            <div id="predefinedInterests" class="predefined-interests">
+            </div>
+
+            <p id="colorsHeader" class="predefinedHeader"></p>
+            <div id="predefinedColors" class="predefined-colors">
+            </div>
+
+            <p id="numbersHeader" class="predefinedHeader"></p>
+            <div id="predefinedNumbers" class="predefined-numbers">
+            </div>
+
+
+            <div class="inputGroup">
+                <input id="inputsTextField" type="text" placeholder="Type interest or number" autocomplete="off" maxlength="40" />
+                <button id="addButton" class="btn btn-primary">+</button>
+                <div class="info-button-container">
+                    <button id="infoButton" class="btn btn-secondary">?</button>
+                    <span id="tooltip-text-interest"></span>
+                </div>
+            </div>
+            <!-- Feedback for minimum interests -->
+            <div id="minInterestsFeedback" class="min-interests-feedback"></div>
+        </div>
+
+        <!-- Tags Displayed Here -->
+        <div id="tags"></div>
+
+        <!-- Slider for selecting amount of characters per interest the password should include -->
+        <div class="sliderContainer">
+            <label id="charactersLabel" class="sliderLabel"></label>
+            <div class="sliderWithButton">
+                <input type="range" id="characters" min="1" max="5" value="3">
+                <div class="info-button-container">
+                    <button id="infoButton" class="btn btn-secondary">?</button>
+                    <span id="tooltip-text-characters-per-interest"></span>
+                </div>
+            </div>
+            <div class="rangeLabels">
+                <label class="minValue">1</label>
+                <div> valgt: <span id="charactersValue" class="characterColor">3</span></div>
+                <label class="maxValue">5</label>
+            </div>
+        </div>
+
+        <!-- Slider for choosing the length of the password -->
+        <div class="sliderContainer">
+            <label id="passwordLengthLabel" class="sliderLabel"></label>
+            <div class="sliderWithButton">
+                <input type="range" id="passwordLength" min="12" max="20" value="15">
+                <div class="info-button-container">
+                    <button id="infoButton" class="btn btn-secondary">?</button>
+                    <span id="tooltip-text-password-length"></span>
+                </div>
+            </div>
+            <div class="rangeLabels">
+                <label class="minValue">12</label>
+                <div>valgt: <span id="passwordLengthValue" class="characterColor">15</span></div>
+                <label class="maxValue">20</label>
+            </div>
+        </div>
+
+        <!-- Custom-Styled Checkboxes -->
+        <div class="checkboxesContainer">
+            <div class="custom-checkbox">
+                <input type="checkbox" id="checkboxForSpecialCharacters" checked disabled>
+                <label for="checkboxForSpecialCharacters" id="labelForSpecialCharacters"></label>
+            </div>
+            <div class="custom-checkbox">
+                <input type="checkbox" id="checkboxForUppercaseLetters" checked disabled>
+                <label for="checkboxForUppercaseLetters" id="labelForUppercaseLetters"></label>
+            </div>
+        </div>
+
+        <!-- Button that generates the passwords -->
+        <div id="buttonContainer">
+            <button id="generatePassword" class="btn btn-primary" disabled></button>
+        </div>
+
+        <!-- Container for the passwords when they are generated -->
+        <div id="passwordsContainer" class="passwordsContainer hidden">
+            <div id="specialCharInfo" class="special-char-info"></div>
+            <div id="tagsSummaryWithInfo">
+                <div id="tagsSummary" class="tags-summary hidden">
+                    <h3 id="tagsSummaryHeader"></h3>
+                    <ul id="tagsList"></ul>
+                    <div id="specialCharInfo" class="special-char-info"></div>
+                </div>
+                <div class="info-button-container">
+                    <button id="generatedPasswordsInfoButton" class="btn btn-secondary">?</button>
+                    <span id="tooltip-text-used-interests"></span>
+                </div>
+            </div>
+            <label id="passwordsHeader" class="header"></label>
+            <div id="originalPasswordContainer" class="hidden">
+                <a id="originalPassword"></a>
+            </div>
+
+            <!-- Slider for selecting the amount of characters from service name -->
+            <div class="sliderContainer">
+                <label id="serviceNameLabel" class="sliderLabel"></label>
+                <div class="sliderWithButton">
+                    <input type="range" id="serviceName" min="2" max="5" value="3">
+                    <!-- Info button for service name slider -->
+                    <div class="info-button-container">
+                        <button id="infoButton" class="btn btn-secondary">?</button>
+                        <span id="tooltip-text-service-name"></span>
+                    </div>
+                </div>
+                <div class="rangeLabels">
+                    <label class="minValue">2</label>
+                    <div>valgt: <span id="serviceNameValue" class="characterColor">3</span></div>
+                    <label class="maxValue">5</label>
+                </div>
+            </div>
+
+            <!-- Container to show generated passwords -->
+            <div id="generatedPasswordsContainer">
+                <div class="passwords-with-info">
+                    <div id="passwords"></div>
+                    <div class="info-button-container">
+                        <button id="generatedPasswordsInfoButton" class="btn btn-secondary">?</button>
+                        <span id="tooltip-text-generated-passwords"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strength Meter -->
+            <div id="strengthMeterContainer">
+                <div class="strengthMeterWrapper">
+                    <div class="strengthMeterBar"></div>
+                </div>
+                <span id="strengthText"></span>
+
+                <!-- Strength Criteria Grid -->
+                <div id="strengthCriteriaContainer">
+                    <ul id="strengthCriteria" class="strength-criteria" aria-live="polite">
+                        <li id="criteria-lowercase" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <label for="criteria-lowercase" id="lowercase-criteria"></label>
+                        </li>
+                        <li id="criteria-uppercase" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <label for="criteria-uppercase" id="uppercase-criteria"></label>
+                        </li>
+                        <li id="criteria-number" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <label for="criteria-number" id="number-criteria"></label>
+                        </li>
+                        <li id="criteria-special" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <label for="criteria-special" id="special-criteria"></label>
+                        </li>
+                        <li id="criteria-length" class="criteria-item">
+                            <i class="bi bi-x-circle"></i>
+                            <label for="criteria-length" id="length-criteria"></label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div id="footerContent">
+            <a href="https://avirus.dk/create-a-strong-personalized-unique-password-com-q-a" target="_blank"
+                rel="noopener noreferrer">Q&A avirus.dk</a>
+            <span>&copy; 2024</span>
+            <span id="whoAmI"></span>
+            <span id="areYouParanoid"></span>
+            <span id="whoCanUseThis"></span>
+            <span id="version">V2.4</span>
+            <span id="cvr">CVR:DK31351332</span>
+            <span id="sponsoredBy"></span>
+        </div>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+</body>
+
+</html>
