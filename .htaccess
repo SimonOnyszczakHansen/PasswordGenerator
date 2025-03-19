@@ -1,4 +1,11 @@
-RewriteEnginge On
+RewriteEngine On
+
+# If the URL is exactly "/" and the language starts with "da", redirect to /da/
+RewriteCond %{REQUEST_URI} ^/$
 RewriteCond %{HTTP:Accept-Language} ^da [NC]
 RewriteRule ^$ /da/ [L,R=301]
+
+# If the URL is exactly "/" and the language does not start with "da", redirect to /en/
+RewriteCond %{REQUEST_URI} ^/$
+RewriteCond %{HTTP:Accept-Language} !^da [NC]
 RewriteRule ^$ /en/ [L,R=301]
